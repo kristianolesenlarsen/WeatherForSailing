@@ -97,28 +97,41 @@ def counter(x, Q):
     return c
 
 
-results = []
-number = []
-
-def tester():
-        n = int(round(random.uniform(0,len(names)),0))
-        x = names[n][0]
+def tester(Q):
+        n = int(round(random.uniform(0,len(Q)),0))
+        x = Q[n][0]
         number.append(n)
 #        print(x)
         a = input( x + " - hit 'Enter' when ready for answer, 'stop' to terminate")
 
         if a != "stop":
-            if input(names[n][2] + " - hit 'Enter' to try another one; 'stop' to terminate. -------------------------------------------------------------------------------------------------------------------" + "YOUR ANSWER was:" +  a) != "stop":
+            if input(Q[n][2] + " - hit 'Enter' to try another one; 'stop' to terminate. -------------------------------------------------------------------------------------------------------------------" + "YOUR ANSWER was:" +  a) != "stop":
                 res = input("Did you get it right (0/1)")
                 if res == "1" or res == "0":
                     results.append(int(res))
                 else:
                     results.append(0)
-                tester()
+                tester(Q)
+
+def sort(Q,part):
+    out = []
+    for i in range(0,len(Q)):
+        if Q[i][1].lower() == part.lower():
+            out.append(Q[i])
+    return out
+
+
+part1 = sort(names, "part 1")
+part2 = sort(names,"Part 2")
+part3 = sort(names,"3")
 
 
 
-tester()
+results = []
+number = []
+
+tester(part2)
+
 
 avg = runner(results)
 
