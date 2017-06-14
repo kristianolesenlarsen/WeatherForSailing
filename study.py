@@ -47,10 +47,8 @@ names = [["Checchi","Credit constraints","say that if there are credit constrain
         ["In the median voter model - will there be over- or underproduction of HC if we are in the elite case?","median voter","It depends on the distribution of abilities, bu assuming they are right-skewed there will be underproduction of human capital when everybody have the same wealth"],
         ["Where in the income distribution does abilities matter the most, and according to who?","Credit constraints","At the bottom of the income distribution. Income has become more important from 79 to 97 in all parts of the distribution (Belley, Lochner)"],
         ["Who uses changes in compulsory schooling laws to show reduced deathrates when educational attainment increases","LM","Lleras, Muney - they find higher estimates with IV compared to OLS, suggesting a concave relationship between education and health"],
-        ["What is Marmonides rule? What have it been used to study?","M","An old Israeli rule stating that when classes exceede 40 students they should be divided in two equally sized classes. It has been used to study the effect of class size on education"],
+        ["What is Maimonides rule? What have it been used to study?","M","An old Israeli rule stating that when classes exceede 40 students they should be divided in two equally sized classes. It has been used to study the effect of class size on education"],
         ["Who use TIMSS data, what for and what do they find?","WW","Woesmann and West - they study the effect of smaller class sizes and find that effects are limited to few countries. In those countries where effects are present, it's likely that the reason is a mix of different effects including low teacher wages"]]
-
-
 
 
 
@@ -77,7 +75,7 @@ results = []
 number = []
 
 def tester():
-        n = int(random.uniform(0,len(names)))
+        n = int(round(random.uniform(0,len(names)),0))
         x = names[n][0]
         number.append(n)
 #        print(x)
@@ -108,14 +106,4 @@ count = counter(number, names)
 
 plt.bar(list(range(0,len(names))), count, align = 'center', alpha = 0.5)
 plt.suptitle("Number of occurences of each question")
-plt.show()
-
-
-a = np.array(number.pop())
-b = np.array(results)
-
-correct = counter(list(a*b),names)
-
-plt.bar(list(range(0,len(names))), correct, align = 'center', alpha = 0.5)
-plt.suptitle("Correct on each question")
 plt.show()
