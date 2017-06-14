@@ -1,26 +1,8 @@
-from tkinter import *
-
-class Window(Frame):
-
-    def __init__(self, master = None):
-        Frame.__init__(self, master)
-        self.master = master
-        self.init_window()
-
-    def init_window(self):
-        self.master.title("GUI")
-
-        self.pack(fill = BOTH, expand = 1)
-
-        quitButton = Button(self, text = "Quit", command = self.client_exit)
-        quitButton.place(x = 0, y = 0)
-
-    def client_exit(self):
-        exit()
+import requests
+from bs4 import BeautifulSoup
 
 
-root = Tk()
-root.geometry("400x300")
+resp = requests.get("http://web.econ.ku.dk/polit/studerende/eksamen/opgrv/cms-ku/dansk.asp?del=3%E5r&fag_id=187&fagnavn=Mikro%F8konomi%20III").content
+soup = BeautifulSoup(resp, "html5lib")
 
-app = Window(root)
-root.mainloop()
+requests.findall
