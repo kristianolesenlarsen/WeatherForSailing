@@ -1,6 +1,13 @@
 import random
 import matplotlib.pyplot as plt
-import numpy as np
+
+
+# Format for adding quetion is to add a list of the following Format
+# ["question", "category", "answer"]
+# so that names becomes
+# [["question", "category", "answer"],
+# ...
+#["question", "category", "answer"]]
 
 names = [["What is a type-1 error? What is a type-2 error?", "3","Type 1 errors is the phenomenon of finding significant results when none are in fact present (False positives). Type-2 errors are false negatives, that is failing to identify an effect when there is indeed one present."],
          ["What might pre-analysis plans help with? What are they?", "3","Pre-analysis plans are project descriptions which are prepared before researchers begin their study. They contain information on the hypotheses researchers plan to investigate, and how they will go about it. Their purpose is to restrict the freedom given to researchers in teasing out significant results from their data, thus preventing p-hacking (intentional or not) as well as other kinds of evidence fabrication."],
@@ -101,6 +108,9 @@ def tester(Q):
         n = int(round(random.uniform(0,len(Q)),0))
         x = Q[n][0]
         number.append(n)
+
+        count = counter(number, names)
+        pPullAgain = count[n]/ sum(count)
 #        print(x)
         a = input( x + " - hit 'Enter' when ready for answer, 'stop' to terminate")
 
@@ -130,7 +140,7 @@ part3 = sort(names,"3")
 results = []
 number = []
 
-tester(part2)
+tester(names)
 
 
 avg = runner(results)
