@@ -1,5 +1,6 @@
 import random
 import matplotlib.pyplot as plt
+import statistics as stats
 
 
 # Format for adding quetion is to add a list of the following Format
@@ -104,14 +105,17 @@ def counter(x, Q):
     return c
 
 
+def genN(Q):
+    n = round(random.uniform(0, len(Q)-1),0)
+    count = counter(number, Q)[n]
+    print(count)
+
+
 def tester(Q):
-        n = int(round(random.uniform(0,len(Q)),0))
+        n = int(round(random.uniform(0,len(Q)-1),0))
         x = Q[n][0]
         number.append(n)
 
-        count = counter(number, names)
-        pPullAgain = count[n]/ sum(count)
-#        print(x)
         a = input( x + " - hit 'Enter' when ready for answer, 'stop' to terminate")
 
         if a != "stop":
@@ -136,12 +140,10 @@ part2 = sort(names,"Part 2")
 part3 = sort(names,"3")
 
 
-
 results = []
 number = []
 
 tester(names)
-
 
 avg = runner(results)
 
@@ -152,11 +154,8 @@ plt.suptitle("Quiz score")
 plt.show()
 
 
+ct = counter(number, names)
 
-
-
-count = counter(number, names)
-
-plt.bar(list(range(0,len(names))), count, align = 'center', alpha = 0.5)
+plt.bar(list(range(0,len(names))), ct, align = 'center', alpha = 0.5)
 plt.suptitle("Number of occurences of each question")
 plt.show()
