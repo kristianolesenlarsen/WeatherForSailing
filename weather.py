@@ -16,14 +16,28 @@ def get_loc_by_ip():
     return [j['latitude'], j['longitude'], j['city'], j['region_name'], j['country_name']]
 
 
+
+
 # def get_loc_by_gps():
 #
 #
 #
 #
 
-def get_weather_at_loc(pk):
+def get_weather_at_loc(pk, method = 'ip'):
     # ensure we dont start using money - later update this to reset calls if a day has passed
+    if method == 'gps':
+        #implement gps location
+        lat = str(get_loc_by_ip()[0])
+        lon = str(get_loc_by_ip()[1])
+        print('gps not yet implemented! defaulting to IP')
+    if method == 'manual':
+        lat = input('latitude: ')
+        lon = input('longitude: ')
+    else:
+        lat = str(get_loc_by_ip()[0])
+        lon = str(get_loc_by_ip()[1])
+
     global calls
     if calls > 900:
         print('no more calls!')
@@ -31,11 +45,10 @@ def get_weather_at_loc(pk):
     else:
         calls += 1
 
-    link = 'https://api.darksky.net/forecast/' + pk + '/' + str(get_loc_by_ip()[0]) + ',' + str(get_loc_by_ip()[1]) + '?units=si'
+    link = 'https://api.darksky.net/forecast/' + pk + '/' + lat + ',' + lon + '?units=si'
     resp = requests.get(link).json()
 
     return resp
-
 
 
 
@@ -58,7 +71,7 @@ def get_weather_at_loc(pk):
 from pygal.style import Style
 
 
-weather = get_weather_at_loc(key)
+weather = get_weather_at_loc(key, 'ip')
 
 
 
