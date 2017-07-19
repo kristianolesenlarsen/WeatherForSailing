@@ -24,6 +24,23 @@
   box-sizing: border-box;
 }
 
+.left {
+  display: table;
+}
+
+img {
+  vertical-align: middle;
+  display: table-cell;
+  width: 400px;
+  height: 400px;
+}
+span {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+
+
 body {
   padding: 0;
   margin: 0;
