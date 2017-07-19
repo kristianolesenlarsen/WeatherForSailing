@@ -12,16 +12,12 @@ layout: default
 </script>'
 </div>
 
-## test2
-
-<object data="svg/rain.svg" type="image/svg+xml" id="mySVG"></object>
-
-<img src="svg/rain.svg" />
-
-## Risk of rain
+## risk of rain
 <div class="lr">
-  <span class = "left"> <img src="svg/rain.svg" /> </span>
-  <span class = "right"> 8-day forecast for the risk of rain or other precipation and the cloud cover fraction </span>
+<div class="left">
+<object data="svg/rain.svg" type="image/svg+xml" id="mySVG"></object>
+</div>
+  <div class = "right"> 8-day forecast for the risk of rain or other precipation and the cloud cover fraction </div>
 </div>
 
 
