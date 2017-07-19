@@ -20,22 +20,19 @@ layout: default
   <div class = "right"> 8-day forecast for the risk of rain or other precipation and the cloud cover fraction </div>
 
 
-## testing
-
-<object data="svg/rain.svg" type="image/svg+xml"></object>
 
 ## Current temperature
-<div class="lr">
+
   <span class = "left"> Gauges the current temperature </span>
-  <span class = "right"><object data="svg/temp_now.svg" type="image/svg+xml"></object></span>
-</div>
+  <div class = "right"><object data="svg/temp_now.svg" type="image/svg+xml"></object></div>
+
 
 
 # Temperature for the next 48 hours
-<div class="lr">
-  <span class = "left"> <img src="svg/temp_overday.svg" /> </span>
+
+  <div class = "left"> <object data="svg/temp_overday.svg" type="image/svg+xml"> </div>
   <span class = "right"> Temperatures for the comming 48 hours </span>
-</div>
+
 
 
 ## ... and for the next 8 days
