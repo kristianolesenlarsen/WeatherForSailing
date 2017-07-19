@@ -28,10 +28,15 @@ layout: default
   <span class = "right"><img src="svg/temp_overdays.svg" /></span>
 </div>
 
-# Temperature for the next 48 hours
+# Wind bearing
 <div class="lr">
-  <span class = "left"> <img src="svg/temp_overday.svg" /> </span>
-  <span class = "right"> Temperatures for the comming 48 hours </span>
+  <span class = "left"> <img src="svg/windbearing_line.svg" /> </span>
+  <span class = "right"> Wind-bearing for the comming 48 hours </span>
+</div>
+
+<div class="lr">
+  <span class = "left"> <img src="svg/windbearing_radar.svg" /> </span>
+  <span class = "right"> Radar format </span>
 </div>
 
 
