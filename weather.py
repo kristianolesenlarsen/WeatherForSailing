@@ -69,8 +69,6 @@ def get_weather_at_loc(pk, method = 'ip'):
 #       weater: output from get_weather_at_loc
 
 from pygal.style import Style
-
-
 weather = get_weather_at_loc(key, 'ip')
 
 
@@ -193,3 +191,88 @@ def show_temperature(weather, name):
     return gauge_chart.render_to_file('./svg/' + name + '.svg')
 
 show_temperature(weather, 'temp_now')
+
+
+
+
+
+
+
+
+
+### PLOTLY VISUALIZATIONS
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+import plotly
+import plotly.plotly as py
+import plotly.graph_objs as go
+import numpy as np
+
+
+def plotly_winddir(weather):
+    d = {'time': [], 'winddir': [], 'windspeed': []}
+    for i in range(0,len(weather['hourly']['data'])):
+        time = int(datetime.datetime.fromtimestamp(weather['hourly']['data'][i]['time']).strftime('%H'))
+        d['time'].append(time)
+        d['winddir'].append(weather['hourly']['data'][i]['windBearing'])
+        d['windspeed'].append(weather['hourly']['data'][i]['windSpeed'])
+    print(d)
+
+    trace1 = go.Scatter(
+        r= d['windspeed'],
+        t=d['winddir'],
+        mode='lines',
+        name='Wind direction',
+        marker = dict(
+        color = 'none',
+        line = dict(
+        color = '#E95355',
+        width = 2
+        )
+        )
+    )
+    trace2 = go.Scatter(
+    r=np.random.uniform(3,8,size=2),
+    t=np.random.uniform(-14,-76,size=2),
+    mode='markers',
+    name='Trial 2',
+    marker=dict(
+        color='rgb(217,95,2)',
+        size=110,
+        opacity=0.7
+    )
+)
+
+    data = [trace1, trace2]
+    layout = go.Layout(
+        title='Wind direction and -speed',
+
+        showlegend = False,
+        font=dict(
+            size=16
+        ),
+        legend=dict(
+            font=dict(
+                size=16
+            )
+        ),
+        radialaxis=dict(
+            ticksuffix='m/s'
+        ),
+        orientation=-90
+    )
+
+
+    fig = go.Figure(data=data, layout=layout)
+    return plotly.offline.plot(fig)
+
+
+plotly_winddir(weather)
