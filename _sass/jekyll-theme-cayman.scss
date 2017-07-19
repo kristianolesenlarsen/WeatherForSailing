@@ -24,30 +24,38 @@
   box-sizing: border-box;
 }
 
-.lr {
+div.lr {
   display: table;
 }
 
-img {
-  vertical-align: middle;
-  display: table-cell;
-  width: 600px;
-  height: 600px;
+//img {
+//  vertical-align: middle;
+//  display: table-cell;
+//  width: 600px;
+//  height: 600px;
+//}
+
+div.plotly_graph_div{
+  width: 80%;
+  margin: 0 auto;
 }
 
-.left {
+div.left {
   vertical-align: middle;
   horizontal-align: left;
   display: table-cell;
 }
 
-.right {
+div.right {
   vertical-align: middle;
   horizontal-align: right;
   display: table-cell;
 }
 
-
+div.center {
+  width: 80%;
+  margin: 0 auto;
+}
 
 body {
   padding: 0;
