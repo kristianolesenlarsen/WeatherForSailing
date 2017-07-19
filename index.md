@@ -13,18 +13,21 @@ layout: default
 </div>
 
 ## risk of rain
-<div class="lr">
+
 <div class="left">
-<object data="svg/rain.svg" type="image/svg+xml" id="mySVG"></object>
+<object data="svg/rain.svg" type="image/svg+xml"></object>
 </div>
   <div class = "right"> 8-day forecast for the risk of rain or other precipation and the cloud cover fraction </div>
-</div>
 
+
+## testing
+
+<object data="svg/rain.svg" type="image/svg+xml"></object>
 
 ## Current temperature
 <div class="lr">
   <span class = "left"> Gauges the current temperature </span>
-  <span class = "right"><img src="svg/temp_now.svg" /></span>
+  <span class = "right"><object data="svg/temp_now.svg" type="image/svg+xml"></object></span>
 </div>
 
 
