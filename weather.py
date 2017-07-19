@@ -153,7 +153,7 @@ def show_winddir_overday(weather, name1, name2):
     line_chart.x_labels = map(str, d['time'])
     line_chart.add('Wind direction', d['winddir'])
 
-    radar_chart = pygal.Radar()
+    radar_chart = pygal.Radar(style = custom_style)
     radar_chart.title = 'Daily Wind bearing'
     radar_chart.x_labels = map(str, d['time'])
     radar_chart.add('Wind direction', d['winddir'])
@@ -224,11 +224,10 @@ def plotly_winddir(weather):
         d['time'].append(time)
         d['winddir'].append(weather['hourly']['data'][i]['windBearing'])
         d['windspeed'].append(weather['hourly']['data'][i]['windSpeed'])
-    print(d)
 
     trace1 = go.Scatter(
-        r= d['windspeed'],
-        t=d['winddir'],
+        r = d['windspeed'],
+        t = d['winddir'],
         mode='lines',
         name='Wind direction',
         marker = dict(
@@ -239,19 +238,22 @@ def plotly_winddir(weather):
         )
         )
     )
-    trace2 = go.Scatter(
-    r=np.random.uniform(3,8,size=2),
-    t=np.random.uniform(-14,-76,size=2),
-    mode='markers',
-    name='Trial 2',
-    marker=dict(
-        color='rgb(217,95,2)',
-        size=110,
-        opacity=0.7
-    )
-)
 
-    data = [trace1, trace2]
+    trace2 = go.Scatter(
+        r= [d['windspeed'][0], d['windspeed'][0],d['windspeed'][0],d['windspeed'][0],d['windspeed'][0]],
+        t= [d['winddir'][0],   d['winddir'][0],d['winddir'][0],d['winddir'][0],d['winddir'][0]],
+        mode='markers',
+        name='time=now',
+        marker = dict(
+        color = 'none',
+        line = dict(
+        color = '#E95355',
+        width = 2
+        )
+        )
+    )
+
+    data = [trace1,trace2]
     layout = go.Layout(
         title='Wind direction and -speed',
 
@@ -272,7 +274,7 @@ def plotly_winddir(weather):
 
 
     fig = go.Figure(data=data, layout=layout)
-    return plotly.offline.plot(fig)
+    return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
 
 
 plotly_winddir(weather)
