@@ -85,6 +85,11 @@ custom_style = Style(
   colors=('#E853A0', '#E8537A', '#E95355', '#E87653', '#E89B53'))
 
 
+#c6138e
+#f45fb4
+#b1e4fa
+#18a7ed
+#005570 
 
 
 def show_windspeed(weather, name):
@@ -230,6 +235,7 @@ def plotly_winddir(weather):
         t = d['winddir'],
         mode='lines',
         name='Wind direction',
+        text = d['time'],
         marker = dict(
         color = 'none',
         line = dict(
