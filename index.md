@@ -6,8 +6,24 @@ layout: default
 <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 
 <div class="center">
-<link rel="import" href="compass.html">
+<iframe src="compass.html" seamless></iframe>
 </div>
+
+## Some plotly testing2
+<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+
+<div class="center">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+    $(function(){
+      $("#includedContent").load("compass.html");
+    });
+</script>
+<div id="includedContent"></div>
+
+</div>
+
+
 
 ## risk of rain
 
