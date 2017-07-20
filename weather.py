@@ -209,12 +209,6 @@ show_temperature(weather, 'temp_now')
 
 
 
-
-
-
-
-
-
 ### PLOTLY VISUALIZATIONS
 #
 #
@@ -291,12 +285,13 @@ def plotly_winddir(weather):
 
 
     fig = go.Figure(data=data, layout=layout)
-    plotly.offline.plot(fig)
+#    plotly.offline.plot(fig)   #activate to get local output as well
     return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
 
+def webready_plotly_winddir(weather):
+    with open('compass.js','w') as f:
+        f.write("document.write('")
+        f.write(plotly_winddir(weather))
+        f.write("')")
 
-with open('compass.js','w') as f:
-    f.write('<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>')
-    f.write("document.write('")
-    f.write(plotly_winddir(weather))
-    f.write("')")
+webready_plotly_winddir(weather)

@@ -2,7 +2,12 @@
 layout: default
 ---
 
-## Some plotly testing
+# Weather summaries
+** Today: ** <script src="dailysummary.js"></script>
+** This week: ** <script src="weeklysummary.js"></script>
+
+
+## 48 hour wind direction prognosis
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 

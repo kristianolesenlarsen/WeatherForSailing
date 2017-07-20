@@ -1,0 +1,1 @@
+document.write('Light rain today through Tuesday, with temperatures falling to 19°C on Sunday.')
