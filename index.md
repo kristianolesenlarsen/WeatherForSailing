@@ -3,7 +3,7 @@ layout: default
 ---
 
 ## Some plotly testing
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 
 <div class="center">
 <link rel="import" href="compass.html">
