@@ -17,7 +17,7 @@ layout: default
 </div>
 
 ## Wind field
-<div class = "left"> <img src="map.png"></img> </div>
+<div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
 
 ## Current temperature
