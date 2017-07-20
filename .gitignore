@@ -19,11 +19,12 @@ $RECYCLE.BIN/
 
 
 #images
-*.PNG
 *.jpg
 
 #project specific
 __pycache__/*
+*.csv
+
 # =========================
 # Operating System Files
 # =========================

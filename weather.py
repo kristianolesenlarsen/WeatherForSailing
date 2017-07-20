@@ -4,7 +4,8 @@ import pygal
 import datetime
 from math import *
 import io
-
+import numpy as np
+import pandas as pd
 
 key = '5ec23cf02b8ef50a23c22f504bd7dc00'
 calls = 0
@@ -51,6 +52,49 @@ def get_weather_at_loc(pk, method = 'ip'):
     resp = requests.get(link).json()
 
     return resp
+
+
+
+
+
+def get_weather_at_latlon(lat, lon, pk):
+    link = 'https://api.darksky.net/forecast/' + pk + '/' + str(lat) + ',' + str(lon) + '?units=si'
+    resp = requests.get(link).json()
+
+    return resp
+
+
+# extend: measures grid size in lat,lon deviations from current position
+#
+#
+
+def get_weather_around_loc(extend, incr):
+    pos = get_loc_by_ip()
+    lat0 = pos[0]
+    lon0 = pos[1]
+
+    v = get_weather_at_latlon(lat0,lon0,key)['hourly']['data'][0]
+
+    grid = {'lat': [lat0], 'lon':[lon0], 'speed': [v['windSpeed']], 'direction': [v['windBearing']], 'temp': [v['temperature']]}
+
+    for i in np.linspace(lat0-extend, lat0+extend, incr):
+        for j in np.linspace(lon0 - extend, lon0 + extend, incr):
+            grid['lat'].append(i)
+            grid['lon'].append(j)
+
+            w = get_weather_at_latlon(i, j, key)['hourly']['data'][0]
+
+            grid['speed'].append(w['windSpeed'])
+            grid['direction'].append(w['windBearing'])
+            grid['temp'].append(w['temperature'])
+
+    return grid
+
+
+#generate grid and save to dataframe
+grid = get_weather_around_loc(1,10)
+df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
+
 
 
 
@@ -206,7 +250,6 @@ def show_temperature(weather, name):
 import plotly
 import plotly.plotly as py
 import plotly.graph_objs as go
-import numpy as np
 
 
 def plotly_winddir(weather):

@@ -16,15 +16,9 @@ layout: default
 <script src="js/compass.js"></script>
 </div>
 
-## risk of rain
-
-<div class="left">
-<object data="svg/rain.svg" type="image/svg+xml"></object>
-</div>
-  <div class = "right"> 8-day forecast for the risk of rain (and other precipation), as well as cloud coverage. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something.
-  </div>
-
-
+## Wind field
+<div class = "left"> <img src="map.png"></img> </div>
+<div class = "right"> Current wind directions around vessel </div>
 
 ## Current temperature
 
@@ -33,6 +27,14 @@ layout: default
   <object data="svg/temp_now.svg" type="image/svg+xml"></object>
   </div>
 
+
+## risk of rain
+
+  <div class="left">
+  <object data="svg/rain.svg" type="image/svg+xml"></object>
+  </div>
+  <div class = "right"> 8-day forecast for the risk of rain (and other precipation), as well as cloud coverage. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something.
+  </div>
 
 
 ## Temperature for the next 48 hours
