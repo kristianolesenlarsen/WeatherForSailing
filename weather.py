@@ -3,6 +3,8 @@ import json
 import pygal
 import datetime
 from math import *
+import io
+
 
 key = '5ec23cf02b8ef50a23c22f504bd7dc00'
 calls = 0
@@ -289,7 +291,7 @@ def plotly_winddir(weather):
     return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
 
 def webready_plotly_winddir(weather):
-    with open('compass.js','w') as f:
+    with open('js/compass.js','w') as f:
         f.write("document.write('")
         f.write(plotly_winddir(weather))
         f.write("')")
@@ -297,14 +299,18 @@ def webready_plotly_winddir(weather):
 webready_plotly_winddir(weather)
 
 
+
 def weathersummaries(weather):
-    with open('dailysummary.js','w') as f:
+    with io.open('js/dailysummary.js','w', encoding = 'utf-8') as f:
         f.write("document.write('")
         f.write(weather['hourly']['summary'])
         f.write("')")
-    with open('weeklysummary.js','w') as f:
+    with io.open('js/weeklysummary.js','w', encoding = 'utf-8') as f:
         f.write("document.write('")
         f.write(weather['daily']['summary'])
         f.write("')")
 
 weathersummaries(weather)
+
+
+weather['daily']['summary']

@@ -3,9 +3,9 @@ layout: default
 ---
 
 # Weather summaries
-**Today:** <script src="dailysummary.js"></script>
+**Today:** <script src="js/dailysummary.js"></script>
 
-**This week:** <script src="weeklysummary.js"></script>
+**This week:** <script src="js/weeklysummary.js"></script>
 
 
 ## 48 hour wind direction prognosis
@@ -13,7 +13,7 @@ layout: default
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <div class="center">
-<script src="compass.js"></script>
+<script src="js/compass.js"></script>
 </div>
 
 ## risk of rain
