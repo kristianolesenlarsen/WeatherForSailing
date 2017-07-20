@@ -12,17 +12,14 @@ layout: default
 ## Some plotly testing2
 <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 
-<div class="center">
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script src="https://www.w3schools.com/lib/w3.js"></script>
+
+<div w3-include-html="compass.html"></div>
+
 <script>
-    $(function(){
-      $("#includedContent").load("compass.html");
-    });
+w3.includeHTML();
 </script>
-<div id="includedContent"></div>
-
-</div>
-
 
 
 ## risk of rain
@@ -44,7 +41,7 @@ layout: default
 
 
 
-# Temperature for the next 48 hours
+## Temperature for the next 48 hours
 
   <div class = "left">
   <object data="svg/temp_overday.svg" type="image/svg+xml"></object>

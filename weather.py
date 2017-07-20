@@ -72,24 +72,34 @@ from pygal.style import Style
 weather = get_weather_at_loc(key, 'ip')
 
 
+c1 = '#E853A0'
+c2 = '#E8537A'
+c3 = '#E95355'
+c4 = '#E87653'
+c5 = '#E89B53'
+
+
+c6 = '#c6138e'
+c7 = '#f45fb4'
+c8 = '#b1e4fa'
+c9 = '#18a7ed'
+c0 = '#005570'
+
 
 custom_style = Style(
   background='transparent',
   plot_background='transparent',
-  foreground='#53E89B',
-  foreground_strong='#53A0E8',
+  foreground=c0,
+  foreground_strong=c9,
   foreground_subtle='#630C0D',
   opacity='.6',
   opacity_hover='.9',
   transition='400ms ease-in',
-  colors=('#E853A0', '#E8537A', '#E95355', '#E87653', '#E89B53'))
+  colors=(c0, c8 , c4, c5, c1))
 
 
-#c6138e
-#f45fb4
-#b1e4fa
-#18a7ed
-#005570 
+
+
 
 
 def show_windspeed(weather, name):
@@ -135,7 +145,7 @@ def show_temp_overdays(weather, name):
         d['temp_max'].append(weather['daily']['data'][i]['temperatureMax'])
         d['temp_min'].append(weather['daily']['data'][i]['temperatureMin'])
 
-    line_chart = pygal.Bar(style=custom_style)
+    line_chart = pygal.Line(style=custom_style)
     line_chart.title = 'Daily temperatures - 8 days'
     line_chart.x_labels = map(str, d['time'])
     line_chart.add('daily max', d['temp_max'])
@@ -166,7 +176,7 @@ def show_winddir_overday(weather, name1, name2):
 
     return [radar_chart.render_to_file('./svg/' + name1 + '.svg'),line_chart.render_to_file('./svg/' + name2 + '.svg')]
 
-show_winddir_overday(weather, 'windbearing_line','windbearing_radar')
+show_winddir_overday(weather, 'windbearing_radar','windbearing_line')
 
 
 def show_rain_overdays(weather, name):
@@ -239,7 +249,7 @@ def plotly_winddir(weather):
         marker = dict(
         color = 'none',
         line = dict(
-        color = '#E95355',
+        color = c0,
         width = 2
         )
         )
@@ -250,10 +260,11 @@ def plotly_winddir(weather):
         t= [d['winddir'][0],   d['winddir'][0],d['winddir'][0],d['winddir'][0],d['winddir'][0]],
         mode='markers',
         name='time=now',
+        text=['t=0'],
         marker = dict(
         color = 'none',
         line = dict(
-        color = '#E95355',
+        color = c0,
         width = 2
         )
         )
@@ -280,7 +291,10 @@ def plotly_winddir(weather):
 
 
     fig = go.Figure(data=data, layout=layout)
+    plotly.offline.plot(fig)
     return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
 
 
-plotly_winddir(weather)
+with open('compass.html','w') as f:
+    f.write('<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>')
+    f.write(plotly_winddir(weather))
