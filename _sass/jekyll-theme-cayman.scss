@@ -36,8 +36,7 @@ div.lr {
 //}
 
 div.plotly_graph_div{
-  width: 80%;
-  margin: 0 auto;
+  display: inline-block;
 }
 
 div.left {
@@ -54,11 +53,13 @@ div.right {
   display: table-cell;
   width: 400px;
   height: 400px;
+  padding: 20px;
 }
 
 div.center {
   width: 80%;
   margin: 0 auto;
+  horizontal-align: center;
 }
 
 body {
