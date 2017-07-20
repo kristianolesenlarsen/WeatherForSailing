@@ -22,6 +22,8 @@ $RECYCLE.BIN/
 *.PNG
 *.jpg
 
+#project specific
+__pycache__/*
 # =========================
 # Operating System Files
 # =========================
