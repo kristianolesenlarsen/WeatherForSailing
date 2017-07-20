@@ -3,6 +3,7 @@ layout: default
 ---
 
 ## Some plotly testing
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 
 <div class="center">
@@ -12,15 +13,7 @@ layout: default
 ## Some plotly testing2
 <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
 
-
-<script src="https://www.w3schools.com/lib/w3.js"></script>
-
-<div w3-include-html="compass.html"></div>
-
-<script>
-w3.includeHTML();
-</script>
-
+<script src="compass.js"></script>
 
 ## risk of rain
 

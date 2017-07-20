@@ -295,6 +295,8 @@ def plotly_winddir(weather):
     return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
 
 
-with open('compass.html','w') as f:
+with open('compass.js','w') as f:
     f.write('<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>')
+    f.write("document.write('")
     f.write(plotly_winddir(weather))
+    f.write("')")
