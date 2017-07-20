@@ -295,3 +295,16 @@ def webready_plotly_winddir(weather):
         f.write("')")
 
 webready_plotly_winddir(weather)
+
+
+def weathersummaries(weather):
+    with open('dailysummary.js','w') as f:
+        f.write("document.write('")
+        f.write(weather['hourly']['summary'])
+        f.write("')")
+    with open('weeklysummary.js','w') as f:
+        f.write("document.write('")
+        f.write(weather['daily']['summary'])
+        f.write("')")
+
+weathersummaries(weather)
