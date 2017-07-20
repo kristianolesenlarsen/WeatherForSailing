@@ -31,28 +31,28 @@ layout: default
 # Temperature for the next 48 hours
 
   <div class = "left">
-  <object data="svg/temp_overday.svg" type="image/svg+xml">
+  <object data="svg/temp_overday.svg" type="image/svg+xml"></object>
   </div>
   <div class = "right"> Temperatures for the comming 48 hours </div>
 
 
 
 ## ... and for the next 8 days
-  <div class = "left"> and over the nex 8 days </div>
+  <div class = "left"> and over the next 8 days </div>
   <div class = "right">
-  <object data="svg/temp_overdays.svg" type="image/svg+xml">
+  <object data="svg/temp_overdays.svg" type="image/svg+xml"></object>
   </div>
 
 # Wind bearing
 
   <div class = "left">
-  <object data="svg/windbearing_line.svg" type="image/svg+xml">
+  <object data="svg/windbearing_line.svg" type="image/svg+xml"></object>
   </div>
   <div class = "right"> Wind-bearing for the comming 48 hours </div>
 
 
   <div class = "left">
-  <object data="svg/windbearing_radar.svg" type="image/svg+xml">
+  <object data="svg/windbearing_radar.svg" type="image/svg+xml"></object>
   </div>
   <div class = "right"> Radar format
   </div>
@@ -62,5 +62,5 @@ layout: default
 
   <div class = "left"> Shows the average wind speed alone and as a fraction of the highest recorded gusts </div>
   <div class = "right">
-  <object data="svg/windspeed.svg" type="image/svg+xml">
+  <object data="svg/windspeed.svg" type="image/svg+xml"></object>
   </div>
