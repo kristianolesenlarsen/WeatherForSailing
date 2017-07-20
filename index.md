@@ -6,7 +6,7 @@ layout: default
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <div class="center">
-<iframe src="compass.html"></iframe>
+<link rel="import" href="compass.html">
 </div>
 
 ## risk of rain
