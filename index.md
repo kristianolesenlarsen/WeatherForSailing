@@ -72,3 +72,8 @@ layout: default
   <div class = "right">
   <object data="svg/windspeed.svg" type="image/svg+xml"></object>
   </div>
+
+
+## About
+
+Weather data supplied by [darksky.net](https://darksky.net/).
