@@ -54,7 +54,7 @@ def get_weather_at_loc(pk, method = 'ip'):
 
 
 
-### PYGAL VISUALIZATIONS
+### PYGAL VISUALIZATIONS #######################################################
 #   show_windspeed(weather): plots average and max windspeed
 #       weather: output from get_weather_at_loc
 #
@@ -71,7 +71,6 @@ def get_weather_at_loc(pk, method = 'ip'):
 #       weater: output from get_weather_at_loc
 
 from pygal.style import Style
-weather = get_weather_at_loc(key, 'ip')
 
 
 c1 = '#E853A0'
@@ -102,8 +101,6 @@ custom_style = Style(
 
 
 
-
-
 def show_windspeed(weather, name):
     gauge = pygal.SolidGauge(
         half_pie=True, inner_radius= 0.7,
@@ -118,8 +115,6 @@ def show_windspeed(weather, name):
     gauge.add('Windspeed', [{'value': weather['currently']['windSpeed'], 'max_value':15}],
               formatter=formatter)
     return gauge.render_to_file('./svg/' + name + '.svg')
-
-show_windspeed(weather, 'windspeed')
 
 
 def show_temp_overday(weather, name):
@@ -136,8 +131,6 @@ def show_temp_overday(weather, name):
     line_chart.add('temperature', d['temp'])
     return line_chart.render_to_file('./svg/' + name + '.svg')
 
-show_temp_overday(weather, 'temp_overday')
-
 
 def show_temp_overdays(weather, name):
     d = {'time': [], 'temp_max': [], 'temp_min': []}
@@ -153,8 +146,6 @@ def show_temp_overdays(weather, name):
     line_chart.add('daily max', d['temp_max'])
     line_chart.add('daily min', d['temp_min'])
     return line_chart.render_to_file('./svg/' + name + '.svg')
-
-show_temp_overdays(weather, 'temp_overdays')
 
 
 def show_winddir_overday(weather, name1, name2):
@@ -178,7 +169,6 @@ def show_winddir_overday(weather, name1, name2):
 
     return [radar_chart.render_to_file('./svg/' + name1 + '.svg'),line_chart.render_to_file('./svg/' + name2 + '.svg')]
 
-show_winddir_overday(weather, 'windbearing_radar','windbearing_line')
 
 
 def show_rain_overdays(weather, name):
@@ -196,9 +186,6 @@ def show_rain_overdays(weather, name):
     line_chart.add('Cloud cover', d['clouds'])
     return line_chart.render_to_file('./svg/' + name + '.svg')
 
-show_rain_overdays(weather, 'rain')
-
-
 
 def show_temperature(weather, name):
     gauge_chart = pygal.Gauge(human_readable=True, style = custom_style)
@@ -207,20 +194,14 @@ def show_temperature(weather, name):
     gauge_chart.add('temperature', weather['currently']['temperature'])
     return gauge_chart.render_to_file('./svg/' + name + '.svg')
 
-show_temperature(weather, 'temp_now')
 
 
 
-### PLOTLY VISUALIZATIONS
+### PLOTLY VISUALIZATIONS ######################################################
 #
 #
 #
-#
-#
-#
-#
-#
-#
+
 
 import plotly
 import plotly.plotly as py
@@ -296,9 +277,11 @@ def webready_plotly_winddir(weather):
         f.write(plotly_winddir(weather))
         f.write("')")
 
-webready_plotly_winddir(weather)
 
-
+### WEATHER SUMMARIES ##########################################################
+#
+#
+#
 
 def weathersummaries(weather):
     with io.open('js/dailysummary.js','w', encoding = 'utf-8') as f:
@@ -309,8 +292,3 @@ def weathersummaries(weather):
         f.write("document.write('")
         f.write(weather['daily']['summary'])
         f.write("')")
-
-weathersummaries(weather)
-
-
-weather['daily']['summary']
