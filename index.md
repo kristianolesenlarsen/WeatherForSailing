@@ -18,15 +18,16 @@ layout: default
 <script>
 window.sr = ScrollReveal();
 sr.reveal('.fader');
-sr.reveal('.left');
-sr.reveal('.right');
 </script>
 
-<div class="fader">
+
 ## Wind field
 <div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
-</div>
+
+<div class="fader"> something fadeing  </div>
+
+
 ## Current temperature
 
   <div class = "left"> Gauges the current temperature. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. </div>
@@ -85,4 +86,4 @@ sr.reveal('.right');
 
 ## About
 
-Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/dailysummary.js"></script>
+Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/time.js"></script>
