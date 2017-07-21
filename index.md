@@ -86,6 +86,6 @@ layout: default
 Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/time.js"></script>
 
 <script>
-window.sr = ScrollReveal({reset:true});
+window.sr = ScrollReveal({reset:true, duration:1000});
 sr.reveal('.fader');
 </script>
