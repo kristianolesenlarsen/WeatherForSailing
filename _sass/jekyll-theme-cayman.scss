@@ -24,20 +24,22 @@
   box-sizing: border-box;
 }
 
+#container
+{
+    height:500px;
+}
+
+#container DIV
+{
+    margin:50px;
+    padding:50px;
+    background-color:pink;
+}
+
 .hideme
 {
     opacity:0;
-    margin: 100px;
-    padding:100px;
-    background-color: lightgreen;
 }
-
-div.block {
-  margin: 100px;
-  padding:100px;
-  background-color: lightgreen;
-}
-
 //img {
 //  vertical-align: middle;
 //  display: table-cell;
