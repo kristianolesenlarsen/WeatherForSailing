@@ -15,12 +15,13 @@ layout: default
 <script src="js/compass.js"></script>
 </div>
 
+<div class="fader">
 
 ## Wind field
 <div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
 
-<div class="fader"> something fadeing  </div>
+</div>
 
 
 ## Current temperature
