@@ -30,12 +30,12 @@ $(this).animate({'opacity':'1'},500);
 <script src="js/compass.js"></script>
 </div>
 
-<div id="container">
-<div class="hideme">
 ## Wind field
 <div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
-</div>
+
+<div id="container">
+<div class="hideme">fade</div>
 </div>
 ## Current temperature
 
