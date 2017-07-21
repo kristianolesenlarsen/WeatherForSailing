@@ -15,11 +15,6 @@ layout: default
 <script src="js/compass.js"></script>
 </div>
 
-<script>
-window.sr = ScrollReveal();
-sr.reveal('.fader');
-</script>
-
 
 ## Wind field
 <div class = "left"> <img src="map.png"> </div>
@@ -87,3 +82,8 @@ sr.reveal('.fader');
 ## About
 
 Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/time.js"></script>
+
+<script>
+window.sr = ScrollReveal({reset:true});
+sr.reveal('.fader');
+</script>

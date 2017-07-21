@@ -21,7 +21,7 @@ weather.weathersummaries(w)
 #generate grid and save to dataframe
 grid = get_weather_around_loc(4,8,key, True, False)
 
-time = []
+time = []   
 for i in grid['time']:
     time.append(datetime.datetime.fromtimestamp(i).strftime('%d-%H'))
 
