@@ -24,6 +24,7 @@ $RECYCLE.BIN/
 #project specific
 __pycache__/*
 *.csv
+*.gif
 
 # =========================
 # Operating System Files

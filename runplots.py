@@ -16,3 +16,7 @@ webready_plotly_winddir(weather)
 
 # weather summaries
 weathersummaries(weather)
+
+# something something ... run the R script
+#import subprocess
+#subprocess.check_call(['Rscript', 'vectorfield.R'], shell=False)

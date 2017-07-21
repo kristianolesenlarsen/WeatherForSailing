@@ -66,35 +66,91 @@ def get_weather_at_latlon(lat, lon, pk):
 
 # extend: measures grid size in lat,lon deviations from current position
 #
-#
+# TODO: more sophisticated grid generation
 
-def get_weather_around_loc(extend, incr):
+def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
     pos = get_loc_by_ip()
     lat0 = pos[0]
     lon0 = pos[1]
 
-    v = get_weather_at_latlon(lat0,lon0,key)['hourly']['data'][0]
+    if hourly:
+        subset = 'hourly'
+        tempfix = 'temperature'
 
-    grid = {'lat': [lat0], 'lon':[lon0], 'speed': [v['windSpeed']], 'direction': [v['windBearing']], 'temp': [v['temperature']]}
+    if not hourly:
+        subset = 'daily'
+        tempfix = 'temperatureMax'
 
-    for i in np.linspace(lat0-extend, lat0+extend, incr):
-        for j in np.linspace(lon0 - extend, lon0 + extend, incr):
-            grid['lat'].append(i)
-            grid['lon'].append(j)
+    if not temporal:
+        v = get_weather_at_latlon(lat0,lon0,key)[subset]['data'][0]
 
-            w = get_weather_at_latlon(i, j, key)['hourly']['data'][0]
+        grid = {'lat': [lat0],
+                'lon':[lon0],
+                'speed': [v['windSpeed']],
+                'direction': [v['windBearing']],
+                'temp': [v[tempfix]]}
 
-            grid['speed'].append(w['windSpeed'])
-            grid['direction'].append(w['windBearing'])
-            grid['temp'].append(w['temperature'])
+        for i in np.linspace(lat0-extend, lat0+extend, incr):
+            for j in np.linspace(lon0 - extend, lon0 + extend, incr):
 
-    return grid
+                w = get_weather_at_latlon(i, j, key)[subset]['data'][0]
+
+                grid['lat'].append(i)
+                grid['lon'].append(j)
+
+                grid['speed'].append(w['windSpeed'])
+                grid['direction'].append(w['windBearing'])
+                grid['temp'].append(w[tempfix])
+
+        return grid
+
+    if temporal:
+        v = get_weather_at_latlon(lat0,lon0,key)[subset]['data']
+
+        grid = {'time': [],
+         'lat': [],
+         'lon':[],
+         'speed': [],
+         'direction': [],
+         'temp': []}
+
+        for k in range(0,len(v)):
+            grid['lat'].append(lat0)
+            grid['lon'].append(lon0)
+            grid['time'].append(v[k]['time'])
+
+            grid['speed'].append(v[k]['windSpeed'])
+            grid['direction'].append(v[k]['windBearing'])
+            grid['temp'].append(v[k][tempfix])
+
+        for i in np.linspace(lat0-extend, lat0+extend, incr):
+            for j in np.linspace(lon0 - extend, lon0 + extend, incr):
+
+                w = get_weather_at_latlon(i, j, key)[subset]['data']
+
+                for t in range(0,len(w)):
+                    grid['lat'].append(i)
+                    grid['lon'].append(j)
+                    grid['time'].append(w[t]['time'])
+
+                    grid['speed'].append(w[t]['windSpeed'])
+                    grid['direction'].append(w[t]['windBearing'])
+                    grid['temp'].append(w[t][tempfix])
+
+        return grid
+
+    return None
 
 
 #generate grid and save to dataframe
-grid = get_weather_around_loc(1,10)
-df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
+grid = get_weather_around_loc(4,8,True, False)
 
+time = []
+for i in grid['time']:
+    time.append(datetime.datetime.fromtimestamp(i).strftime('%d-%H'))
+
+grid['time_2'] = time
+df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
 
 
 
