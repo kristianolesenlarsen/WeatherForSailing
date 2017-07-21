@@ -19,7 +19,7 @@ layout: default
 <h2> Wind field </h2>
 
 <div class = "left"> <img src="map.png"> </div>
-<div class = "right"> Current wind directions around vessel </div>
+<div class = "right"> Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final. </div>
 
 </div>
 
