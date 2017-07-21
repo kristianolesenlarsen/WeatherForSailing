@@ -2,40 +2,30 @@
 layout: default
 ---
 
-<script>
-$(document).ready(function() {
-<!--    /* Every time the window is scrolled ... */ -->
-$(window).scroll( function(){  
-<!--    /* Check the location of each desired element */ -->
-$('.hideme').each( function(i){
-var bottom_of_object = $(this).position().top + $(this).outerHeight();
-var bottom_of_window = $(window).scrollTop() + $(window).height();
-<!-- /* If the object is completely visible in the window, fade it it */ -->
-if( bottom_of_window > bottom_of_object ){
-$(this).animate({'opacity':'1'},500);
-}});});});
-</script>
-
-
 # Weather summaries
 **Today:** <script src="js/dailysummary.js"></script>
 
 **This week:** <script src="js/weeklysummary.js"></script>
 
 ## 48 hour wind direction prognosis
-
+<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 <div class="center">
 <script src="js/compass.js"></script>
 </div>
 
+<script>
+window.sr = ScrollReveal();
+sr.reveal('.fader');
+sr.reveal('.left');
+sr.reveal('.right');
+</script>
+
+<div class="fader">
 ## Wind field
 <div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
-
-<div id="container">
-<div class="hideme">fade</div>
 </div>
 ## Current temperature
 
@@ -95,4 +85,4 @@ $(this).animate({'opacity':'1'},500);
 
 ## About
 
-Weather data supplied by [darksky.net](https://darksky.net/).
+Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/dailysummary.js"></script>
