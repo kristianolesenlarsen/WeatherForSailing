@@ -16,21 +16,22 @@ layout: default
 </div>
 
 <div class="fader">
+<h2> Wind field </h2>
 
-## Wind field
 <div class = "left"> <img src="map.png"> </div>
 <div class = "right"> Current wind directions around vessel </div>
 
 </div>
 
 
-## Current temperature
+<div class="fader">
+<h2> Current temperature </h2>
 
   <div class = "left"> Gauges the current temperature. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. </div>
   <div class = "right">
   <object data="svg/temp_now.svg" type="image/svg+xml"></object>
   </div>
-
+</div>
 
 ## risk of rain
 
