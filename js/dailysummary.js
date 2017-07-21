@@ -1,1 +1,1 @@
-document.write('Light rain starting tonight, continuing until tomorrow morning.')
+document.write('Mostly cloudy throughout the day.')

@@ -1,1 +1,1 @@
-document.write('Light rain today through Wednesday, with temperatures falling to 21°C tomorrow.')
+document.write('Light rain throughout the week, with temperatures bottoming out at 20°C on Monday.')

@@ -7,9 +7,6 @@ import io
 import numpy as np
 import pandas as pd
 
-key = '5ec23cf02b8ef50a23c22f504bd7dc00'
-calls = 0
-
 
 def get_loc_by_ip():
     send_url = 'http://freegeoip.net/json'
@@ -41,20 +38,10 @@ def get_weather_at_loc(pk, method = 'ip'):
         lat = str(get_loc_by_ip()[0])
         lon = str(get_loc_by_ip()[1])
 
-    global calls
-    if calls > 900:
-        print('no more calls!')
-        return None
-    else:
-        calls += 1
-
     link = 'https://api.darksky.net/forecast/' + pk + '/' + lat + ',' + lon + '?units=si'
     resp = requests.get(link).json()
 
     return resp
-
-
-
 
 
 def get_weather_at_latlon(lat, lon, pk):
@@ -68,7 +55,7 @@ def get_weather_at_latlon(lat, lon, pk):
 #
 # TODO: more sophisticated grid generation
 
-def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
+def get_weather_around_loc(extend, incr, pk, temporal = False, hourly = False):
     pos = get_loc_by_ip()
     lat0 = pos[0]
     lon0 = pos[1]
@@ -82,7 +69,7 @@ def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
         tempfix = 'temperatureMax'
 
     if not temporal:
-        v = get_weather_at_latlon(lat0,lon0,key)[subset]['data'][0]
+        v = get_weather_at_latlon(lat0,lon0,pk)[subset]['data'][0]
 
         grid = {'lat': [lat0],
                 'lon':[lon0],
@@ -93,7 +80,7 @@ def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
         for i in np.linspace(lat0-extend, lat0+extend, incr):
             for j in np.linspace(lon0 - extend, lon0 + extend, incr):
 
-                w = get_weather_at_latlon(i, j, key)[subset]['data'][0]
+                w = get_weather_at_latlon(i, j, pk)[subset]['data'][0]
 
                 grid['lat'].append(i)
                 grid['lon'].append(j)
@@ -105,7 +92,7 @@ def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
         return grid
 
     if temporal:
-        v = get_weather_at_latlon(lat0,lon0,key)[subset]['data']
+        v = get_weather_at_latlon(lat0,lon0,pk)[subset]['data']
 
         grid = {'time': [],
          'lat': [],
@@ -126,7 +113,7 @@ def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
         for i in np.linspace(lat0-extend, lat0+extend, incr):
             for j in np.linspace(lon0 - extend, lon0 + extend, incr):
 
-                w = get_weather_at_latlon(i, j, key)[subset]['data']
+                w = get_weather_at_latlon(i, j, pk)[subset]['data']
 
                 for t in range(0,len(w)):
                     grid['lat'].append(i)
@@ -140,17 +127,6 @@ def get_weather_around_loc(extend, incr, temporal = False, hourly = False):
         return grid
 
     return None
-
-
-#generate grid and save to dataframe
-grid = get_weather_around_loc(4,8,True, False)
-
-time = []
-for i in grid['time']:
-    time.append(datetime.datetime.fromtimestamp(i).strftime('%d-%H'))
-
-grid['time_2'] = time
-df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
 
 
 
@@ -390,4 +366,8 @@ def weathersummaries(weather):
     with io.open('js/weeklysummary.js','w', encoding = 'utf-8') as f:
         f.write("document.write('")
         f.write(weather['daily']['summary'])
+        f.write("')")
+    with io.open('js/time.js','w', encoding = 'utf-8') as f:
+        f.write("document.write('")
+        f.write( str(datetime.datetime.now()) )
         f.write("')")
