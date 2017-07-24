@@ -17,6 +17,7 @@ layout: default
 
 
 <h2> Weather layers </h2>
+
 <iframe src="plots/bbox.html" id = "leaflet""> Leaflet map </iframe>
 
 Use the menu in the top right corner to toggle layers, or go to the [full screen version](https://kristianuruplarsen.github.io/WeatherForSailing/plots/bbox.html).
