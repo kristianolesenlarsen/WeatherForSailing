@@ -18,7 +18,7 @@ layout: default
 
 <h2> Some title </h2>
 
-<iframe src="plots/bbox.html"> Leaflet map </iframe>
+<iframe src="plots/bbox.html" id = "leaflet"> Leaflet map </iframe>
 
 
 <div class="fader">
