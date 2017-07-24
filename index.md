@@ -15,6 +15,12 @@ layout: default
 <script src="js/compass.js"></script>
 </div>
 
+
+<h2> Some title </h2>
+
+<script src="js/bbox.js"></script>
+
+
 <div class="fader">
 <h2> Wind field </h2>
 

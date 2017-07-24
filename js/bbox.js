@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+document.write('<!DOCTYPE html>
 <head>    
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script>L_PREFER_CANVAS = false; L_NO_TOUCH = false; L_DISABLE_3D = false;</script>
@@ -2187,4 +2187,4 @@
                  autoZIndex: true
                 }).addTo(map_e9b6ee2bda63442881c2e83926db41bd);
         
-</script>
+</script>')
