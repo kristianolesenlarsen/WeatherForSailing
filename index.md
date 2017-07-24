@@ -18,8 +18,9 @@ layout: default
 
 <h2> Some title </h2>
 
+<div class="center">
 <iframe src="plots/bbox.html" id = "leaflet" onload="this.width=screen.width;"> Leaflet map </iframe>
-
+</div>
 
 <div class="fader">
 <h2> Wind field </h2>

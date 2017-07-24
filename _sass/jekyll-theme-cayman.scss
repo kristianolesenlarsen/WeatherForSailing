@@ -36,6 +36,7 @@
   height: 400px;
 }
 
+
 div.plotly_graph_div{
   display: inline-block;
 }
@@ -58,9 +59,8 @@ div.right {
 }
 
 div.center {
-  width: 80%;
-  margin: 0 auto;
-  horizontal-align: center;
+  width: 100%;
+  text-align:center;
 }
 
 body {
