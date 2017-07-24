@@ -102,6 +102,8 @@ class fromOpenAPI():
 
 
 
+
+
 class csvFunctions():
     def appendInCsv(self, json, filename):
         row = []
