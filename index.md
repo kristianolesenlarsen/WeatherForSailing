@@ -18,7 +18,7 @@ layout: default
 
 <h2> Some title </h2>
 
-<script src="js/bbox.js"></script>
+<iframe src="plots/bbox.html"> Leaflet map </iframe>
 
 
 <div class="fader">
