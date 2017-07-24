@@ -1,33 +1,50 @@
 import weather
+import keys
+import plots
 
-key = '5ec23cf02b8ef50a23c22f504bd7dc00'
+#load API key from keyfile
+
 # get current weather
-w = weather.get_weather_at_loc(key, 'ip')
+w = weather.fromDarkskyAPI.get_weather_at_loc(keys.key, 'ip')
 
 # pygal plots
-weather.show_windspeed(w, 'windspeed')
-weather.show_temp_overday(w, 'temp_overday')
-weather.show_temp_overdays(w, 'temp_overdays')
-weather.show_winddir_overday(w, 'windbearing_radar','windbearing_line')
-weather.show_rain_overdays(w, 'rain')
-weather.show_temperature(w, 'temp_now')
+plots.show_windspeed(w, 'windspeed')
+plots.show_temp_overday(w, 'temp_overday')
+plots.show_temp_overdays(w, 'temp_overdays')
+plots.show_winddir_overday(w, 'windbearing_radar','windbearing_line')
+plots.show_rain_overdays(w, 'rain')
+plots.show_temperature(w, 'temp_now')
 
 # plotly plots
-weather.webready_plotly_winddir(w)
+plots.webready_plotly_winddir(w)
 
 # weather summaries
-weather.weathersummaries(w)
+plots.weathersummaries(w)
 
 #generate grid and save to dataframe
-grid = get_weather_around_loc(4,8,key, True, False)
+grid = weather.fromDarkskyAPI.get_weather_around_loc(4,8,keys.key, True, False)
 
-time = []   
+time = []
 for i in grid['time']:
     time.append(datetime.datetime.fromtimestamp(i).strftime('%d-%H'))
 
 grid['time_2'] = time
 df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
 
+
+
+
+#fire up fromOpenAPI
+g = weather.fromOpenAPI(keys.key2)
+
+curcir = g.CurrentWeatherCircle(weather.get_loc_by_ip()[0],weather.get_loc_by_ip()[1], 50)
+bbox = g.CurrentWeatherBbox(8,13,54,58,200,10)
+
+weather.csvFunctions().toCSV(curcir,'./data/curcir.csv', 'circle')
+weather.csvFunctions().toCSV(bbox, './data/bbox.csv','bbox')
+
+#folium plots
+plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
 
 # something something ... run the R script

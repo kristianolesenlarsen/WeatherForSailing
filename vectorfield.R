@@ -36,6 +36,41 @@ p <- ggmap(map) +
 ggsave(filename = 'map.png', p)
 
 
+################################################################################
+###
+###
+
+df = read.csv("./data/test2.csv")
+
+
+lat0 = max(df$lat) - (max(df$lat) - min(df$lat))/2
+lon0 = max(df$lon) - (max(df$lon) - min(df$lon))/2
+
+
+n = ifelse(max(df$lat) - min(df$lat) >3 , ifelse(max(df$lat) - min(df$lat) >6, 5, 6), 7)
+
+
+f = ifelse(max(df$lat) - min(df$lat) >3 , ifelse(max(df$lat) - min(df$lat) >6, 0.1, 0.05), 0.03)
+
+df$dx = df$speed * cos(df$deg)*f
+df$dy = df$speed * sin(df$deg)*f
+
+
+map = get_map(c(lon0, lat0), zoom = n, color = 'bw')
+
+
+p <- ggmap(map) +
+geom_raster(data = df, aes(x = lon, y = lat, fill = temp), interpolate = TRUE, alpha = 0.4) +
+#  geom_point(data = df, aes(x = lon, y = lat)) +
+#  geom_segment(data = df, aes(x = lon, y = lat, xend = lon + dx, yend = lat + dy, color = temp),alpha = 0.5,arrow = arrow(length = unit(0.08,"cm"))) +
+#  geom_point(data = subset(df_static, dummy == 1), aes(x = lon, y = lat), color = "red") +
+scale_fill_gradient(low = 'blue', high = 'red')
+
+p
+
+ggsave(filename = 'temp.png', p)
+
+
 
 ################################################################################
 ###

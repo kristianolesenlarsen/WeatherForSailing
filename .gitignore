@@ -25,9 +25,12 @@ $RECYCLE.BIN/
 __pycache__/*
 *.csv
 *.gif
+*.Rhistory
+*.grb
+csvifyGRIB.R
 
 # key file
-runplots.py
+keys.py
 
 # =========================
 # Operating System Files

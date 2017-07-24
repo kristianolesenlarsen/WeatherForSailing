@@ -1,11 +1,17 @@
+import keys
+
 import requests
 import json
-import pygal
-import datetime
-from math import *
+import csv
+import pandas as pd
+import os
 import io
 import numpy as np
-import pandas as pd
+import time
+
+
+
+
 
 
 def get_loc_by_ip():
@@ -16,358 +22,260 @@ def get_loc_by_ip():
     return [j['latitude'], j['longitude'], j['city'], j['region_name'], j['country_name']]
 
 
-
-
 # def get_loc_by_gps():
 #
 #
 #
 #
 
-def get_weather_at_loc(pk, method = 'ip'):
-    # ensure we dont start using money - later update this to reset calls if a day has passed
-    if method == 'gps':
-        #implement gps location
-        lat = str(get_loc_by_ip()[0])
-        lon = str(get_loc_by_ip()[1])
-        print('gps not yet implemented! defaulting to IP')
-    if method == 'manual':
-        lat = input('latitude: ')
-        lon = input('longitude: ')
-    else:
-        lat = str(get_loc_by_ip()[0])
-        lon = str(get_loc_by_ip()[1])
 
-    link = 'https://api.darksky.net/forecast/' + pk + '/' + lat + ',' + lon + '?units=si'
-    resp = requests.get(link).json()
+class fromOpenAPI():
+    def __init__(self, key):
+        self.pk = key
 
-    return resp
+    def CurrentWeatherBbox(self, left, right, bottom, top, count, zoom):
+        args = map(str,[left, bottom, right, top, zoom])
+        base = 'http://api.openweathermap.org/data/2.5/box/city?bbox='
+        for i in args:
+            base = base + i + ','
+        base = base[:-1] + '&units=metric' + '&cnt=' + str(count) + '&cluster=y' + '&appid=' + self.pk
+        return requests.get(base).json()
+
+    def CurrentWeatherCircle(self, lat,lon, count):
+        #lat, lon = map(str, [lat,lon])     #why is this not working?
+        base = 'http://api.openweathermap.org/data/2.5/find?'
+        base = base + 'lat=' + str(lat) + '&lon=' + str(lon) + '&cnt=' + str(count) + '&units=metric'+ '&cluster=y' + '&appid=' + self.pk
+        return requests.get(base).json()
+
+    def WeatherByLatLon(self, lat, lon, Type = 'current'):
+        lat, lon = map(str, [lat,lon])
+        base = 'http://api.openweathermap.org/data/2.5/'
+        if Type == 'current':
+            base = base + 'weather?'
+        elif Type == 'forecast':
+            base = base + 'forecast?'
+        else:
+            print("choose Type as 'current'(default) or 'forecast'")
+        base = base + 'lat=' + lat + '&lon=' + lon + '&units=metric' + '&appid=' + self.pk
+        return requests.get(base).json()
+
+    def WeatherByID(self, ID, Type = 'current'):
+        ID = str(ID)
+        base = 'http://api.openweathermap.org/data/2.5/'
+        if Type == 'current':
+            base = base + 'weather?id='
+        elif Type == 'forecast':
+            base = base + 'forecast?id='
+        else:
+            print("choose Type as 'current'(default) or 'forecast'")
+        base = base + ID + '&units=metric' + '&appid=' + self.pk
+        return requests.get(base).json()
+
+    # lat: north/south
+    # lon: west/east
+
+    def WeatherGrid(self, left, right, bottom, top, splits, filename):
+        latlon = []
+        lr = np.linspace(left, right,round(splits))
+        bt = np.linspace(bottom, top, round(splits))
+
+        for lat in bt:
+            for lon in lr:
+                latlon.append([lat,lon])
+        print('estimated download duration:', len(latlon)/50, 'minutes')
+
+        open(filename,'w').close()      #wipe file of old data
+
+        for i in latlon:
+            json = self.WeatherByLatLon(i[0],i[1])
+            csvf = csvFunctions().appendInCsv(json = json, filename = filename)
+            row = csvf[0]
+            time.sleep(1)
+
+        # add a header to the csv file
+        df = pd.read_csv(filename)
+        df.columns = csvf[1]
+        df.to_csv(filename, index = False)
+
+        print("finished downloading")
+        return None
 
 
-def get_weather_at_latlon(lat, lon, pk):
-    link = 'https://api.darksky.net/forecast/' + pk + '/' + str(lat) + ',' + str(lon) + '?units=si'
-    resp = requests.get(link).json()
 
-    return resp
+class csvFunctions():
+    def appendInCsv(self, json, filename):
+        row = []
+        unfolded = self.unfoldJSON(json, 'now')
+
+        for i in unfolded:
+            row.append(unfolded[i][0])
+
+        with io.open(filename,'a', encoding = 'utf-8') as f:
+            writer = csv.writer(f, lineterminator = '\n')
+            writer.writerow(row)
+
+        return [row, unfolded.keys()]
+
+    def unfoldJSON(self, json, source):
+        inRaw = ['dt', 'id', 'name']
+        inMain = ['humidity', 'pressure', 'temp']
+        inWind = ['deg','speed']
 
 
-# extend: measures grid size in lat,lon deviations from current position
-#
-# TODO: more sophisticated grid generation
+        dat = {
+        'clouds': [],
+        'dt': [],
+        'id': [],
+        'humidity': [],
+        'pressure': [],
+        'temp': [],
+        'name': [],
+        'deg': [],
+        'speed': []
+        }
 
-def get_weather_around_loc(extend, incr, pk, temporal = False, hourly = False):
-    pos = get_loc_by_ip()
-    lat0 = pos[0]
-    lon0 = pos[1]
+        if source == 'circle':
+            strip = json['list']
+            inRaw.append('rain')
+            dat['rain'] = []
+            dat['icon'] = []
+            dat['lat'] = []
+            dat['lon'] = []
+            inCoords = ['lat', 'lon']
+            what = 'all'
+        if source == 'now':
+            strip = [json]
+            dat['lat'] = []
+            dat['lon'] = []
+            inCoords = ['lat', 'lon']
+            what = 'all'
+        if source == 'bbox':
+            strip = json['list']
+            dat['Lat'] = []
+            dat['Lon'] = []
+            dat['icon'] = []
+            inCoords = ['Lat', 'Lon']
+            what = 'today'
 
-    if hourly:
-        subset = 'hourly'
-        tempfix = 'temperature'
+        for i in range(0,len(strip)):
+            for raw in inRaw:
+                dat[raw].append(strip[i][raw])
+            for main in inMain:
+                dat[main].append(strip[i]['main'][main])
+            for wind in inWind:
+                dat[wind].append(strip[i]['wind'][wind])
+            for coords in inCoords:
+                dat[coords].append(strip[i]['coord'][coords])
+            dat['clouds'].append(strip[i]['clouds'][what])
+            dat['icon'].append(strip[i]['weather'][0]['icon'])
+        return dat
 
-    if not hourly:
-        subset = 'daily'
-        tempfix = 'temperatureMax'
+    def toCSV(self, json, filename, source = 'circle'):
+        dat = self.unfoldJSON(json, source)
+        pd.DataFrame.from_dict(dat).to_csv(filename, index = False)
 
-    if not temporal:
-        v = get_weather_at_latlon(lat0,lon0,pk)[subset]['data'][0]
+        return dat
 
-        grid = {'lat': [lat0],
-                'lon':[lon0],
-                'speed': [v['windSpeed']],
-                'direction': [v['windBearing']],
-                'temp': [v[tempfix]]}
 
-        for i in np.linspace(lat0-extend, lat0+extend, incr):
-            for j in np.linspace(lon0 - extend, lon0 + extend, incr):
 
-                w = get_weather_at_latlon(i, j, pk)[subset]['data'][0]
+class fromDarkskyAPI():
+    def get_weather_at_loc(pk, method = 'ip'):
+        if method == 'gps':
+            #implement gps location (some day ... )
+            lat = str(get_loc_by_ip()[0])
+            lon = str(get_loc_by_ip()[1])
+            print('gps not yet implemented! defaulting to IP')
+        if method == 'manual':
+            lat = input('latitude: ')
+            lon = input('longitude: ')
+        else:
+            lat = str(get_loc_by_ip()[0])
+            lon = str(get_loc_by_ip()[1])
 
-                grid['lat'].append(i)
-                grid['lon'].append(j)
+        link = 'https://api.darksky.net/forecast/' + pk + '/' + lat + ',' + lon + '?units=si'
+        resp = requests.get(link).json()
 
-                grid['speed'].append(w['windSpeed'])
-                grid['direction'].append(w['windBearing'])
-                grid['temp'].append(w[tempfix])
+        return resp
 
-        return grid
 
-    if temporal:
-        v = get_weather_at_latlon(lat0,lon0,pk)[subset]['data']
+    def get_weather_at_latlon(lat, lon, pk):
+        link = 'https://api.darksky.net/forecast/' + pk + '/' + str(lat) + ',' + str(lon) + '?units=si'
+        resp = requests.get(link).json()
 
-        grid = {'time': [],
-         'lat': [],
-         'lon':[],
-         'speed': [],
-         'direction': [],
-         'temp': []}
+        return resp
 
-        for k in range(0,len(v)):
-            grid['lat'].append(lat0)
-            grid['lon'].append(lon0)
-            grid['time'].append(v[k]['time'])
+    # extend: measures grid size in lat,lon deviations from current position
+    #
+    # TODO: more sophisticated grid generation
+    def get_weather_around_loc(extend, incr, pk, temporal = False, hourly = False):
+        pos = get_loc_by_ip()
+        lat0 = pos[0]
+        lon0 = pos[1]
 
-            grid['speed'].append(v[k]['windSpeed'])
-            grid['direction'].append(v[k]['windBearing'])
-            grid['temp'].append(v[k][tempfix])
+        if hourly:
+            subset = 'hourly'
+            tempfix = 'temperature'
 
-        for i in np.linspace(lat0-extend, lat0+extend, incr):
-            for j in np.linspace(lon0 - extend, lon0 + extend, incr):
+        if not hourly:
+            subset = 'daily'
+            tempfix = 'temperatureMax'
 
-                w = get_weather_at_latlon(i, j, pk)[subset]['data']
+        if not temporal:
+            v = self.get_weather_at_latlon(lat0,lon0,pk)[subset]['data'][0]
 
-                for t in range(0,len(w)):
+            grid = {'lat': [lat0],
+                    'lon':[lon0],
+                    'speed': [v['windSpeed']],
+                    'direction': [v['windBearing']],
+                    'temp': [v[tempfix]]}
+
+            for i in np.linspace(lat0-extend, lat0+extend, incr):
+                for j in np.linspace(lon0 - extend, lon0 + extend, incr):
+
+                    w = self.get_weather_at_latlon(i, j, pk)[subset]['data'][0]
+
                     grid['lat'].append(i)
                     grid['lon'].append(j)
-                    grid['time'].append(w[t]['time'])
 
-                    grid['speed'].append(w[t]['windSpeed'])
-                    grid['direction'].append(w[t]['windBearing'])
-                    grid['temp'].append(w[t][tempfix])
+                    grid['speed'].append(w['windSpeed'])
+                    grid['direction'].append(w['windBearing'])
+                    grid['temp'].append(w[tempfix])
 
-        return grid
+            return grid
 
-    return None
+        if temporal:
+            v = self.get_weather_at_latlon(lat0,lon0,pk)[subset]['data']
 
+            grid = {'time': [],
+             'lat': [],
+             'lon':[],
+             'speed': [],
+             'direction': [],
+             'temp': []}
 
+            for k in range(0,len(v)):
+                grid['lat'].append(lat0)
+                grid['lon'].append(lon0)
+                grid['time'].append(v[k]['time'])
 
-### PYGAL VISUALIZATIONS #######################################################
-#   show_windspeed(weather): plots average and max windspeed
-#       weather: output from get_weather_at_loc
-#
-#   show_temp_overday(weather): plots average and max teperature per hour
-#       weather: output from get_weather_at_loc
-#
-#   show_winddir_overday(weather): plots winddirection per hour
-#       weather: output from get_weather_at_loc
-#
-#   show_rain_overdays(weather): plots daily probability of rain and cloud coverage for the comming 8 days
-#       weather: output from get_weather_at_loc
-#
-#   show_temperature(weather): plots current temperature
-#       weater: output from get_weather_at_loc
+                grid['speed'].append(v[k]['windSpeed'])
+                grid['direction'].append(v[k]['windBearing'])
+                grid['temp'].append(v[k][tempfix])
 
-from pygal.style import Style
+            for i in np.linspace(lat0-extend, lat0+extend, incr):
+                for j in np.linspace(lon0 - extend, lon0 + extend, incr):
 
+                    w = self.get_weather_at_latlon(i, j, pk)[subset]['data']
 
-c1 = '#E853A0'
-c2 = '#E8537A'
-c3 = '#E95355'
-c4 = '#E87653'
-c5 = '#E89B53'
+                    for t in range(0,len(w)):
+                        grid['lat'].append(i)
+                        grid['lon'].append(j)
+                        grid['time'].append(w[t]['time'])
 
+                        grid['speed'].append(w[t]['windSpeed'])
+                        grid['direction'].append(w[t]['windBearing'])
+                        grid['temp'].append(w[t][tempfix])
 
-c6 = '#c6138e'
-c7 = '#f45fb4'
-c8 = '#b1e4fa'
-c9 = '#18a7ed'
-c0 = '#005570'
+            return grid
 
-
-custom_style = Style(
-  background='transparent',
-  plot_background='transparent',
-  foreground=c0,
-  foreground_strong=c9,
-  foreground_subtle='#630C0D',
-  opacity='.6',
-  opacity_hover='.9',
-  transition='400ms ease-in',
-  colors=(c0, c8 , c4, c5, c1))
-
-
-
-
-def show_windspeed(weather, name):
-    gauge = pygal.SolidGauge(
-        half_pie=True, inner_radius= 0.7,
-        style = custom_style)
-        #style=pygal.style.styles['default'](value_font_size=10))
-
-    formatter = lambda x: '{:.10g}m/s'.format(x)
-    gauge.value_formatter = formatter
-
-    gauge.add('Gusts', [{'value': weather['currently']['windSpeed'], 'max_value': weather['currently']['windGust']}],
-              formatter=formatter)
-    gauge.add('Windspeed', [{'value': weather['currently']['windSpeed'], 'max_value':15}],
-              formatter=formatter)
-    return gauge.render_to_file('./svg/' + name + '.svg')
-
-
-def show_temp_overday(weather, name):
-    d = {'time': [], 'temp': []}
-    for i in range(0,len(weather['hourly']['data'])):
-        time = datetime.datetime.fromtimestamp(weather['hourly']['data'][i]['time']).strftime('%H')
-        d['time'].append(time)
-        d['temp'].append(weather['hourly']['data'][i]['temperature'])
-
-
-    line_chart = pygal.Line(style = custom_style)
-    line_chart.title = 'Hourly temperatures - next 48 hrs'
-    line_chart.x_labels = map(str, d['time'])
-    line_chart.add('temperature', d['temp'])
-    return line_chart.render_to_file('./svg/' + name + '.svg')
-
-
-def show_temp_overdays(weather, name):
-    d = {'time': [], 'temp_max': [], 'temp_min': []}
-    for i in range(0,len(weather['daily']['data'])):
-        time = datetime.datetime.fromtimestamp(weather['daily']['data'][i]['time']).strftime('%d')
-        d['time'].append(time)
-        d['temp_max'].append(weather['daily']['data'][i]['temperatureMax'])
-        d['temp_min'].append(weather['daily']['data'][i]['temperatureMin'])
-
-    line_chart = pygal.Line(style=custom_style)
-    line_chart.title = 'Daily temperatures - 8 days'
-    line_chart.x_labels = map(str, d['time'])
-    line_chart.add('daily max', d['temp_max'])
-    line_chart.add('daily min', d['temp_min'])
-    return line_chart.render_to_file('./svg/' + name + '.svg')
-
-
-def show_winddir_overday(weather, name1, name2):
-    d = {'time': [], 'winddir': []}
-    for i in range(0,len(weather['hourly']['data'])):
-        time = datetime.datetime.fromtimestamp(weather['hourly']['data'][i]['time']).strftime('%H')
-        d['time'].append(time)
-        d['winddir'].append(weather['hourly']['data'][i]['windBearing'])
-
-
-    line_chart = pygal.Line(style=custom_style)
-    line_chart.title = 'Daily wind bearing'
-    line_chart.x_labels = map(str, d['time'])
-    line_chart.add('Wind direction', d['winddir'])
-
-    radar_chart = pygal.Radar(style = custom_style)
-    radar_chart.title = 'Daily Wind bearing'
-    radar_chart.x_labels = map(str, d['time'])
-    radar_chart.add('Wind direction', d['winddir'])
-    radar_chart.render()
-
-    return [radar_chart.render_to_file('./svg/' + name1 + '.svg'),line_chart.render_to_file('./svg/' + name2 + '.svg')]
-
-
-
-def show_rain_overdays(weather, name):
-    d = {'time': [], 'rain': [], 'clouds': []}
-    for i in range(0,len(weather['daily']['data'])):
-        time = datetime.datetime.fromtimestamp(weather['daily']['data'][i]['time']).strftime('%d')
-        d['time'].append(time)
-        d['rain'].append(weather['daily']['data'][i]['precipProbability'])
-        d['clouds'].append(weather['daily']['data'][i]['cloudCover'])
-
-    line_chart = pygal.Bar(style = custom_style)
-    line_chart.title = 'Daily rain probability'
-    line_chart.x_labels = map(str, d['time'])
-    line_chart.add('Risk of rain', d['rain'])
-    line_chart.add('Cloud cover', d['clouds'])
-    return line_chart.render_to_file('./svg/' + name + '.svg')
-
-
-def show_temperature(weather, name):
-    gauge_chart = pygal.Gauge(human_readable=True, style = custom_style)
-    gauge_chart.title = 'Current temperature'
-    gauge_chart.range = [0, 35]
-    gauge_chart.add('temperature', weather['currently']['temperature'])
-    return gauge_chart.render_to_file('./svg/' + name + '.svg')
-
-
-
-
-### PLOTLY VISUALIZATIONS ######################################################
-#
-#
-#
-
-
-import plotly
-import plotly.plotly as py
-import plotly.graph_objs as go
-
-
-def plotly_winddir(weather):
-    d = {'time': [], 'winddir': [], 'windspeed': []}
-    for i in range(0,len(weather['hourly']['data'])):
-        time = int(datetime.datetime.fromtimestamp(weather['hourly']['data'][i]['time']).strftime('%H'))
-        d['time'].append(time)
-        d['winddir'].append(weather['hourly']['data'][i]['windBearing'])
-        d['windspeed'].append(weather['hourly']['data'][i]['windSpeed'])
-
-    trace1 = go.Scatter(
-        r = d['windspeed'],
-        t = d['winddir'],
-        mode='lines',
-        name='Wind direction',
-        text = d['time'],
-        marker = dict(
-        color = 'none',
-        line = dict(
-        color = c0,
-        width = 2
-        )
-        )
-    )
-
-    trace2 = go.Scatter(
-        r= [d['windspeed'][0], d['windspeed'][0],d['windspeed'][0],d['windspeed'][0],d['windspeed'][0]],
-        t= [d['winddir'][0],   d['winddir'][0],d['winddir'][0],d['winddir'][0],d['winddir'][0]],
-        mode='markers',
-        name='time=now',
-        text=['t=0'],
-        marker = dict(
-        color = 'none',
-        line = dict(
-        color = c0,
-        width = 2
-        )
-        )
-    )
-
-    data = [trace1,trace2]
-    layout = go.Layout(
-        title='Wind direction and -speed',
-
-        showlegend = False,
-        font=dict(
-            size=16
-        ),
-        legend=dict(
-            font=dict(
-                size=16
-            )
-        ),
-        radialaxis=dict(
-            ticksuffix='m/s'
-        ),
-        orientation=-90
-    )
-
-
-    fig = go.Figure(data=data, layout=layout)
-#    plotly.offline.plot(fig)   #activate to get local output as well
-    return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
-
-def webready_plotly_winddir(weather):
-    with open('js/compass.js','w') as f:
-        f.write("document.write('")
-        f.write(plotly_winddir(weather))
-        f.write("')")
-
-
-### WEATHER SUMMARIES ##########################################################
-#
-#
-#
-
-def weathersummaries(weather):
-    with io.open('js/dailysummary.js','w', encoding = 'utf-8') as f:
-        f.write("document.write('")
-        f.write(weather['hourly']['summary'])
-        f.write("')")
-    with io.open('js/weeklysummary.js','w', encoding = 'utf-8') as f:
-        f.write("document.write('")
-        f.write(weather['daily']['summary'])
-        f.write("')")
-    with io.open('js/time.js','w', encoding = 'utf-8') as f:
-        f.write("document.write('")
-        f.write( str(datetime.datetime.now()) )
-        f.write("')")
+        return None
