@@ -277,7 +277,7 @@ def folium_cityweather(datafile, outfile):
 
     map_osm = folium.Map(location = [locNow[0],locNow[1]], tiles = 'Cartodb Positron', control_scale = True, zoom_start = 4)
 
-    for i in ['wind_new', 'clouds_new', 'precipitation_new','temp_new']:
+    for i in ['wind_new', 'precipitation_new','temp_new']:
         url = 'http://tile.openweathermap.org/map/' + i + '/{z}/{x}/{y}.png?appid=' + keys.key2
         folium.TileLayer(
         tiles = url,
@@ -298,8 +298,3 @@ def folium_cityweather(datafile, outfile):
     folium.LayerControl().add_to(map_osm)
 
     mc.save(outfile)
-
-
-import keys
-
-folium_cityweather('./data/bbox.csv','./plots/bbox.html')

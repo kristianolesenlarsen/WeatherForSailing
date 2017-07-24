@@ -46,13 +46,6 @@ weather.csvFunctions().toCSV(bbox, './data/bbox.csv','bbox')
 #folium plots
 plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
-f1 = open('./plots/bbox.html','r').read()
-
-with open('js/bbox.js','w') as f:
-    f.write("document.write('")
-    f.write(f1)
-    f.write("')")
-
 # something something ... run the R script
 #import subprocess
 #subprocess.check_call(['Rscript', 'vectorfield.R'], shell=False)

@@ -15,11 +15,11 @@ layout: default
 <script src="js/compass.js"></script>
 </div>
 
+<div class="fader">
+<h2> Weather layers </h2>
+<iframe src="plots/bbox.html" id = "leaflet""> Leaflet map </iframe>
 
-<h2> Some title </h2>
-
-<div class="center">
-<iframe src="plots/bbox.html" id = "leaflet" onload="this.width=screen.width;"> Leaflet map </iframe>
+Use the menu in the top right corner to toggle layers, or go to the [full screen version](https://kristianuruplarsen.github.io/WeatherForSailing/plots/bbox.html).
 </div>
 
 <div class="fader">
@@ -101,7 +101,7 @@ layout: default
 
 ## About
 
-Weather data supplied by [darksky.net](https://darksky.net/). Last updated <script src="js/time.js"></script>
+Weather data supplied by [darksky.net](https://darksky.net/poweredby) and [OpenWeatherMap](openweathermap.org/). Last updated <script src="js/time.js"></script>
 
 <script>
 window.sr = ScrollReveal({reset:true, duration:1000});
