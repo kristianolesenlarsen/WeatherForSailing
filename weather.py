@@ -10,10 +10,6 @@ import numpy as np
 import time
 
 
-
-
-
-
 def get_loc_by_ip():
     send_url = 'http://freegeoip.net/json'
     r = requests.get(send_url)
@@ -28,38 +24,50 @@ def get_loc_by_ip():
 #
 #
 
-
 class fromOpenAPI():
     def __init__(self, key):
         self.pk = key
 
-    def CurrentWeatherBbox(self, left, right, bottom, top, count, zoom):
+    def CurrentWeatherBbox(self, left, right, bottom, top, zoom, **kwargs):
         args = map(str,[left, bottom, right, top, zoom])
         base = 'http://api.openweathermap.org/data/2.5/box/city?bbox='
         for i in args:
             base = base + i + ','
-        base = base[:-1] + '&units=metric' + '&cnt=' + str(count) + '&cluster=y' + '&appid=' + self.pk
+        # add appid from keyfile
+        base = base[:-1] + '&appid=' + self.pk
+        # optional GET options such as 'unit', 'cnt' etc
+        for i in kwargs.items():
+            base = base + '&{}={}'.format(i[0],i[1])
         return requests.get(base).json()
 
-    def CurrentWeatherCircle(self, lat,lon, count):
-        #lat, lon = map(str, [lat,lon])     #why is this not working?
+    def CurrentWeatherCircle(self, lat,lon,count, **kwargs):
+        loc = map(str, [lat,lon, count])     #why is this not working?
         base = 'http://api.openweathermap.org/data/2.5/find?'
-        base = base + 'lat=' + str(lat) + '&lon=' + str(lon) + '&cnt=' + str(count) + '&units=metric'+ '&cluster=y' + '&appid=' + self.pk
+        # add required parameters to URL
+        base = base + 'lat={}&lon={}&cnt={}'.format(loc[0], loc[1], loc[2]) + '&appid=' + self.pk
+        # add optional paramters
+        for i in kwargs.items():
+            base = base + '&{}={}'.format(i[0],i[1])
         return requests.get(base).json()
 
-    def WeatherByLatLon(self, lat, lon, Type = 'current'):
-        lat, lon = map(str, [lat,lon])
+    def WeatherByLatLon(self, lat, lon, Type = 'current', **kwargs):
+        loc = map(str, [lat,lon])
         base = 'http://api.openweathermap.org/data/2.5/'
+        # do you want current weather or forecast?
         if Type == 'current':
             base = base + 'weather?'
         elif Type == 'forecast':
             base = base + 'forecast?'
         else:
             print("choose Type as 'current'(default) or 'forecast'")
-        base = base + 'lat=' + lat + '&lon=' + lon + '&units=metric' + '&appid=' + self.pk
+        #lat, lon and appid
+        base = base + 'lat={}&lon={}'.format(loc[0],loc[1]) + '&appid=' + self.pk
+        # optional URL params
+        for i in kwargs.items():
+            base = base + '&{}={}'.format(i[0],i[1])
         return requests.get(base).json()
 
-    def WeatherByID(self, ID, Type = 'current'):
+    def WeatherByID(self, ID, Type = 'current', **kwargs):
         ID = str(ID)
         base = 'http://api.openweathermap.org/data/2.5/'
         if Type == 'current':
@@ -68,13 +76,16 @@ class fromOpenAPI():
             base = base + 'forecast?id='
         else:
             print("choose Type as 'current'(default) or 'forecast'")
-        base = base + ID + '&units=metric' + '&appid=' + self.pk
+        base = base + ID  + '&appid=' + self.pk
+        # optional URL params
+        for i in kwargs.items():
+            base = base + '&{}={}'.format(i[0],i[1])
         return requests.get(base).json()
 
     # lat: north/south
     # lon: west/east
 
-    def WeatherGrid(self, left, right, bottom, top, splits, filename):
+    def WeatherGrid(self, left, right, bottom, top, splits, filename, **kwargs):
         latlon = []
         lr = np.linspace(left, right,round(splits))
         bt = np.linspace(bottom, top, round(splits))
@@ -87,7 +98,7 @@ class fromOpenAPI():
         open(filename,'w').close()      #wipe file of old data
 
         for i in latlon:
-            json = self.WeatherByLatLon(i[0],i[1])
+            json = self.WeatherByLatLon(i[0],i[1], **kwargs)
             csvf = csvFunctions().appendInCsv(json = json, filename = filename)
             row = csvf[0]
             time.sleep(1)
