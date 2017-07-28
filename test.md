@@ -34,6 +34,7 @@ layout: null
  <!--              <h3 class="masthead-brand">Cover</h3> -->
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="test.html">Home</a>
+                <a class="nav-link active" href="content.html">Refurbished content</a>
                 <a class="nav-link" href="index.html">Old front</a>
  <!--                <a class="nav-link" href="#">Contact</a> -->
               </nav>
