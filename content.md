@@ -22,11 +22,12 @@ layout: null
 
   <body>
     <div class="container">
-    <div class="col-md-8"><script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
       <h3>Two columns</h3>
 
       <div class="row">
+        <div class="col-md-8">
         <div class="center">
         <script src="js/compass.js"></script>
         </div>
