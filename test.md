@@ -53,7 +53,7 @@ layout: null
             </p>
           </div>
           </div>
-          
+
           <div class="mastfoot">
             <div class="inner">
               <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -77,7 +77,7 @@ layout: null
     <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
     <script>
-    window.sr = ScrollReveal({reset:false, duration:2000});
+    window.sr = ScrollReveal({reset:false, duration:2000, distance:'0px'});
     sr.reveal('.fader');
     </script>
 
