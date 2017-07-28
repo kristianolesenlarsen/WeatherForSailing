@@ -44,7 +44,7 @@ layout: null
             <h1 class="cover-heading">WeatherForSailing</h1>
             <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
             <p class="lead">
-              <a href="WeatherForSailing/plots/bbox.html" class="btn btn-lg btn-secondary">Go to map</a>
+              <a href="plots/bbox.html" class="btn btn-outline-secondary">Go to map</a>
               <a href="https://github.com/Kristianuruplarsen/WeatherForSailing" class="btn btn-lg btn-secondary">View on Github</a>
             </p>
           </div>
