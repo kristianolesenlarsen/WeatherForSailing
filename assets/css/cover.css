@@ -24,12 +24,12 @@ a:hover {
 /*
  * Base structure
  */
-
+V
 html,
 body {
   height: 100%;
-  background-color: #b1e4fa;
-  background-image: linear-gradient(120deg, #005570, #b1e4fa)
+  background-color: #c9efff;
+  background-image: linear-gradient(120deg, #0d4760, #c9efff)
 }
 body {
   color: #fff;
