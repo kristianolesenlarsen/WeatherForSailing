@@ -22,6 +22,7 @@ layout: null
   </head>
 
   <body>
+  <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 
     <div class="site-wrapper">
 
@@ -41,6 +42,7 @@ layout: null
             </div>
           </div>
 
+          <div class="fader">
           <div class="inner cover">
             <h1 class="cover-heading">WeatherForSailing</h1>
             <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
@@ -50,7 +52,8 @@ layout: null
               <a href="https://github.com/Kristianuruplarsen/WeatherForSailing" class="btn btn-outline-secondary">Or view on Github</a>
             </p>
           </div>
-
+          </div>
+          
           <div class="mastfoot">
             <div class="inner">
               <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
@@ -72,5 +75,11 @@ layout: null
     <script src="../../../../dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+    <script>
+    window.sr = ScrollReveal({reset:false, duration:2000});
+    sr.reveal('.fader');
+    </script>
+
   </body>
 </html>
