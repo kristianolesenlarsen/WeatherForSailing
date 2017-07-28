@@ -33,9 +33,9 @@ layout: null
             <div class="inner">
               <h3 class="masthead-brand">Cover</h3>
               <nav class="nav nav-masthead">
-                <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link active" href="test.html">Home</a>
+                <a class="nav-link" href="index.html">Old front</a>
+ <!--                <a class="nav-link" href="#">Contact</a> -->
               </nav>
             </div>
           </div>
@@ -44,7 +44,7 @@ layout: null
             <h1 class="cover-heading">WeatherForSailing</h1>
             <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
             <p class="lead">
-              <a href="#" class="btn-special">Go to map</a>
+              <a href="/plots/bbox.html" class="btn-special">Go to map</a>
             </p>
           </div>
 
