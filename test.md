@@ -11,7 +11,7 @@ layout: null
     <meta name="author" content="">
    <!--  <link rel="icon" href="../../../../favicon.ico"> -->
 
-    <title>Cover Template for Bootstrap</title>
+    <title>WeatherForSailing</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
@@ -40,10 +40,10 @@ layout: null
           </div>
 
           <div class="inner cover">
-            <h1 class="cover-heading">Cover your page.</h1>
-            <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+            <h1 class="cover-heading">WeatherForSailing</h1>
+            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
             <p class="lead">
-              <a href="#" class="btn btn-lg btn-secondary">Learn more</a>
+              <a href="#" class="btn btn-lg btn-secondary">Go to map</a>
             </p>
           </div>
 
