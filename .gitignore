@@ -27,6 +27,7 @@ __pycache__/*
 *.gif
 *.Rhistory
 *.grb
+*.grb2
 csvifyGRIB.R
 
 # key file

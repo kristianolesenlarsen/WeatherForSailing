@@ -98,4 +98,64 @@ def getattachment(user, pwd):
                 fp.write(part.get_payload(decode=True))
                 fp.close()
 
+
 # getattachment(user,pwd)
+
+
+"""
+below is testing stuff
+"""
+import requests
+
+
+#possibly dont get anl files?
+def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
+    base = 'https://nomads.ncdc.noaa.gov/data/gfsanl/{}/{}/'.format(''.join([year, month]), ''.join([year, month, day]))
+    filename = 'gfsanl_4_{}_{}_000.grb2'.format(''.join([year, month, day]), hour)
+    link = base + filename
+    resp = requests.get(link, stream = True)
+    i = 0
+
+    f = open('./data/{}'.format(filename), 'wb')
+    for chunk in resp.iter_content():
+        f.write(chunk)
+        print(i)
+        i += 1
+    return link
+
+
+
+# these grib files suck
+import gdal
+import numpy as np
+import geopandas as gp
+
+a = './data/40N,60N,140W,120W.grb'
+b = './data/gfsanl_4_20170726_0000_006.grb2'
+c = './data/gfs_4_20170726_0000_384.grb2'
+
+f = gdal.Open(a)
+
+
+# saildocs email gribs
+# pressure, pressure, pressure, wind-speed (u), wind-speed (u), wind-speed (u), wind-speed (v), wind-speed (v), wind-speed (v)
+
+
+
+
+f.
+
+f.GetRasterBand(363).GetMetadata()
+
+
+band = f.GetRasterBand(363)
+
+
+
+arr = band.ReadAsArray()
+
+arr[360][719]
+
+f.GetGeoTransform()
+
+f.GetRasterBand(3).GetMetadata_Dict()
