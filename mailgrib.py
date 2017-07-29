@@ -55,7 +55,7 @@ def sendmail(query, user, pwd, send = True):
     msg['Subject'] = "saildocs request" + ' ' + timeNow
     # implement carrying info in the filename
 
-    
+
     if send:
         try:
             body = query
@@ -72,10 +72,6 @@ def sendmail(query, user, pwd, send = True):
             return None
 
     return 'Re: ' + msg['subject']
-
-
-q = genQuery(latBottom = 45, latTop = 60, lonLeft = 0, lonRight= 30, inc = 0.5, timestring = '00')
-sendmail(q, user,pwd)
 
 
 #Retrieve an attachment from a Message.
@@ -113,7 +109,6 @@ def getattachment(user, pwd):
 
             filename =  mail['Subject'][4:] + datetime.datetime.now().date().strftime('%d-%H')
             att_path = os.path.join(detach_dir, filename) + '.grb'
-            print(att_path)
             #Check if its already there
             if not os.path.exists(att_path):
                 open(att_path, 'w').close()
@@ -122,6 +117,10 @@ def getattachment(user, pwd):
                 fp.close()
                 print('new file added!')
 
+
+
+q = genQuery(latBottom = 25, latTop = 70, lonLeft = 30, lonRight= 300, inc = 0.5, timestring = '00')
+sendmail(q, user,pwd)
 
 getattachment(user,pwd)
 

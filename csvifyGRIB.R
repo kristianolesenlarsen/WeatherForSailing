@@ -22,7 +22,7 @@ df = as.data.frame(gribdata)
 df$speed = sqrt(df$band1^2 + df$band2^2)
 df$unif = runif(length(df$x),0,1)
 
-map = get_map(c(-10, 55) , zoom = 3, color = 'bw')
+map = get_map(c(0, 55) , zoom = 3, color = 'bw')
 
 
 ggmap(map) +
@@ -31,7 +31,7 @@ ggmap(map) +
   geom_tile(data = df, aes(x = x, y = y, z = speed, fill = speed),  alpha = 0.3) +
   geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), alpha = 0.6) +
   scale_color_viridis(option = "plasma") +
-  scale_fill_viridis(option = "plasma") #+
+  scale_fill_viridis(option = "plasma") +
   theme_nothing()
 
 

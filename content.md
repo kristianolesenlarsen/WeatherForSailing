@@ -42,13 +42,13 @@ layout: null
         Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
         </div>
         <div class="col-md-8">
-        <img class ="img-fluid" src="map.png">
+        <img class ="img-responsive" src="map.png">
         </div>
 
         <h3>Two columns</h3>  
         <div class="row">
           <div class="col-md-8">
-          <img class="img-fluid" src="map2.png">
+          <img class="img-responsive" src="map2.png">
           </div>
           <div class="col-md-4"> Lorem Ipsum</div>
         </div>
