@@ -48,7 +48,7 @@ layout: null
         <h3>Two columns</h3>  
         <div class="row">
           <div class="col-md-8">
-          <img class="img-responsive" src="map2.png">
+          <img class="img-responsive" src="map-eu.png">
           </div>
           <div class="col-md-4"> Lorem Ipsum</div>
         </div>

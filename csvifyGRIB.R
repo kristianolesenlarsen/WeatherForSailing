@@ -1,4 +1,4 @@
-#depr
+# This is so far the only way i've been able to get GRIB data to a more usable format
 
 library("rgdal")
 library("jsonlite")
@@ -22,10 +22,12 @@ df = as.data.frame(gribdata)
 df$speed = sqrt(df$band1^2 + df$band2^2)
 df$unif = runif(length(df$x),0,1)
 
-map = get_map(c(0, 55) , zoom = 3, color = 'bw')
+map = get_map(c(5, 55) , zoom = 3, color = 'bw')
 
 
-ggmap(map) +
+setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing")
+
+p = ggmap(map) +
 #  geom_point(data = df, aes(x = x, y = y))# +
 #  geom_segment(data = subset(df, unif < 0.1), aes(x = x, y = y, xend = x + band1*0.01, yend = y+band2)) +
   geom_tile(data = df, aes(x = x, y = y, z = speed, fill = speed),  alpha = 0.3) +
@@ -36,4 +38,4 @@ ggmap(map) +
 
 
 
-ggsave('map2.png', p)
+ggsave('map-eu.png', p)
