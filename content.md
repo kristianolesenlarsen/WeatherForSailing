@@ -32,10 +32,10 @@ layout: null
         <script src="js/compass.js"></script>
         </div>
         </div>
-        <div class="col-md-4">Here is some text</div>
+        <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot.</div>
       </div>
 
-      <h3> Two more collumns </h3>
+      <h3> Two more columns </h3>
 
       <div class="row">
         <div class="col-md-4">
@@ -44,6 +44,15 @@ layout: null
         <div class="col-md-8">
         <img src="map.png">
         </div>
+
+        <h3>Two columns</h3>  
+        <div class="row">
+          <div class="col-md-8">
+          <img src="map2.png">
+          </div>
+          <div class="col-md-4"> Lorem Ipsum</div>
+        </div>
+
 
       </div>
 
