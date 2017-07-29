@@ -20,6 +20,25 @@ from email.mime.text import MIMEText
 user = keys.user
 pwd = keys.pwd
 
+
+### valid timestring
+# 0,3,...180 hrs
+
+### valid parameters:
+# PRMSL: mean sea-level pressure
+# WIND: surface wind gradient
+# HGT: 500mb (milibars) height above sea-level
+# SEATMP: sea temperature
+# AIRTMP: air temperature
+
+def genQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
+    #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
+    query = '{}:{}N,{}N,{}W,{}W|{},{}|{}|{}'.format(model,latBottom, latTop, lonRight, lonLeft, str(inc), str(inc), timestring, params)
+    if subscribe:
+        query + 'sub' + query
+    return query
+
+
 ### sendemail ##################################################################
 #
 # query: email body content
@@ -34,7 +53,9 @@ def sendmail(query, user, pwd, send = True):
     msg['From'] = fromaddr
     msg['To'] = toaddr
     msg['Subject'] = "saildocs request" + ' ' + timeNow
+    # implement carrying info in the filename
 
+    
     if send:
         try:
             body = query
@@ -53,14 +74,15 @@ def sendmail(query, user, pwd, send = True):
     return 'Re: ' + msg['subject']
 
 
-# sendmail('send gfs:50N,60N,140W,120W', user,pwd)
+q = genQuery(latBottom = 45, latTop = 60, lonLeft = 0, lonRight= 30, inc = 0.5, timestring = '00')
+sendmail(q, user,pwd)
 
 
 #Retrieve an attachment from a Message.
 #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
 
 def getattachment(user, pwd):
-    detach_dir = './grb' # directory where to save attachments (default: current)
+    detach_dir = './data' # directory where to save attachments (default: current)
     # connecting to the gmail imap server
     m = imaplib.IMAP4_SSL("imap.gmail.com")
     m.login(user,pwd)
@@ -89,17 +111,28 @@ def getattachment(user, pwd):
             if part.get('Content-Disposition') is None:
                 continue
 
-            filename =  mail['Subject'][4:]
+            filename =  mail['Subject'][4:] + datetime.datetime.now().date().strftime('%d-%H')
             att_path = os.path.join(detach_dir, filename) + '.grb'
-
+            print(att_path)
             #Check if its already there
-                # finally write the stuff
+            if not os.path.exists(att_path):
+                open(att_path, 'w').close()
                 fp = open(att_path, 'wb')
                 fp.write(part.get_payload(decode=True))
                 fp.close()
+                print('new file added!')
 
 
-# getattachment(user,pwd)
+getattachment(user,pwd)
+
+
+
+
+
+
+
+
+
 
 
 """

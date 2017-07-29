@@ -28,7 +28,6 @@ __pycache__/*
 *.Rhistory
 *.grb
 *.grb2
-csvifyGRIB.R
 
 # key file
 keys.py
