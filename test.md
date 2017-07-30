@@ -45,7 +45,7 @@ layout: null
           <div class="fader">
           <div class="inner cover">
             <h1 class="cover-heading">WeatherForSailing</h1>
-            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
+  <!--          <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p> -->
             <p class="lead">
             <b> Today: </b> <script src="js/dailysummary.js"></script>
             <br>            
