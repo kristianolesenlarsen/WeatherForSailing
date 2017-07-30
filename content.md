@@ -11,13 +11,14 @@ layout: null
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Grid Template for Bootstrap</title>
+    <title>Weather data content</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="assets/css/grid.css" rel="stylesheet">
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
   </head>
 
   <body>
