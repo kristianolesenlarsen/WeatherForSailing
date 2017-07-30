@@ -3,6 +3,7 @@ library('ggmap')
 library("gganimate")
 
 
+setwd('C:/User/Kristian/Documents/GitHub/WeatherForSailing')
 
 df = read.csv('windgrid.csv')
 

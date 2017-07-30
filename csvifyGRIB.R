@@ -19,7 +19,8 @@ fname = "25N,70N,300W,30W29-00.grb"
 
 gribdata = readGDAL(fname)
 df = as.data.frame(gribdata)
-rm(gribddata)
+rm(gribdata)
+
 
 
 #df$speed = sqrt(df$band4^2 + df$band7^2)
@@ -34,9 +35,10 @@ setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing")
 
 
 
+
 p = ggmap(map) +
-  scale_x_continuous(limits = c(min(df$x), max(df$x)), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(min(df$y), max(df$y)), expand = c(0, 0)) +
+#  scale_x_continuous(limits = c(min(df$x), max(df$x)), expand = c(0, 0)) +
+# scale_y_continuous(limits = c(min(df$y), max(df$y)), expand = c(0, 0)) +
 #  geom_point(data = df, aes(x = x, y = y))# +
 #  geom_segment(data = subset(df, unif < 0.1), aes(x = x, y = y, xend = x + band1*0.01, yend = y+band2), arrow = arrow(length = unit(0.5, 'cm'))) +
   geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed), alpha = 0.6) +
@@ -47,4 +49,26 @@ p = ggmap(map) +
   #scale_fill_viridis(option = "inferno") #+
   theme_nothing()
 
+
+p
+
 ggsave('map-eu2.png')
+
+
+
+library('maps')
+
+world = map_data("world")
+
+worldmap = ggplot(world,aes(x = long, y = lat, group = group)) +
+  geom_polygon(fill = 'white', colour = 'black') +
+  geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed), alpha = 0.6, inherit.aes = F) +
+  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5, inherit.aes = F) +
+  scale_fill_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
+  scale_color_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
+  scale_y_continuous(breaks = (-2:2) * 30) +
+  scale_x_continuous(breaks = (-4:4) * 45) +
+  coord_map("ortho", orientation = c(50,12,0))
+
+worldmap
+

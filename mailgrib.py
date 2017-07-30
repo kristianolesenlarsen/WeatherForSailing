@@ -2,6 +2,12 @@
 # since their documentation is worse than that of ancient civilizations.
 import keys
 import datetime
+import requests
+import pandas as pd
+import gdal
+import numpy as np
+import re
+
 
 import email, imaplib, os
 imaplib._MAXLINE = 100000
@@ -31,20 +37,21 @@ pwd = keys.pwd
 # SEATMP: sea temperature
 # AIRTMP: air temperature
 
-def genQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
+
+
+def genMailQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
     #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
     query = '{}:{}N,{}N,{}W,{}W|{},{}|{}|{}'.format(model,latBottom, latTop, lonRight, lonLeft, str(inc), str(inc), timestring, params)
     if subscribe:
         query + 'sub' + query
     return query
 
-
 ### sendemail ##################################################################
 #
 # query: email body content
 # send: if true the email is send (so we can get mail subject without sending it)
 
-def sendmail(query, user, pwd, send = True):
+def sendMailQuery(query, user, pwd, send = True):
     fromaddr = user
     toaddr = "query@saildocs.com"
     timeNow = datetime.datetime.now().date().strftime('%d-%H')
@@ -77,7 +84,7 @@ def sendmail(query, user, pwd, send = True):
 #Retrieve an attachment from a Message.
 #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
 
-def getattachment(user, pwd):
+def getMailAttachment(user, pwd):
     detach_dir = './data' # directory where to save attachments (default: current)
     # connecting to the gmail imap server
     m = imaplib.IMAP4_SSL("imap.gmail.com")
@@ -119,27 +126,6 @@ def getattachment(user, pwd):
 
 
 
-q = genQuery(latBottom = 25, latTop = 70, lonLeft = 30, lonRight= 300, inc = 0.5, timestring = '00')
-sendmail(q, user,pwd)
-
-getattachment(user,pwd)
-
-
-
-
-
-
-
-
-
-
-
-"""
-below is testing stuff
-"""
-import requests
-
-
 #possibly dont get anl files?
 def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
     base = 'https://nomads.ncdc.noaa.gov/data/gfsanl/{}/{}/'.format(''.join([year, month]), ''.join([year, month, day]))
@@ -156,17 +142,116 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
     return link
 
 
+## update names
+#q = genMailQuery(latBottom = 25, latTop = 70, lonLeft = 30, lonRight= 300, inc = 0.5, timestring = '00')
+#sendMailQuery(q, user,pwd)
+#getMailAttachment(user,pwd)
 
-# these grib files suck
-import gdal
-import numpy as np
-import geopandas as gp
+
+
+
+# ATT: x,y are returned wrongly
+def GRIBtoDict(GRIB, delete_original = True):
+    f = gdal.Open(GRIB)
+    print('opened file')
+    #basic info on the thing
+    width = f.RasterXSize
+    height = f.RasterYSize
+    # get transformation
+    gt = f.GetGeoTransform()
+
+    print('doing min max stuff')
+    #bbox of GRIB data
+    minx = gt[0]
+    miny = gt[3] + width*gt[4] + height*gt[5]
+    maxx = gt[0] + width*gt[1] + height*gt[2]
+    maxy = gt[3]
+    print(minx, miny, maxx, maxy)
+    stepx = gt[2]
+    stepy = gt[2]
+
+    # number of bands
+    s = gdal.Info(GRIB)
+    nbands = len([m.start() for m in re.finditer('Band', s)])
+
+    # dict to be returned with metadata for all the stuff
+    outerHelp = {}
+
+    endResult = {'x':[], 'y': []}
+
+    for b in range(1, nbands + 1):
+        print('new band')
+        helpMeDict = {}
+        band = f.GetRasterBand(b)
+        meta = band.GetMetadata_Dict()
+        #this is stupidly complicated, but it converts the timestamp to a readable date
+        time = datetime.datetime.fromtimestamp(int(re.findall('\d+', band.GetMetadata_Dict()['GRIB_REF_TIME'])[0])).strftime("%Y-%m-%d %H")
+
+        # fill out the helper dict
+        #helpMeDict['var'].append(meta['GRIB_ELEMENT'])
+        helpMeDict['band'] = [str(b)]
+        helpMeDict['comment'] = [meta['GRIB_COMMENT']]
+        helpMeDict['forecast'] = [meta['GRIB_FORECAST_SECONDS']]
+        helpMeDict['time'] = [time]
+
+        outerHelp[meta['GRIB_ELEMENT']] = helpMeDict
+
+
+        #define new column in output
+        endResult[meta['GRIB_ELEMENT']] = []
+        """
+        maybe arr[i] is the y-coordinates, and for each arr[i] the values are the corresponding x's?
+        so where do they begin???
+        """
+        array = band.ReadAsArray()
+
+        for y_index in range(0,len(array)):                        # for each y
+            for x_index in range(0,len(array[y_index])):           # for each x
+                if b == 1:                                         # Only add lon/lat once
+                    # something is wrong with this
+                    endResult['x'].append(maxy - (miny + 0.5*x_index))
+                    endResult['y'].append(maxx - (minx + 0.5*y_index))
+                endResult[meta['GRIB_ELEMENT']].append(array[y_index][x_index])
+
+    if delete_original:
+        try:
+            os.remove(f.GetFileList()[0])
+        except:
+            print("couldn't remove file")
+    print("DONE!")
+    return [endResult, outerHelp]
+
+
+
+
+
+
+test = GRIBtoDict(b, delete_original = False)
+pd.DataFrame.from_dict(test[0]).to_csv('./data/test.csv')
+
+
+"""
+below is testing stuff
+"""
+
+
 
 a = './data/40N,60N,140W,120W.grb'
-b = './data/gfsanl_4_20170726_0000_006.grb2'
+b = './data/25N,70N,300W,30W29-00.grb'
 c = './data/gfs_4_20170726_0000_384.grb2'
 
-f = gdal.Open(a)
+
+
+
+
+arr[1][180]
+(70-25)*2
+
+25+0.5
+
+(300-30)/2
+
+f = gdal.Open(b)
 
 
 # saildocs email gribs
@@ -175,19 +260,48 @@ f = gdal.Open(a)
 
 
 
-f.
-
-f.GetRasterBand(363).GetMetadata()
+f.GetRasterBand(1).GetMetadata()
 
 
-band = f.GetRasterBand(363)
+band = f.GetRasterBand(2)
+
+width = f.RasterXSize
+height = f.RasterYSize
 
 
+gt = f.GetGeoTransform()
 
-arr = band.ReadAsArray()
+gt
 
-arr[360][719]
+
+f.GetProjectionRef()
+
+gt
+
+minx = gt[0]
+miny = gt[3] + width*gt[4] + height*gt[5]
+maxx = gt[0] + width*gt[1] + height*gt[2]
+maxy = gt[3]
+
+miny
+maxy
+
+
+minx
+maxx
+# upper left: (gt[0],gt[3])
+#
+
+s = gdal.Info(b)
+s
+# find number of bands
+array = band.ReadAsArray()
+
+band.XSize
+
+band.YSize
+
+
+band.GetDescription()
 
 f.GetGeoTransform()
-
-f.GetRasterBand(3).GetMetadata_Dict()
