@@ -68,8 +68,6 @@ layout: null
       <div class="row">
         <div class="col-md-4">
         Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
-        </br>
-        <button onclick="topFunction()" id="btn" title="Go to top">Top</button>        
         </div>
         <div class="col-md-8">
         <img class ="img-responsive" src="map.png">
@@ -90,7 +88,7 @@ layout: null
 
 
 
-    </div>
+   </div>
     </div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript

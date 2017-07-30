@@ -29,13 +29,14 @@ df$unif = runif(length(df$x),0,1)
 #map = get_map(c(-130, 55) , zoom = 3, maptype = 'satellite')
 map = get_map(c(5, 55) , zoom = 3, maptype = 'satellite')
 
-#ggmap(map)
 
 setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing")
 
 
 
 p = ggmap(map) +
+  scale_x_continuous(limits = c(min(df$x), max(df$x)), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(min(df$y), max(df$y)), expand = c(0, 0)) +
 #  geom_point(data = df, aes(x = x, y = y))# +
 #  geom_segment(data = subset(df, unif < 0.1), aes(x = x, y = y, xend = x + band1*0.01, yend = y+band2), arrow = arrow(length = unit(0.5, 'cm'))) +
   geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed), alpha = 0.6) +
@@ -45,7 +46,5 @@ p = ggmap(map) +
  # scale_color_viridis(option = "inferno") +
   #scale_fill_viridis(option = "inferno") #+
   theme_nothing()
-
-p
 
 ggsave('map-eu2.png')
