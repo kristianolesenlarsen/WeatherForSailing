@@ -1,5 +1,8 @@
 # This is so far the only way i've been able to get GRIB data to a more usable format
 
+
+install.packages(c('rgdal', 'viridis'))
+
 library("rgdal")
 library("jsonlite")
 library("ggmap")
@@ -27,6 +30,8 @@ map = get_map(c(5, 55) , zoom = 3, color = 'bw')
 
 setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing")
 
+
+
 p = ggmap(map) +
 #  geom_point(data = df, aes(x = x, y = y))# +
 #  geom_segment(data = subset(df, unif < 0.1), aes(x = x, y = y, xend = x + band1*0.01, yend = y+band2)) +
@@ -37,5 +42,6 @@ p = ggmap(map) +
   theme_nothing()
 
 
+p
 
 ggsave('map-eu.png', p)
