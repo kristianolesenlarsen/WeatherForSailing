@@ -24,12 +24,13 @@ def get_loc_by_ip():
 #
 #
 
+
 class fromOpenAPI():
     def __init__(self, key):
         self.pk = key
 
     def CurrentWeatherBbox(self, left, right, bottom, top, zoom, **kwargs):
-        args = map(str,[left, bottom, right, top, zoom])
+        args = list(map(str,[left, bottom, right, top, zoom]))
         base = 'http://api.openweathermap.org/data/2.5/box/city?bbox='
         for i in args:
             base = base + i + ','
@@ -41,7 +42,8 @@ class fromOpenAPI():
         return requests.get(base).json()
 
     def CurrentWeatherCircle(self, lat,lon,count, **kwargs):
-        loc = map(str, [lat,lon, count])     #why is this not working?
+#        loc = list(map(str, [lat,lon,count]))     #why is this not working?
+        loc = [str(lat), str(lon), str(count)]
         base = 'http://api.openweathermap.org/data/2.5/find?'
         # add required parameters to URL
         base = base + 'lat={}&lon={}&cnt={}'.format(loc[0], loc[1], loc[2]) + '&appid=' + self.pk
@@ -51,7 +53,7 @@ class fromOpenAPI():
         return requests.get(base).json()
 
     def WeatherByLatLon(self, lat, lon, Type = 'current', **kwargs):
-        loc = map(str, [lat,lon])
+        loc = list(map(str, [lat,lon]))
         base = 'http://api.openweathermap.org/data/2.5/'
         # do you want current weather or forecast?
         if Type == 'current':
@@ -194,8 +196,8 @@ class csvFunctions():
 class fromDarkskyAPI():
     def __init__(self):
         pass
-        
-    def get_weather_at_loc(pk, method = 'ip'):
+
+    def get_weather_at_loc(self, pk, method = 'ip'):
         if method == 'gps':
             #implement gps location (some day ... )
             lat = str(get_loc_by_ip()[0])
@@ -214,7 +216,7 @@ class fromDarkskyAPI():
         return resp
 
 
-    def get_weather_at_latlon(lat, lon, pk):
+    def get_weather_at_latlon(self, lat, lon, pk):
         link = 'https://api.darksky.net/forecast/' + pk + '/' + str(lat) + ',' + str(lon) + '?units=si'
         resp = requests.get(link).json()
 

@@ -1,11 +1,12 @@
 import weather
 import keys
 import plots
-
+import datetime
+import pandas as pd
 #load API key from keyfile
 
 # get current weather
-w = weather.fromDarkskyAPI.get_weather_at_loc(keys.key, 'ip')
+w = weather.fromDarkskyAPI().get_weather_at_loc(keys.key, 'ip')
 
 # pygal plots
 plots.show_windspeed(w, 'windspeed')
@@ -22,7 +23,7 @@ plots.webready_plotly_winddir(w)
 plots.weathersummaries(w)
 
 #generate grid and save to dataframe
-grid = weather.fromDarkskyAPI.get_weather_around_loc(4,8,keys.key, True, False)
+grid = weather.fromDarkskyAPI().get_weather_around_loc(4,8,keys.key, True, False)
 
 time = []
 for i in grid['time']:
