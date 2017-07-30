@@ -52,7 +52,7 @@ layout: null
             <b> This week: </b> <script src="js/weeklysummary.js"></script>
             </p>
             <p class="lead">
-              <a href="index.html" class="btn btn-info btn-lg">Weather data</a>
+              <a href="content.html" class="btn btn-info btn-lg">Weather data</a>
               <a href="plots/bbox.html" class="btn btn-info btn-lg">Interactive map</a>
               <a href="https://github.com/Kristianuruplarsen/WeatherForSailing" class="btn btn-outline-secondary">Or view on Github</a>
             </p>
