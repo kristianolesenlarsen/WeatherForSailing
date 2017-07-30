@@ -45,7 +45,11 @@ layout: null
           <div class="fader">
           <div class="inner cover">
             <h1 class="cover-heading">WeatherForSailing</h1>
-            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
+            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else.
+            </br> 
+            **Today:** <script src="js/dailysummary.js"></script>            
+            **This week:** <script src="js/weeklysummary.js"></script>
+            </p>
             <p class="lead">
               <a href="index.html" class="btn btn-info btn-lg">Content</a>
               <a href="plots/bbox.html" class="btn btn-info btn-lg">Go to map</a>
