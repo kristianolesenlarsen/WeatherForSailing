@@ -1,1 +1,1 @@
-document.write('Light rain later this evening and tomorrow morning.')
+document.write('Light rain until this evening.')
