@@ -47,7 +47,8 @@ layout: null
             <h1 class="cover-heading">WeatherForSailing</h1>
             <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
             <p class="lead">
-            <b> Today: </b> <script src="js/dailysummary.js"></script>            
+            <b> Today: </b> <script src="js/dailysummary.js"></script>
+            <br>            
             <b> This week: </b> <script src="js/weeklysummary.js"></script>
             </p>
             <p class="lead">
