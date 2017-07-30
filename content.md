@@ -85,10 +85,8 @@ layout: null
         </div>
 <!-- /PART 3 -->
 
-      </div>
 
-
-
+<!--    </div> -->
     </div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript
