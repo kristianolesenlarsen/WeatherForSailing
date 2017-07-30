@@ -192,6 +192,9 @@ class csvFunctions():
 
 
 class fromDarkskyAPI():
+    def __init__(self):
+        pass
+        
     def get_weather_at_loc(pk, method = 'ip'):
         if method == 'gps':
             #implement gps location (some day ... )
@@ -220,7 +223,7 @@ class fromDarkskyAPI():
     # extend: measures grid size in lat,lon deviations from current position
     #
     # TODO: more sophisticated grid generation
-    def get_weather_around_loc(extend, incr, pk, temporal = False, hourly = False):
+    def get_weather_around_loc(self, extend, incr, pk, temporal = False, hourly = False):
         pos = get_loc_by_ip()
         lat0 = pos[0]
         lon0 = pos[1]
