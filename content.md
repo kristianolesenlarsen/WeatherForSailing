@@ -27,32 +27,41 @@ layout: null
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 
+
+<!-- NAVBAR -->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">WebSiteName</a>
+          <a class="navbar-brand" href="test.html">WeatherForSailing</a>
         </div>
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Home</a></li>
-          <li><a href="#">Page 1</a></li>
-          <li><a href="#">Page 2</a></li>
-          <li><a href="#">Page 3</a></li>
+          <li class="active"><a href="content.html">Top</a></li>
+          <li><a href="#p1">Wind compass</a></li>
+          <li><a href="#p2">Wind vectors</a></li>
+          <li><a href="#p3">Wind systems</a></li>
         </ul>
       </div>
     </nav>
 
-      <h3>Two columns</h3>
+<!-- /NAVBAR -->
+
+<!-- PART 1 -->
+      <h3>Wind compass</h3>
+      <a name = "p1">
 
       <div class="row">
         <div class="col-md-8">
         <div class="center">
-        <script src="js/compass.js"></script>
+        <script src="js/compass.js" class = "img-responsive"></script>
         </div>
         </div>
         <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot.</div>
       </div>
 
-      <h3> Two more columns </h3>
+<!-- /PART 1 -->
+<!-- PART 2 -->
+      <h3> Local wind vectors </h3>
+      <a name = "p2">
 
       <div class="row">
         <div class="col-md-4">
@@ -62,14 +71,19 @@ layout: null
         <img class ="img-responsive" src="map.png">
         </div>
 
-        <h3>Two columns</h3>  
+<!-- /PART 2 -->
+<!-- PART 3 -->
+
+        <h3>Large scale wind systems</h3>
+        <a name="p3">
+
         <div class="row">
           <div class="col-md-8">
           <img class="img-responsive" src="map-eu2.png">
           </div>
           <div class="col-md-4"> Lorem Ipsum</div>
         </div>
-
+<!-- /PART 3 -->
 
       </div>
 
