@@ -35,7 +35,7 @@ layout: null
  <!--              <h3 class="masthead-brand">Cover</h3> -->
               <nav class="nav nav-masthead">
                 <a class="nav-link active" href="test.html">Home</a>
-                <a class="nav-link active" href="content.html">Refurbished content</a>
+                <a class="nav-link active" href="content.html">Weather data</a>
                 <a class="nav-link" href="index.html">Old front</a>
  <!--                <a class="nav-link" href="#">Contact</a> -->
               </nav>
@@ -45,14 +45,14 @@ layout: null
           <div class="fader">
           <div class="inner cover">
             <h1 class="cover-heading">WeatherForSailing</h1>
-            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else.
-            </br> 
-            **Today:** <script src="js/dailysummary.js"></script>            
-            **This week:** <script src="js/weeklysummary.js"></script>
+            <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p>
+            <p class="lead">
+            <b> Today: </b> <script src="js/dailysummary.js"></script>            
+            <b> This week: </b> <script src="js/weeklysummary.js"></script>
             </p>
             <p class="lead">
-              <a href="index.html" class="btn btn-info btn-lg">Content</a>
-              <a href="plots/bbox.html" class="btn btn-info btn-lg">Go to map</a>
+              <a href="index.html" class="btn btn-info btn-lg">Weather data</a>
+              <a href="plots/bbox.html" class="btn btn-info btn-lg">Interactive map</a>
               <a href="https://github.com/Kristianuruplarsen/WeatherForSailing" class="btn btn-outline-secondary">Or view on Github</a>
             </p>
           </div>
