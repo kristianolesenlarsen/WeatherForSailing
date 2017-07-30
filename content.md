@@ -47,7 +47,7 @@ layout: null
 
 <!-- PART 1 -->
       <h3>Wind compass</h3>
-      <a name = "p1">
+      <a name = "p1"></a>
 
       <div class="row">
         <div class="col-md-8">
@@ -61,7 +61,7 @@ layout: null
 <!-- /PART 1 -->
 <!-- PART 2 -->
       <h3> Local wind vectors </h3>
-      <a name = "p2">
+      <a name = "p2"></a>
 
       <div class="row">
         <div class="col-md-4">
@@ -75,7 +75,7 @@ layout: null
 <!-- PART 3 -->
 
         <h3>Large scale wind systems</h3>
-        <a name="p3">
+        <a name="p3"></a>
 
         <div class="row">
           <div class="col-md-8">
