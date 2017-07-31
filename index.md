@@ -1,110 +1,90 @@
 ---
-layout: default
+layout: null
 ---
 
-# Weather summaries
-**Today:** <script src="js/dailysummary.js"></script>
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+   <!--  <link rel="icon" href="../../../../favicon.ico"> -->
 
-**This week:** <script src="js/weeklysummary.js"></script>
+    <title>WeatherForSailing</title>
 
-## 48 hour wind direction prognosis
-<script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="center">
-<script src="js/compass.js"></script>
-</div>
+    <!-- Custom styles for this template -->
+    <link href="assets/css/cover.css" rel="stylesheet">
 
+  </head>
 
-<h2> Weather layers </h2>
+  <body>
+  <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 
-<iframe src="plots/bbox.html" id ="leaflet"></iframe>
+    <div class="site-wrapper">
 
-Use the menu in the top right corner to toggle layers, or go to the [full screen version](https://kristianuruplarsen.github.io/WeatherForSailing/plots/bbox.html).
+    <div class ="full"></div>
 
+      <div class="site-wrapper-inner">
 
-<div class="fader">
-<h2> Wind field </h2>
+        <div class="cover-container">
 
-<div class = "left"> <img src="map.png"> </div>
-<div class = "right"> Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final. </div>
+          <div class="masthead clearfix">
+            <div class="inner">
+ <!--              <h3 class="masthead-brand">Cover</h3> -->
+              <nav class="nav nav-masthead">
+                <a class="nav-link active" href="index.html">Home</a>
+                <a class="nav-link active" href="content.html">Weather data</a>
+                <a class="nav-link" href="old.html">Old front</a>
+ <!--                <a class="nav-link" href="#">Contact</a> -->
+              </nav>
+            </div>
+          </div>
 
-</div>
+          <div class="fader">
+          <div class="inner cover">
+            <h1 class="cover-heading">WeatherForSailing</h1>
+  <!--          <p class="lead"> Data on wind, weather and currents presented for sailors and anyone else. </p> -->
+            <p class="lead">
+            <b> This week: </b> <script src="js/weeklysummary.js"></script>
+            </p>
+            <p class="lead">
+              <a href="content.html" class="btn btn-info btn-lg">Weather data</a>
+              <a href="plots/bbox.html" class="btn btn-info btn-lg">Interactive map</a>
+              <a href="https://github.com/Kristianuruplarsen/WeatherForSailing" class="btn btn-outline-secondary">Or view on Github</a>
+            </p>
+          </div>
+          </div>
 
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Cover template for <a href="https://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            </div>
+          </div>
 
-<div class="fader">
-<h2> Current temperature </h2>
+        </div>
 
-  <div class = "left"> Gauges the current temperature. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. </div>
-  <div class = "right">
-  <object data="svg/temp_now.svg" type="image/svg+xml"></object>
-  </div>
-</div>
+      </div>
 
+    </div>
 
-<div class="fader">
-<h2> risk of rain </h2>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
 
-  <div class="left">
-  <object data="svg/rain.svg" type="image/svg+xml"></object>
-  </div>
-  <div class = "right"> 8-day forecast for the risk of rain (and other precipation), as well as cloud coverage. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something. Lorem ipsum something something lorem ipsum something something lorem ipsum something something.
-  </div>
-</div>
+    <script>
+    window.sr = ScrollReveal({reset:false, duration:2000, distance:'0px'});
+    sr.reveal('.fader');
+    </script>
 
-
-<div class="fader">
-<h2> Temperature for the next 48 hours </h2>
-
-  <div class = "left">
-  <object data="svg/temp_overday.svg" type="image/svg+xml"></object>
-  </div>
-  <div class = "right"> Hourly temperatures for the coming 48 hours, notice that the second axis will vary from day to day.
-  </div>
-
-</div>
-
-<div class="fader">
-<h2> ... and for the next 8 days </h2>
-
-  <div class = "left"> and over the next 8 days </div>
-  <div class = "right">
-  <object data="svg/temp_overdays.svg" type="image/svg+xml"></object>
-  </div>
-</div>
-
-<div class="fader">
-<h2> Wind bearing </h2>
-
-  <div class = "left">
-  <object data="svg/windbearing_line.svg" type="image/svg+xml"></object>
-  </div>
-  <div class = "right"> Wind-bearing for the comming 48 hours </div>
-
-  <div class = "left">
-  <object data="svg/windbearing_radar.svg" type="image/svg+xml"></object>
-  </div>
-  <div class = "right"> Radar format
-  </div>
-</div>
-
-
-<div class="fader">
-<h2>  windspeed and windgusts </h2>
-
-  <div class = "left"> Shows the average wind speed alone and as a fraction of the highest recorded gusts </div>
-  <div class = "right">
-  <object data="svg/windspeed.svg" type="image/svg+xml"></object>
-  </div>
-
-</div>
-
-
-## About
-
-Weather data supplied by [darksky.net](https://darksky.net/poweredby) and [OpenWeatherMap](openweathermap.org/). Last updated <script src="js/time.js"></script>
-
-<script>
-window.sr = ScrollReveal({reset:true, duration:1000});
-sr.reveal('.fader');
-</script>
+  </body>
+</html>
