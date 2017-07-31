@@ -58,7 +58,7 @@ layout: null
         </div>
         <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot.
         <br>
-        It's constructed with the `plots.webready_plotly_winddir(weather)` function, which takes `weather` as it's returned from 'weather.fromDarkskyAPI().get_weather_at_loc()'. This function requires a key to the DarkSky Api.
+        It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
         </div>
       </div>
 
@@ -92,7 +92,7 @@ layout: null
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
-      <span class="text-muted">Weather data supplied by [darksky.net](https://darksky.net/poweredby), [OpenWeatherMap](openweathermap.org/) and GRIB data from [saildocs](http://saildocs.com/). Last updated <script src="js/time.js"></script>
+      <span class="text-muted">Weather data supplied by <a href="https://darksky.net/poweredby">DarkSky.net</a>, <a href="openweathermap.org/">OpenWeatherMap</a> and GRIB data from <a href ="http://saildocs.com/">Saildocs</a>. Last updated <script src="js/time.js"></script>
       </span>
     </div>
   </footer>
