@@ -25,15 +25,7 @@ a:hover {
  * Base structure
  */
 
- .full {
-    background: url("https://kristianuruplarsen.github.io/WeatherForSailing/assets/bg.jpeg") /*no-repeat center center fixed*/;
-    /* Full height */
-    height: 100%;
 
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     /*
     background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg")no-repeat center center fixed;
     -webkit-background-size: cover;
@@ -54,6 +46,16 @@ body {
   text-align: center;
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
+
+.full {
+   background: url("https://kristianuruplarsen.github.io/WeatherForSailing/assets/bg.jpeg") /*no-repeat center center fixed*/;
+   /* Full height */
+   height: 100%;
+
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
