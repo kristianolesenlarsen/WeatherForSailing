@@ -33,13 +33,13 @@ a:hover {
     -o-background-size: cover;
     background-size: cover;
     */
-}
+
 
 html,
 body {
   height: 100%;
 /*  background-color: #c9efff;*/
-/*  background-image:   linear-gradient(120deg, #0d4760, #c9efff)*/
+    background-image:  url("https://kristianuruplarsen.github.io/WeatherForSailing/assets/bg.jpeg") /*  linear-gradient(120deg, #0d4760, #c9efff)*/
 }
 body {
   color: #fff;
@@ -47,15 +47,7 @@ body {
   text-shadow: 0 .05rem .1rem rgba(0,0,0,.5);
 }
 
-.full {
-   background: url("https://kristianuruplarsen.github.io/WeatherForSailing/assets/bg.jpeg") /*no-repeat center center fixed*/;
-   /* Full height */
-   height: 100%;
 
-   /* Center and scale the image nicely */
-   background-position: center;
-   background-repeat: no-repeat;
-   background-size: cover;
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
