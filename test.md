@@ -25,6 +25,7 @@ layout: null
   <script src="https://unpkg.com/scrollreveal/dist/scrollreveal.min.js"></script>
 
     <div class="site-wrapper">
+    <div class ="full"> </div>
 
       <div class="site-wrapper-inner">
 
