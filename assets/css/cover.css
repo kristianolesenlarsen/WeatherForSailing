@@ -26,7 +26,7 @@ a:hover {
  */
 
  .full {
-    background: url('assets/bg.jpeg') /*no-repeat center center fixed*/;
+    background: url("https://kristianuruplarsen.github.io/WeatherForSailing/assets/bg.jpeg") /*no-repeat center center fixed*/;
     /* Full height */
     height: 100%;
 
@@ -34,6 +34,13 @@ a:hover {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    /*
+    background: url("https://mdbootstrap.com/images/regular/city/img%20(17).jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    */
 }
 
 html,
