@@ -54,6 +54,7 @@ layout: null
       <div class="row">
         <div class="col-md-8">
         <script src="js/compass.js" class = "img-responsive"></script>
+
         </div>
         <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
         </div>
@@ -69,6 +70,28 @@ layout: null
         </div>
         <div class="col-md-4">
           Lorem Ipsum
+
+            <div class="card" style="width: 20rem;">
+            <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">Active</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+              </li>
+            </ul>
+          </div>
+          <div class="card-block">
+            <h4 class="card-title">Special title treatment</h4>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+          </div>
+
         </div>
       </div>
 <!-- /PART 2 -->
