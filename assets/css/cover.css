@@ -27,10 +27,13 @@ a:hover {
 
  .full {
     background: url('assets/bg.jpeg') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
-    -o-background-size: cover;
 }
 
 html,
