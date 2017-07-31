@@ -53,9 +53,7 @@ layout: null
 
       <div class="row">
         <div class="col-md-8">
-        <div class="center">
         <script src="js/compass.js" class = "img-responsive"></script>
-        </div>
         </div>
         <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
         </div>
