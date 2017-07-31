@@ -26,7 +26,7 @@ a:hover {
  */
 
  .full {
-    background: url('assets/bg.jpeg') no-repeat center center fixed;
+    background: url('assets/bg.jpeg') /*no-repeat center center fixed*/;
     /* Full height */
     height: 100%;
 
