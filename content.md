@@ -39,6 +39,7 @@ layout: null
           <li><a href="#p1">Wind compass</a></li>
           <li><a href="#p2">Wind systems</a></li>
           <li><a href="#p3">Wind vectors</a></li>
+          <li><a href="#p4">Thermometer</a></li>
         </ul>
       </div>
     </nav>
@@ -86,7 +87,7 @@ layout: null
 <!-- /PART 3 -->
 <!-- PART 4 -->
       <a name="p4"></a>
-      <h3>Large scale wind systems</h3>
+      <h3>Current temperature</h3>
 
       <div class="row">
         <div class="col-md-8">
