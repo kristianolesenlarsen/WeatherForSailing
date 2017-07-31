@@ -70,7 +70,7 @@ layout: null
         </div>
         <div class="col-md-4">
           Lorem Ipsum
-
+<!--
             <div class="card" style="width: 20rem;">
             <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -91,7 +91,7 @@ layout: null
             <a href="#" class="btn btn-primary">Go somewhere</a>
           </div>
           </div>
-
+-->
         </div>
       </div>
 <!-- /PART 2 -->
