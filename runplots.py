@@ -3,6 +3,7 @@ import keys
 import plots
 import datetime
 import pandas as pd
+import GET_A_GRIB as GAG
 
 # inputs
 #   get_weather_around_loc: extend, incr (how far to each side of current location, and in how many steps)
@@ -39,8 +40,6 @@ grid['time_2'] = time
 df = pd.DataFrame.from_dict(grid,orient = 'index').T.to_csv('windgrid.csv', index = False)
 
 
-
-
 #fire up fromOpenAPI
 g = weather.fromOpenAPI(keys.key2)
 
@@ -52,6 +51,15 @@ weather.csvFunctions().toCSV(bbox, './data/bbox.csv','bbox')
 
 #folium plots
 plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
+
+
+# getting GRIB data
+for i in ['WIND,AIRTMP','WAVES']:
+    filename = GAG.getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
+    test = GAG.GRIBtoDict(filename,  delete_original = False)
+    pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
+    time.sleep(180)
+
 
 # something something ... run the R script
 #import subprocess

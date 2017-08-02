@@ -24,7 +24,7 @@ df$dy = df$speed * sin(df$direction)*f
 
 
 df_static = unique(subset(df, time == min(time)))
-map = get_map(c(subset(df_static, dummy == 1)$lon, subset(df_static, dummy == 1)$lat), zoom = n, color = 'bw')
+map = get_map(c(subset(df_static, dummy == 1)$lon, subset(df_static, dummy == 1)$lat), zoom = n, maptype = 'satellite')
 
 
 

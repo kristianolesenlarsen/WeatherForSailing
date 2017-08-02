@@ -64,10 +64,10 @@ layout: null
 
 <!-- PART 2 -->
         <a name = "p2"></a>
-        <h3> Atlantic winds </h3>
+        <h2> Atlantic winds </h2>
         <div class="row">
           <div class="col-md-4">
-          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:yellow"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
         </div>
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/Windspeed.png">
@@ -76,7 +76,7 @@ layout: null
 
 <!-- PART 2.1 -->
       <a name="p21"></a>
-      <h3> 2M air temperatures </h3>
+      <h2> 2M air temperatures </h2>
 
       <div class="row">
         <div class="col-md-8">
@@ -91,7 +91,7 @@ layout: null
 
 <!-- PART 3 -->
         <a name = "p3"></a>
-        <h3> Local wind vectors </h3>
+        <h2> Local wind vectors </h2>
         <div class="row">
           <div class="col-md-4">
           Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
@@ -102,7 +102,7 @@ layout: null
 <!-- /PART 3 -->
 <!-- PART 4 -->
       <a name="p4"></a>
-      <h3>Current temperature</h3>
+      <h2>Current temperature</h2>
 
       <div class="row">
         <div class="col-md-8">

@@ -342,7 +342,7 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filen
 
 
 
-
+"""
 for i in ['WIND,AIRTMP','WAVES']:
     filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
     test = GRIBtoDict(filename,  delete_original = False)
@@ -351,7 +351,7 @@ for i in ['WIND,AIRTMP','WAVES']:
 
 
 
-"""
+
 filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = 'WIND,AIRTMP', inc = 0.5, send = True)
 test = GRIBtoDict(filename,  delete_original = False)
 pd.DataFrame.from_dict(test[0]).to_csv('./data/wind.csv')
@@ -361,4 +361,4 @@ test = GRIBtoDict(filename,  delete_original = False)
 pd.DataFrame.from_dict(test[0]).to_csv('./data/waves.csv')
 """
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 0.5, 0.5, 70, 30, -20, 30, './data/test.json')
+#fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 0.5, 0.5, 70, 30, -20, 30, './data/test.json')
