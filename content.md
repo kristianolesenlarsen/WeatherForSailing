@@ -67,7 +67,7 @@ layout: null
         <h3> Atlantic winds </h3>
         <div class="row">
           <div class="col-md-4">
-          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <div style="color:yellow"> yellow </div> being the fastest, and the almost transparent <div style"color:blue"> blue </div> being low winds. Data are gathered from GRIB files from Saildocs.
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <p style="color:yellow"> yellow </p> being the fastest, and the almost transparent <p style="color:blue"> blue </p> being low winds. Data are gathered from GRIB files from Saildocs.
         </div>
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/Windspeed.png">
