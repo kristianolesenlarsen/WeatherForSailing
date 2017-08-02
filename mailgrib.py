@@ -142,12 +142,12 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
     return link
 
 
-## update names
-#q = genMailQuery(latBottom = 25, latTop = 70, lonLeft = 30, lonRight= 300, inc = 0.5, timestring = '00')
-#sendMailQuery(q, user,pwd)
-#getMailAttachment(user,pwd)
+def getMailWrapper(query, user, pwd, latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
+    q = genMailQuery(latBottom, latTop, lonLeft, lonRight, inc, params, timestring)
+    sendMailQuery(q, user,pwd)
+    getMailAttachment(user,pwd)
 
-
+#latBottom = 15, latTop = 80, lonLeft = 20, lonRight= 310, inc = 0.5, params = 'WIND,PRMSL,AIRTEMP', timestring = '00'
 
 
 def getTop(GRIB):
@@ -240,5 +240,7 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
 
 
 
-test = GRIBtoDict(b,  delete_original = False)
+
+filename =
+test = GRIBtoDict(,  delete_original = False)
 pd.DataFrame.from_dict(test[0]).to_csv('./data/wide.csv')
