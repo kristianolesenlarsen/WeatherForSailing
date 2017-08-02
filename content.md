@@ -66,32 +66,11 @@ layout: null
 
       <div class="row">
         <div class="col-md-8">
-          <img class="img-responsive" src="map-eu2.png">
+          <img class="img-responsive" src="plots/map-eu2.png">
         </div>
         <div class="col-md-4">
           Lorem Ipsum
-<!--
-            <div class="card" style="width: 20rem;">
-            <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Active</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-              </li>
-            </ul>
-          </div>
-          <div class="card-block">
-            <h4 class="card-title">Special title treatment</h4>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-          </div>
--->
+
         </div>
       </div>
 <!-- /PART 2 -->
@@ -103,7 +82,7 @@ layout: null
           Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
         </div>
         <div class="col-md-8">
-          <img class ="img-responsive" src="map.png">
+          <img class ="img-responsive" src="plots/map.png">
         </div>
 <!-- /PART 3 -->
 <!-- PART 4 -->

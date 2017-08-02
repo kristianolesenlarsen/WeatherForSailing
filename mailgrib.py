@@ -8,11 +8,12 @@ import gdal
 import numpy as np
 import re
 import time
+import json
+
 
 import email, imaplib, os
 imaplib._MAXLINE = 100000
 #import getpass
-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -30,10 +31,12 @@ pwd = keys.pwd
 
 def genMailQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
     #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
+
     query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonRight, lonLeft, str(inc), str(inc), timestring, params)
     if subscribe:
         query = 'sub ' + query
-    return query
+    print('query:', query)
+    return query.replace(' ','')
 
 ### sendemail ##################################################################
 #
@@ -43,12 +46,11 @@ def genMailQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, p
 def sendMailQuery(query, user, pwd, send = True):
     fromaddr = user
     toaddr = "query@saildocs.com"
-    timeNow = datetime.datetime.now().date().strftime('%d-%H')
 
     msg = MIMEMultipart()
     msg['From'] = fromaddr
     msg['To'] = toaddr
-    msg['Subject'] = "saildocs request" + ' ' + timeNow
+    msg['Subject'] = "saildocs request"
     # implement carrying info in the filename
 
 
@@ -83,36 +85,36 @@ def getMailAttachment(user, pwd):
     resp, items = m.search(None, 'ALL') # you could filter using the IMAP rules here (check http://www.example-code.com/csharp/imap-search-critera.asp)
     items = items[0].split() # getting the mails id
     print('items in folder:', items)
-    for emailid in items:
-        resp, data = m.fetch(emailid, "(RFC822)") # fetching the mail, "`(RFC822)`" means "get the whole stuff", but you can ask for headers only, etc
-        email_body = data[0][1] # getting the mail content
 
-        mail = email.message_from_bytes(email_body) # parsing the mail content to get a mail object
+    resp, data = m.fetch(items[-1], '(RFC822)')
+    body = data[0][1]
 
-        print('mail: ' + "[" + mail["From"] +"] :" + mail["Subject"])
-        #Check if any attachments at all
-        if mail.get_content_maintype() != 'multipart':
+    mail = email.message_from_bytes(body) # parsing the mail content to get a mail object
+    print('mail: ' + "[" + mail["From"] +"] :" + mail["Subject"])
+
+    # we use walk to create a generator so we can iterate on the parts and forget about the recursive headach
+    for part in mail.walk():
+        # multipart are just containers, so we skip them
+        if part.get_content_maintype() == 'multipart':
             continue
-        # we use walk to create a generator so we can iterate on the parts and forget about the recursive headach
-        for part in mail.walk():
-            # multipart are just containers, so we skip them
-            if part.get_content_maintype() == 'multipart':
-                continue
 
             # is this part an attachment ?
-            if part.get('Content-Disposition') is None:
-                continue
+        if part.get('Content-Disposition') is None:
+            continue
 
-            filename =  mail['Subject'][4:] + datetime.datetime.now().date().strftime('%d-%H')
-            att_path = os.path.join(detach_dir, filename) + '.grb'
-            #Check if its already there
-            if not os.path.exists(att_path):
-                open(att_path, 'w').close()
-                fp = open(att_path, 'wb')
-                fp.write(part.get_payload(decode=True))
-                fp.close()
-                print('new file added!')
+        filename =  mail['Subject'][4:] + datetime.datetime.now().date().strftime('%d-%H')
+        att_path = os.path.join(detach_dir, filename) + '.grb'
+        #Check if its already there
+        if os.path.exists(att_path):
+            os.remove(att_path)
+            print('removed old file')
+        else:
+            open(att_path, 'w').close()
 
+        fp = open(att_path, 'wb')
+        fp.write(part.get_payload(decode=True))
+        fp.close()
+        print('new file added!')
 
 
 #possibly dont get anl files?
@@ -127,6 +129,7 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
         f.write(chunk)
 
     return link
+
 
 
 """ getMailWrapper - a wrapper to get grib data from saildocs
@@ -152,10 +155,25 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
 # HGT: 500mb (milibars) height above sea-level
 # SEATMP: sea temperature
 # AIRTMP: air temperature
+# WAVES: wave height
 
 def getMailWrapper(user, pwd, latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
+    STRING_LENGTH = 25
+
     q = genMailQuery(latBottom, latTop, lonLeft, lonRight, model, inc, params, timestring, subscribe)
-    sendMailQuery(q, user,pwd)
+#    if len(q) > 35:
+#        splitcomma = q[STRING_LENGTH:40].find(',')
+#        if splitcomma != -1:
+#            q1 = q[0:splitcomma + STRING_LENGTH + 1]
+#            q2 = q[splitcomma + STRING_LENGTH + 1: len(q)]
+#            q = """
+#            {}=
+#            {}
+#            """.format(q1, q2)
+#        else:
+#            print('error in generating query')
+    sendMailQuery(q, user,pwd, send)
+    print(q)
     if send:
         time.sleep(180)
     getMailAttachment(user,pwd)
@@ -206,12 +224,12 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
         maxy = topLeft[0] #gt[3]
         print(minx, maxy)
     if not topLeft:
-        minx = getLeft(GRIB)
+        minx = getLeftX(GRIB)
 #        maxx = 60
-        maxy = getTop(GRIB)
+        maxy = getTopY(GRIB)
 #        miny = 10
 #    print('bbox:',minx, maxx, miny, maxy)
-    print(gt[2])
+
     stepx = gt[1]
     stepy = gt[5]
     print('steps:', stepx, stepy)
@@ -267,16 +285,19 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
     print("DONE! see result in output[0]")
     return [endResult, outerHelp]
 
+""" fromDictToWindJSON: takes the dict produced by GRIBtoDict() and converts it into an animation friendly json file
+ - u: u component of wind
+ - v: v component of wind
+ - dx: increments in longitude
+ - dy: increments in latitude
+ - latTop, latBottom, lonLeft,lonRight: bbox
+ - filename: output json filename
+"""
+# TODO is to make transfer from GRIBtoDict to this automatic
 
-filename = getMailWrapper(user, pwd, 30, 70, -20,30, timestring = '00', params = 'WIND, PRMSL, AIRTMP, SEATMP', inc = 0.5, send = True)
-test = GRIBtoDict(filename,  delete_original = False)
-pd.DataFrame.from_dict(test[0]).to_csv('./data/wide.csv')
+def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filename):
 
-
-
-
-def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, time):
-
+    time = datetime.datetime.now().date().strftime('%Y-%M-%d %H-%M %Z')
     nx = (lonLeft - lonRight)/(dx)
     ny = (latTop -latBottom)/(dy)
     if nx < 0:
@@ -284,28 +305,28 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, time)
     if ny < 0:
         ny = -ny
 
-    out = [{'header': { 'parameterUnit': "",
+    out = [{'header': { 'parameterUnit': '',
                         'parameterNumber': '',
                         'dx': dx,
                         'dy': dy,
                         'parameterNumberName': "eastward_wind",
                         'la1': latTop,
                         'la2': latBottom,
-                        'parameterCategory':'',
+                        'parameterCategory': '',
                         'lo2': lonRight,
                         'nx': nx,
                         'ny': ny,
                         'refTime': time,
                         'lo1': lonLeft},
                             'data': u
-                        }
-            {'header': { 'parameterUnit': "",
+                        },
+            {'header': { 'parameterUnit': '',
                          'parameterNumber': '',
                          'dx': dx,
                          'dy': dy,
                          'parameterNumberName': "northward_wind",
                          'la1': latTop,
-                         'la2': latBottom
+                         'la2': latBottom,
                          'parameterCategory': '',
                          'lo2': lonRight,
                          'nx': nx,
@@ -314,5 +335,30 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, time)
                          'lo1': lonLeft},
                          'data': v
                         }]
+    with open(filename, 'w') as f:
+        json.dump(out, f)
 
     return out
+
+
+
+
+for i in ['WIND,AIRTMP','WAVES']:
+    filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
+    test = GRIBtoDict(filename,  delete_original = False)
+    pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
+    time.sleep(180)
+
+
+
+"""
+filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = 'WIND,AIRTMP', inc = 0.5, send = True)
+test = GRIBtoDict(filename,  delete_original = False)
+pd.DataFrame.from_dict(test[0]).to_csv('./data/wind.csv')
+
+filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = 'WAVES', inc = 0.5, send = True)
+test = GRIBtoDict(filename,  delete_original = False)
+pd.DataFrame.from_dict(test[0]).to_csv('./data/waves.csv')
+"""
+
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 0.5, 0.5, 70, 30, -20, 30, './data/test.json')
