@@ -11,6 +11,10 @@ library("viridis")
 
 setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing/data")
 
+
+df = read.csv('test.csv')
+df$speed = sqrt(df$UGRD^2 + df$VGRD^2)
+
 # fix some easy way to change this
 fname = "25N,70N,300W,30W29-00.grb"
 #fname = '40N,60N,140W,120W29-00.grb'
@@ -18,14 +22,28 @@ fname = "25N,70N,300W,30W29-00.grb"
 
 
 gribdata = readGDAL(fname)
-df = as.data.frame(gribdata)
+df2 = as.data.frame(gribdata)
 rm(gribdata)
 
 
 
-#df$speed = sqrt(df$band4^2 + df$band7^2)
-df$speed = sqrt(df$band1^2 + df$band2^2)
-df$unif = runif(length(df$x),0,1)
+min(df$x)
+min(df2$x)
+
+max(df$x)
+max(df2$x)
+
+
+min(df$y)
+min(df2$y)
+
+max(df$y)
+max(df2$y)
+
+
+
+df$speed = sqrt(df$IGRD^2 + df$VGRD^2)
+#df$unif = runif(length(df$x),0,1)
 
 #map = get_map(c(-130, 55) , zoom = 3, maptype = 'satellite')
 map = get_map(c(5, 55) , zoom = 3, maptype = 'satellite')
@@ -52,7 +70,8 @@ p = ggmap(map) +
 
 p
 
-ggsave('map-eu2.png')
+
+#ggsave('map-eu2.png')
 
 
 

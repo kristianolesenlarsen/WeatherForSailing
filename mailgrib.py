@@ -85,7 +85,7 @@ def sendMailQuery(query, user, pwd, send = True):
 #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
 
 def getMailAttachment(user, pwd):
-    detach_dir = './data' # directory where to save attachments (default: current)
+    detach_dir = './data/raw' # directory where to save attachments (default: current)
     # connecting to the gmail imap server
     m = imaplib.IMAP4_SSL("imap.gmail.com")
     m.login(user,pwd)
@@ -134,7 +134,7 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
     resp = requests.get(link, stream = True)
     i = 0
 
-    f = open('./data/{}'.format(filename), 'wb')
+    f = open('./data/raw/{}'.format(filename), 'wb')
     for chunk in resp.iter_content():
         f.write(chunk)
         print(i)
@@ -150,8 +150,21 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
 
 
 
+def getTop(GRIB):
+    place = [m.start() for m in re.finditer(',', GRIB)][0]
+    comma = [m.start() for m in re.finditer('N', GRIB)][1]
+
+    return int(GRIB[place +1 : comma])
+
+def getLeft(GRIB):
+    place = [m.start() for m in re.finditer(',', GRIB)][2]
+    comma = [m.start() for m in re.finditer('W', GRIB)][1]
+
+    return int(GRIB[place +1 : comma])
+
+
 # ATT: x,y are returned wrongly
-def GRIBtoDict(GRIB, delete_original = True):
+def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
     f = gdal.Open(GRIB)
     print('opened file')
     #basic info on the thing
@@ -162,13 +175,17 @@ def GRIBtoDict(GRIB, delete_original = True):
 
     print('doing min max stuff')
     #bbox of GRIB data
-    minx = gt[0]
-    miny = gt[3] + width*gt[4] + height*gt[5]
-    maxx = gt[0] + width*gt[1] + height*gt[2]
-    maxy = gt[3]
-    print(minx, miny, maxx, maxy)
+    if topLeft:
+        minx = topleft[1] #left
+        maxy = topLeft[0] #gt[3]
+        print(minx, maxy)
+    if not topLeft:
+        minx = getLeft(GRIB)
+        maxy = getTop(GRIB)
+
+    print(minx, maxy)
     stepx = gt[2]
-    stepy = gt[2]
+    stepy = gt[5]
 
     # number of bands
     s = gdal.Info(GRIB)
@@ -209,8 +226,8 @@ def GRIBtoDict(GRIB, delete_original = True):
             for x_index in range(0,len(array[y_index])):           # for each x
                 if b == 1:                                         # Only add lon/lat once
                     # something is wrong with this
-                    endResult['x'].append(maxy - (miny + 0.5*x_index))
-                    endResult['y'].append(maxx - (minx + 0.5*y_index))
+                    endResult['x'].append( minx + stepx * x_index )
+                    endResult['y'].append( maxy + stepy * y_index )
                 endResult[meta['GRIB_ELEMENT']].append(array[y_index][x_index])
 
     if delete_original:
@@ -223,85 +240,5 @@ def GRIBtoDict(GRIB, delete_original = True):
 
 
 
-
-
-
-test = GRIBtoDict(b, delete_original = False)
-pd.DataFrame.from_dict(test[0]).to_csv('./data/test.csv')
-
-
-"""
-below is testing stuff
-"""
-
-
-
-a = './data/40N,60N,140W,120W.grb'
-b = './data/25N,70N,300W,30W29-00.grb'
-c = './data/gfs_4_20170726_0000_384.grb2'
-
-
-
-
-
-arr[1][180]
-(70-25)*2
-
-25+0.5
-
-(300-30)/2
-
-f = gdal.Open(b)
-
-
-# saildocs email gribs
-# pressure, pressure, pressure, wind-speed (u), wind-speed (u), wind-speed (u), wind-speed (v), wind-speed (v), wind-speed (v)
-
-
-
-
-f.GetRasterBand(1).GetMetadata()
-
-
-band = f.GetRasterBand(2)
-
-width = f.RasterXSize
-height = f.RasterYSize
-
-
-gt = f.GetGeoTransform()
-
-gt
-
-
-f.GetProjectionRef()
-
-gt
-
-minx = gt[0]
-miny = gt[3] + width*gt[4] + height*gt[5]
-maxx = gt[0] + width*gt[1] + height*gt[2]
-maxy = gt[3]
-
-miny
-maxy
-
-
-minx
-maxx
-# upper left: (gt[0],gt[3])
-#
-
-s = gdal.Info(b)
-s
-# find number of bands
-array = band.ReadAsArray()
-
-band.XSize
-
-band.YSize
-
-
-band.GetDescription()
-
-f.GetGeoTransform()
+test = GRIBtoDict(b,  delete_original = False)
+pd.DataFrame.from_dict(test[0]).to_csv('./data/wide.csv')
