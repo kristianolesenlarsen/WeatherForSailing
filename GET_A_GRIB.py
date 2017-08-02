@@ -285,6 +285,9 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
     print("DONE! see result in output[0]")
     return [endResult, outerHelp]
 
+
+
+
 """ fromDictToWindJSON: takes the dict produced by GRIBtoDict() and converts it into an animation friendly json file
  - u: u component of wind
  - v: v component of wind
@@ -298,36 +301,36 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
 def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filename):
 
     time = datetime.datetime.now().date().strftime('%Y-%M-%d %H-%M %Z')
-    nx = (lonLeft - lonRight)/(dx)
-    ny = (latTop -latBottom)/(dy)
+    nx = int(round((lonLeft - lonRight)/(dx),0))
+    ny = int(round((latTop -latBottom)/(dy),0))
     if nx < 0:
         nx = -nx
     if ny < 0:
         ny = -ny
 
-    out = [{'header': { 'parameterUnit': '',
-                        'parameterNumber': '',
+    out = [{'header': {'parameterUnit': 'm.s-1',
+                        'parameterNumber': 2,
                         'dx': dx,
                         'dy': dy,
                         'parameterNumberName': "eastward_wind",
                         'la1': latTop,
                         'la2': latBottom,
-                        'parameterCategory': '',
+                        'parameterCategory': 2,
                         'lo2': lonRight,
                         'nx': nx,
                         'ny': ny,
                         'refTime': time,
                         'lo1': lonLeft},
-                            'data': u
+                        'data': u
                         },
-            {'header': { 'parameterUnit': '',
-                         'parameterNumber': '',
+            {'header': { 'parameterUnit': 'm.s-1',
+                         'parameterNumber': 3,
                          'dx': dx,
                          'dy': dy,
                          'parameterNumberName': "northward_wind",
                          'la1': latTop,
                          'la2': latBottom,
-                         'parameterCategory': '',
+                         'parameterCategory': 2,
                          'lo2': lonRight,
                          'nx': nx,
                          'ny': ny,
@@ -348,17 +351,10 @@ for i in ['WIND,AIRTMP','WAVES']:
     test = GRIBtoDict(filename,  delete_original = False)
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
-
-
-
-
-filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = 'WIND,AIRTMP', inc = 0.5, send = True)
-test = GRIBtoDict(filename,  delete_original = False)
-pd.DataFrame.from_dict(test[0]).to_csv('./data/wind.csv')
-
-filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = 'WAVES', inc = 0.5, send = True)
-test = GRIBtoDict(filename,  delete_original = False)
-pd.DataFrame.from_dict(test[0]).to_csv('./data/waves.csv')
 """
 
-#fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 0.5, 0.5, 70, 30, -20, 30, './data/test.json')
+filename = getMailWrapper(user, pwd, 5, 8, -70,50, timestring = '00', params = 'WIND', inc = 1, send = True)
+test = GRIBtoDict(filename,  delete_original = False)
+
+
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 80, latBottom =  70, lonLeft =  40, lonRight = 50, filename = 'data/windy.json')

@@ -31,9 +31,9 @@ setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing/plots")
 
 
 # Wind
-p = ggmap(map) +
+p_2 = ggmap(map) +
   geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed)) +
-  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5) +
+#  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5) +
   scale_fill_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 9) +
   scale_color_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 9) +
   theme_nothing()
@@ -52,7 +52,7 @@ p3 = ggmap(map) +
   geom_tile(data = df, aes(x = x, y = y,  fill = TMP), alpha = 0.4) +
   geom_contour(data = df, aes(x = x, y = y, z = TMP, colour = ..level..), bins = 5) +
   scale_fill_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 16) +
-  scale_color_gradient2(low = 'yellow', mid = 'yellow', high = 'red', midpoint = 16) +
+  scale_color_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 16) +
   theme_nothing()
 
 
