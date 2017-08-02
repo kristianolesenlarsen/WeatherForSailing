@@ -38,6 +38,7 @@ layout: null
           <li class="active"><a href="content.html">Top</a></li>
           <li><a href="#p1">Wind compass</a></li>
           <li><a href="#p2">Wind systems</a></li>
+          <li><a href="#p21">Temperatures</a></li>
           <li><a href="#p3">Wind vectors</a></li>
           <li><a href="#p4">Thermometer</a></li>
         </ul>
@@ -60,20 +61,34 @@ layout: null
         </div>
       </div>
 <!-- /PART 1 -->
+
 <!-- PART 2 -->
-      <a name="p2"></a>
-      <h3>Large scale wind systems</h3>
+        <a name = "p2"></a>
+        <h3> Atlantic winds </h3>
+        <div class="row">
+          <div class="col-md-4">
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <div style="color:yellow"> yellow </div> being the fastest, and the almost transparent <div style"color:blue"> blue </div> being low winds. Data are gathered from GRIB files from Saildocs.
+        </div>
+        <div class="col-md-8">
+          <img class ="img-responsive" src="plots/Windspeed.png">
+        </div>
+<!-- /PART 2 -->
+
+<!-- PART 2.1 -->
+      <a name="p21"></a>
+      <h3> 2M air temperatures </h3>
 
       <div class="row">
         <div class="col-md-8">
-          <img class="img-responsive" src="plots/map-eu2.png">
+          <img class="img-responsive" src="plots/Temp.png">
         </div>
         <div class="col-md-4">
-          Lorem Ipsum
+          This map shows air temperatures 2 meters above ocean level.
 
         </div>
       </div>
-<!-- /PART 2 -->
+<!-- /PART 2.1 -->
+
 <!-- PART 3 -->
         <a name = "p3"></a>
         <h3> Local wind vectors </h3>
