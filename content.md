@@ -72,6 +72,7 @@ layout: null
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/Windspeed.png">
         </div>
+        </div>
 <!-- /PART 2 -->
 
 <!-- PART 2.1 -->
@@ -94,10 +95,11 @@ layout: null
         <h3> Local wind vectors </h3>
         <div class="row">
           <div class="col-md-4">
-          Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
-        </div>
+            Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
+          </div>
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/map.png">
+        </div>
         </div>
 <!-- /PART 3 -->
 <!-- PART 4 -->
@@ -120,7 +122,7 @@ layout: null
         </code></pre>
         </div>
       </div>
-<!-- /PART 2 -->
+<!-- /PART 4 -->
 
 <!-- FOOTER -->
 <footer class="footer">
