@@ -249,7 +249,7 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
         band = f.GetRasterBand(b)
         meta = band.GetMetadata_Dict()
         #this is stupidly complicated, but it converts the timestamp to a readable date
-        time = datetime.datetime.fromtimestamp(int(re.findall('\d+', band.GetMetadata_Dict()['GRIB_REF_TIME'])[0])).strftime("%Y-%m-%d %H")
+        time = datetime.datetime.fromtimestamp(int(re.findall('\d+', meta['GRIB_REF_TIME'])[0])).strftime("%Y-%m-%d %H")
 
         # fill out the helper dict
         #helpMeDict['var'].append(meta['GRIB_ELEMENT'])
@@ -352,10 +352,11 @@ for i in ['WIND,AIRTMP','WAVES']:
     test = GRIBtoDict(filename,  delete_original = False)
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
-"""
+
 # why is this not working?
-filename = getMailWrapper(user, pwd, 70, -70, -175, 175, timestring = '00', params = 'WIND', inc = 1, send = True)
+filename = getMailWrapper(user, pwd, 70, 20, -175, 175, timestring = '00', params = 'WIND', inc = 1, send = True)
 test = GRIBtoDict(filename,  delete_original = False)
 
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 70, latBottom =  -70, lonLeft =  -175, lonRight = 175, filename = 'data/windy.json')
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 70, latBottom =  20, lonLeft =  -175, lonRight = 175, filename = 'data/windy.json')
+"""
