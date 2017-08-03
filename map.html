@@ -138,7 +138,7 @@ var tile_layer_3 = L.tileLayer(
 				attribution: 'tile.openweathermap.org',
 				detectRetina: false
 				}
-		).addTo(map,'Temperatures');;
+		);;
 layerControl.addOverlay(tile_layer_3, 'Temperatures');
 
 
@@ -154,6 +154,7 @@ $.getJSON('data/windy.json', function (data) {
 			displayEmptyString: 'No wind data'
 		},
 		data: data,
+		colorScale: ["rgb(0, 9, 93)", "rgb(0, 14, 142)", "rgb(14, 6, 172)", "rgb(6, 60, 200)", "rgb(0, 113, 205)", "rgb(0, 146, 240)", "rgb(27, 192, 254)", "rgb(98, 212, 255)", "rgb(194, 240, 255)"],
 		maxVelocity: 10
 
 	}).addTo(map, 'Winds-animated');
