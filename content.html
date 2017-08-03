@@ -110,13 +110,10 @@
       <h2>Current temperature</h2>
 
       <div class="row">
-        <div class="col-md-8">
-        <object data="svg/temp_now.svg" type="image/svg+xml" class = "img-responsive"></object>
-        </div>
         <div class="col-md-4">
         Gauges the current temperature. This is made with the python module <code>pygal</code> which provide a nice and easy interface to produce a number of standard plots. For example this was made only by importing pygal and calling
         <br>
-        <pre><code> def show_temperature(weather, name):
+        <pre class = "prettyprint"><code> def show_temperature(weather, name):
             gauge_chart = pygal.Gauge(human_readable=True, style = custom_style)
             gauge_chart.title = 'Current temperature'
             gauge_chart.range = [0, 35]
@@ -124,6 +121,9 @@
             return gauge_chart.render_to_file('./svg/' + name + '.svg')
         </code></pre>
         </div>
+      <div class="col-md-8">
+        <object data="svg/temp_now.svg" type="image/svg+xml" class = "img-responsive"></object>
+      </div>
       </div>
 <!-- /PART 2 -->
 
@@ -145,5 +145,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   </body>
 </html>
