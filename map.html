@@ -143,7 +143,6 @@ layerControl.addOverlay(tile_layer_3, 'Temperatures');
 
 
 
-
 // load data (u, v grids) from somewhere (e.g. https://github.com/danwild/wind-js-server)
 $.getJSON('data/windy.json', function (data) {
 
@@ -156,7 +155,8 @@ $.getJSON('data/windy.json', function (data) {
 		},
 		data: data,
 		maxVelocity: 10
-	});
+
+	}).addTo(map, 'Winds-animated');
 
 	layerControl.addOverlay(velocityLayer, 'Winds-animated');
 });
