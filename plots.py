@@ -207,7 +207,6 @@ def plotly_winddir(weather):
     data = [trace1,trace2]
     layout = go.Layout(
         title='Wind direction and -speed',
-
         showlegend = False,
         font=dict(
             size=16
