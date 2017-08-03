@@ -297,6 +297,7 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
  - filename: output json filename
 """
 # TODO is to make transfer from GRIBtoDict to this automatic
+#also some of these values are static to match grib2json output - this is worth fixing
 
 def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filename):
 
@@ -353,8 +354,8 @@ for i in ['WIND,AIRTMP','WAVES']:
     time.sleep(180)
 """
 
-filename = getMailWrapper(user, pwd, 5, 8, -70,50, timestring = '00', params = 'WIND', inc = 1, send = True)
+filename = getMailWrapper(user, pwd, -90, 90, -180,180, timestring = '00', params = 'WIND', inc = 1, send = False)
 test = GRIBtoDict(filename,  delete_original = False)
 
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 80, latBottom =  70, lonLeft =  40, lonRight = 50, filename = 'data/windy.json')
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 80, latBottom =  5, lonLeft =  -70, lonRight = 50, filename = 'data/windy.json')
