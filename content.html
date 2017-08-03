@@ -52,9 +52,10 @@
       <div class="row">
         <div class="col-md-8">
         <script src="js/compass.js" class = "img-responsive"></script>
-
         </div>
-        <div class="col-md-4">This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
+
+        <div class="col-md-4">
+          This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
         </div>
       </div>
 <!-- /PART 1 -->
@@ -63,11 +64,13 @@
         <a name = "p2"></a>
         <h2> Atlantic winds </h2>
         <div class="row">
-          <div class="col-md-4">
-          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
-        </div>
+
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/Windspeed.png">
+        </div>
+        <div class="col-md-4">
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
+        </div>
         </div>
 <!-- /PART 2 -->
 
@@ -80,7 +83,7 @@
           <img class="img-responsive" src="plots/Temp.png">
         </div>
         <div class="col-md-4">
-          This map shows air temperatures 2 meters above ocean level.
+          This map shows air temperatures 2 meters above ground level.
 
         </div>
       </div>
@@ -95,6 +98,7 @@
         </div>
         <div class="col-md-8">
           <img class ="img-responsive" src="plots/map.png">
+        </div>
         </div>
 <!-- /PART 3 -->
 <!-- PART 4 -->
@@ -129,7 +133,7 @@
 <!-- /FOOTER -->
 
 
-   </div>
+
     </div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript
