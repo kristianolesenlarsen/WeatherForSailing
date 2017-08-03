@@ -52,23 +52,23 @@
       <div class="row">
 
         <div class="col-md-4">
-          This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
 
-          <!-- navbuttons -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-              <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Top</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#p2">Next</a>
-              </li>
-          </ul>
-        </nav>
-        <!-- /navbuttons -->
+                    <!-- navbuttons -->
+                      <ul class="nav nav-pills nav-fill nav-justified">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">Top</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#p2">Next</a>
+                        </li>
+                    </ul>
+                    <br  />
+                  <!-- /navbuttons -->
+
+          This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
 
 
         </div>
@@ -85,12 +85,9 @@
         <div class="row">
 
         <div class="col-md-4">
-          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
-
 
           <!-- navbuttons -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
+            <ul class="nav nav-pills nav-fill nav-justified">
               <li class="page-item">
                   <a class="page-link" href="#p1" tabindex="-1">Previous</a>
               </li>
@@ -101,9 +98,10 @@
                 <a class="page-link" href="#p21">Next</a>
               </li>
           </ul>
-        </nav>
+          <br  />
         <!-- /navbuttons -->
 
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
 
         </div>
 
@@ -120,11 +118,8 @@
 
       <div class="row">
         <div class="col-md-4">
-          This map shows air temperatures 2 meters above ground level.
-
           <!-- navbuttons -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
+            <ul class="nav nav-pills nav-fill nav-justified">
               <li class="page-item">
                   <a class="page-link" href="#p2" tabindex="-1">Previous</a>
               </li>
@@ -135,10 +130,10 @@
                 <a class="page-link" href="#p3">Next</a>
               </li>
           </ul>
-        </nav>
+        <br />
         <!-- /navbuttons -->
 
-
+          This map shows air temperatures 2 meters above ground level.
         </div>
 
         <div class="col-md-8">
@@ -153,22 +148,23 @@
         <h2> Local wind vectors </h2>
         <div class="row">
           <div class="col-md-4">
+            <!-- navbuttons -->
+
+              <ul class="nav nav-pills nav-fill nav-justified">
+                <li class="page-item">
+                    <a class="page-link" href="#p21" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Top</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#p4">Next</a>
+                </li>
+            </ul>
+            <br />
+          <!-- /navbuttons -->
+
             Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
-          <!-- navbuttons -->
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-end">
-              <li class="page-item">
-                  <a class="page-link" href="#p21" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Top</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#p4">Next</a>
-              </li>
-          </ul>
-        </nav>
-        <!-- /navbuttons -->
           </div>
           <div class="col-md-8">
             <img class ="img-responsive" src="plots/map.png">
@@ -182,6 +178,24 @@
 
       <div class="row">
         <div class="col-md-4">
+
+          <!-- navbuttons -->
+
+            <ul class="nav nav-pills nav-fill nav-justified">
+              <li class="page-item">
+                  <a class="page-link" href="#p3" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Top</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+          </ul>
+          <br />
+        <!-- /navbuttons -->
+
+
         Gauges the current temperature. This is made with the python module <code>pygal</code> which provide a nice and easy interface to produce a number of standard plots. For example this was made only by importing pygal and calling
         <br>
         <pre class = "prettyprint"><code> def show_temperature(weather, name):
@@ -191,22 +205,6 @@
             gauge_chart.add('temperature', weather['currently']['temperature'])
             return gauge_chart.render_to_file('./svg/' + name + '.svg')
         </code></pre>
-
-        <!-- navbuttons -->
-        <nav aria-label="Page navigation">
-          <ul class="pagination justify-content-end">
-            <li class="page-item">
-                <a class="page-link" href="#p3" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="#">Top</a>
-            </li>
-            <li class="page-item disabled">
-              <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-      </nav>
-      <!-- /navbuttons -->
 
         </div>
       <div class="col-md-8">
