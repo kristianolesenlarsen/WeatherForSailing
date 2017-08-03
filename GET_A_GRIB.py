@@ -353,9 +353,9 @@ for i in ['WIND,AIRTMP','WAVES']:
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
 """
-
-filename = getMailWrapper(user, pwd, -10, 85, -85, 65, timestring = '00', params = 'WIND', inc = 1, send = True)
+# why is this not working?
+filename = getMailWrapper(user, pwd, 70, -70, -175, 175, timestring = '00', params = 'WIND', inc = 1, send = True)
 test = GRIBtoDict(filename,  delete_original = False)
 
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 85, latBottom =  -10, lonLeft =  -85, lonRight = 65, filename = 'data/windy.json')
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 70, latBottom =  -70, lonLeft =  -175, lonRight = 175, filename = 'data/windy.json')
