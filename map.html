@@ -111,7 +111,7 @@ var tile_layer_1 = L.tileLayer(
 				attribution: 'tile.openweathermap.org',
 				detectRetina: false
 				}
-		).addTo(map,'Winds');
+		);
 layerControl.addOverlay(tile_layer_1, 'Winds-static');
 
 // precipitation tiles
@@ -125,7 +125,7 @@ var tile_layer_2 = L.tileLayer(
 				attribution: 'tile.openweathermap.org',
 				detectRetina: false
 				}
-		).addTo(map,'Precipitation');
+		)
 layerControl.addOverlay(tile_layer_2, 'Precipitation');
 
 var tile_layer_3 = L.tileLayer(
@@ -138,7 +138,7 @@ var tile_layer_3 = L.tileLayer(
 				attribution: 'tile.openweathermap.org',
 				detectRetina: false
 				}
-		).addTo(map,'Temperatures');
+		).addTo(map,'Temperatures');;
 layerControl.addOverlay(tile_layer_3, 'Temperatures');
 
 

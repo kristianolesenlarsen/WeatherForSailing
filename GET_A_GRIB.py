@@ -354,8 +354,8 @@ for i in ['WIND,AIRTMP','WAVES']:
     time.sleep(180)
 """
 
-filename = getMailWrapper(user, pwd, -90, 90, -180,180, timestring = '00', params = 'WIND', inc = 1, send = False)
+filename = getMailWrapper(user, pwd, -10, 85, -85, 65, timestring = '00', params = 'WIND', inc = 1, send = True)
 test = GRIBtoDict(filename,  delete_original = False)
 
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 80, latBottom =  5, lonLeft =  -70, lonRight = 50, filename = 'data/windy.json')
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 85, latBottom =  -10, lonLeft =  -85, lonRight = 65, filename = 'data/windy.json')
