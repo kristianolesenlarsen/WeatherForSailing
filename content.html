@@ -54,11 +54,11 @@
         <div class="col-md-4">
 
           <ul class="pager">
-            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
-            <li class="previous"><a href="#"><span aria-hidden="true">&carr;</span> Previous</a></li>
-            <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
+            <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Prev.</a></li>
+            <li ><a href="#"><span aria-hidden="true"></span> Top</a></li>
+            <li class="next"><a href="#p2">Next <span aria-hidden="true">&rarr;</span></a></li>
           </ul>
-        </nav>
+
                     <!-- navbuttons
                       <ul class="nav nav-pills nav-fill nav-justified">
                         <li class="page-item disabled">
@@ -92,20 +92,13 @@
 
         <div class="col-md-4">
 
-          <!-- navbuttons -->
-            <ul class="nav nav-pills nav-fill nav-justified">
-              <li class="page-item">
-                  <a class="page-link" href="#p1" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Top</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#p21">Next</a>
-              </li>
+          <ul class="pager">
+            <li class="previous"><a href="#p1"><span aria-hidden="true">&larr;</span> Prev.</a></li>
+            <li ><a href="#"><span aria-hidden="true"></span> Top</a></li>
+            <li class="next"><a href="#p21">Next <span aria-hidden="true">&rarr;</span></a></li>
           </ul>
-          <br  />
-        <!-- /navbuttons -->
+
+
 
           This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
 
@@ -124,20 +117,13 @@
 
       <div class="row">
         <div class="col-md-4">
-          <!-- navbuttons -->
-            <ul class="nav nav-pills nav-fill nav-justified">
-              <li class="page-item">
-                  <a class="page-link" href="#p2" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Top</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#p3">Next</a>
-              </li>
+
+          <ul class="pager">
+            <li class="previous"><a href="#p2"><span aria-hidden="true">&larr;</span> Prev.</a></li>
+            <li ><a href="#"><span aria-hidden="true"></span> Top</a></li>
+            <li class="next"><a href="#p3">Next <span aria-hidden="true">&rarr;</span></a></li>
           </ul>
-        <br />
-        <!-- /navbuttons -->
+
 
           This map shows air temperatures 2 meters above ground level.
         </div>
@@ -154,21 +140,13 @@
         <h2> Local wind vectors </h2>
         <div class="row">
           <div class="col-md-4">
-            <!-- navbuttons -->
 
-              <ul class="nav nav-pills nav-fill nav-justified">
-                <li class="page-item">
-                    <a class="page-link" href="#p21" tabindex="-1">Previous</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">Top</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#p4">Next</a>
-                </li>
+            <ul class="pager">
+              <li class="previous"><a href="#p21"><span aria-hidden="true">&larr;</span> Prev.</a></li>
+              <li ><a href="#"><span aria-hidden="true"></span> Top</a></li>
+              <li class="next"><a href="#p4">Next <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
-            <br />
-          <!-- /navbuttons -->
+
 
             Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
           </div>
@@ -185,21 +163,11 @@
       <div class="row">
         <div class="col-md-4">
 
-          <!-- navbuttons -->
-
-            <ul class="nav nav-pills nav-fill nav-justified">
-              <li class="page-item">
-                  <a class="page-link" href="#p3" tabindex="-1">Previous</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#">Top</a>
-              </li>
-              <li class="page-item disabled">
-                <a class="page-link" href="#">Next</a>
-              </li>
+          <ul class="pager">
+            <li class="previous"><a href="#p3"><span aria-hidden="true">&larr;</span> Prev.</a></li>
+            <li ><a href="#"><span aria-hidden="true"></span> Top</a></li>
+            <li class="next disabled"><a href="#p4">Next <span aria-hidden="true">&rarr;</span></a></li>
           </ul>
-          <br />
-        <!-- /navbuttons -->
 
 
         Gauges the current temperature. This is made with the python module <code>pygal</code> which provide a nice and easy interface to produce a number of standard plots. For example this was made only by importing pygal and calling
