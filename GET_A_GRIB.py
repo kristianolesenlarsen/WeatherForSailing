@@ -1,5 +1,5 @@
-# this can send and recieve mails/attachments - it's a waste of time to try and implement GRIB data
-# since their documentation is worse than that of ancient civilizations.
+# sends and recieves mail containing GRIB files as attachments
+
 import keys
 import datetime
 import requests
@@ -13,7 +13,6 @@ import json
 
 import email, imaplib, os
 imaplib._MAXLINE = 100000
-#import getpass
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -29,10 +28,10 @@ pwd = keys.pwd
 
 
 
-def genMailQuery(latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
+def genMailQuery(latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
     #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
 
-    query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonRight, lonLeft, str(inc), str(inc), timestring, params)
+    query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonLeft, lonRight, str(inc), str(inc), timestring, params)
     if subscribe:
         query = 'sub ' + query
     print('query:', query)
@@ -102,7 +101,7 @@ def getMailAttachment(user, pwd):
         if part.get('Content-Disposition') is None:
             continue
 
-        filename =  mail['Subject'][4:] + datetime.datetime.now().date().strftime('%d-%H')
+        filename =  mail['Subject'][4:]
         att_path = os.path.join(detach_dir, filename) + '.grb'
         #Check if its already there
         if os.path.exists(att_path):
@@ -157,10 +156,10 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
 # AIRTMP: air temperature
 # WAVES: wave height
 
-def getMailWrapper(user, pwd, latBottom, latTop, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
-    STRING_LENGTH = 25
+def getMailWrapper(user, pwd, latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
+#    STRING_LENGTH = 25
 
-    q = genMailQuery(latBottom, latTop, lonLeft, lonRight, model, inc, params, timestring, subscribe)
+    q = genMailQuery(latTop = latTop, latBottom = latBottom, lonLeft = lonLeft, lonRight = lonRight, model = model, inc = inc, params = params, timestring = timestring, subscribe = subscribe)
 #    if len(q) > 35:
 #        splitcomma = q[STRING_LENGTH:40].find(',')
 #        if splitcomma != -1:
@@ -177,7 +176,7 @@ def getMailWrapper(user, pwd, latBottom, latTop, lonLeft, lonRight, model = 'gfs
     if send:
         time.sleep(180)
     getMailAttachment(user,pwd)
-    return './data/raw/{}N,{}N,{}E,{}E{}.grb'.format(latBottom, latTop, lonRight, lonLeft, datetime.datetime.now().date().strftime('%d-%H'))
+    return  ['./data/raw/{}N,{}N,{}E,{}E.grb'.format(latBottom, latTop, lonLeft, lonRight), [latTop, latBottom, lonLeft, lonRight]]
 
 
 
@@ -207,6 +206,8 @@ various metadata on the variables.
  - topLeft: a two element list containing coordinates for the top left corner of the bbox in the format [top, left]
  - delete_original: should the original grib file be deleted after use?
 """
+
+
 
 # ATT: x,y are returned in a slightly shady way, dont trust output to be correct. (plot some winds to see that they look to be facing correctly)
 def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
@@ -299,7 +300,19 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
 # TODO is to make transfer from GRIBtoDict to this automatic
 #also some of these values are static to match grib2json output - this is worth fixing
 
+
 def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filename):
+
+    if lonRight < 0:
+        lonRight = 360 + lonRight # if right side (end) is negative, subtract it from 360 to convert from [-180,180] to [0,360]
+    if lonLeft < 0:
+        lonLeft = 360 + lonLeft # same with left side (beginning)
+
+    if lonLeft > lonRight:
+        lonRight = 360 + lonRight
+
+    lonRight = lonRight - 20
+    lonLeft = lonLeft -20
 
     time = datetime.datetime.now().date().strftime('%Y-%M-%d %H-%M %Z')
     nx = int(round((lonLeft - lonRight)/(dx),0))
@@ -353,10 +366,15 @@ for i in ['WIND,AIRTMP','WAVES']:
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
 
+
 # why is this not working?
-filename = getMailWrapper(user, pwd, 70, 20, -175, 175, timestring = '00', params = 'WIND', inc = 1, send = True)
+getOut = getMailWrapper(user, pwd, 80, -50, -90, 150, timestring = '00', params = 'WIND', inc = 1, send = True)
+filename = getOut[0]
+
 test = GRIBtoDict(filename,  delete_original = False)
 
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = 70, latBottom =  20, lonLeft =  -175, lonRight = 175, filename = 'data/windy.json')
+coords = getOut[1]
+
+fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = coords[0]  , latBottom =  coords[1], lonLeft =  coords[2], lonRight = coords[3], filename = 'data/windy.json')
 """
