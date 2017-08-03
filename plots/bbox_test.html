@@ -1,0 +1,2190 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS = false; L_NO_TOUCH = false; L_DISABLE_3D = false;</script>
+    <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0/leaflet.markercluster-src.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.0.0/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://rawgit.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css" />
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <style> #map_c55e7c95ec3d41bcb96838510c395f59 {
+                position : relative;
+                width : 100.0%;
+                height: 100.0%;
+                left: 0.0%;
+                top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_c55e7c95ec3d41bcb96838510c395f59" ></div>
+        
+</body>
+<script>    
+    
+
+            
+                var southWest = L.latLng(-90, -180);
+                var northEast = L.latLng(90, 180);
+                var bounds = L.latLngBounds(southWest, northEast);
+            
+
+            var map_c55e7c95ec3d41bcb96838510c395f59 = L.map(
+                                  'map_c55e7c95ec3d41bcb96838510c395f59',
+                                  {center: [55.6667,12.5833],
+                                  zoom: 4,
+                                  maxBounds: bounds,
+                                  layers: [],
+                                  worldCopyJump: false,
+                                  crs: L.CRS.EPSG3857
+                                 });
+            L.control.scale().addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+        
+    
+            var tile_layer_6b5c899cde174ae6841dc4baaeee35d9 = L.tileLayer(
+                'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+                {
+                    maxZoom: 18,
+                    minZoom: 1,
+                    continuousWorld: false,
+                    noWrap: false,
+                    attribution: '(c) <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors (c) <a href="http://cartodb.com/attributions">CartoDB</a>, CartoDB <a href ="http://cartodb.com/attributions">attributions</a>',
+                    detectRetina: false
+                    }
+                ).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+
+        
+    
+            var tile_layer_1d62f85ccdbb40abafc1b0f83b32e79f = L.tileLayer(
+                'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+                {
+                    maxZoom: 18,
+                    minZoom: 1,
+                    continuousWorld: false,
+                    noWrap: false,
+                    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS,AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+                    detectRetina: false
+                    }
+                ).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+
+        
+    
+            var tile_layer_52ec1ca6febb40368a3e2a5f0fe3d5f1 = L.tileLayer(
+                'http://tile.openweathermap.org/map/wind_new/{z}/{x}/{y}.png?appid=93b5f916beeed282e178f687bb4473c5',
+                {
+                    maxZoom: 18,
+                    minZoom: 1,
+                    continuousWorld: false,
+                    noWrap: false,
+                    attribution: 'tile.openweathermap.org',
+                    detectRetina: false
+                    }
+                ).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+
+        
+    
+            var tile_layer_3484ca49145e4701b8a7ed9ead52c5fc = L.tileLayer(
+                'http://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=93b5f916beeed282e178f687bb4473c5',
+                {
+                    maxZoom: 18,
+                    minZoom: 1,
+                    continuousWorld: false,
+                    noWrap: false,
+                    attribution: 'tile.openweathermap.org',
+                    detectRetina: false
+                    }
+                ).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+
+        
+    
+            var tile_layer_b21970c6499c4119b06dc09dcafc6cdc = L.tileLayer(
+                'http://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=93b5f916beeed282e178f687bb4473c5',
+                {
+                    maxZoom: 18,
+                    minZoom: 1,
+                    continuousWorld: false,
+                    noWrap: false,
+                    attribution: 'tile.openweathermap.org',
+                    detectRetina: false
+                    }
+                ).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+
+        
+    
+            var marker_cluster_f6cd83b0f9d742b99d67d262b05d2991 = L.markerClusterGroup();
+            map_c55e7c95ec3d41bcb96838510c395f59.addLayer(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+            var marker_7d087dcc3d604f3db15a22ce39c20ecb = L.marker(
+                [54.200001,9.1],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_44687f6f48d04e64bcbecdb8e479ea5a = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_7d087dcc3d604f3db15a22ce39c20ecb.setIcon(icon_44687f6f48d04e64bcbecdb8e479ea5a);
+            
+    
+            var popup_1a479816f8764fa8b7044d087d57b621 = L.popup({maxWidth: '300'});
+
+            
+                var html_87f3494daf9c497281f9b30d3dbef046 = $('<div id="html_87f3494daf9c497281f9b30d3dbef046" style="width: 100.0%; height: 100.0%;">Location: Heide, Temperature: 20.68</div>')[0];
+                popup_1a479816f8764fa8b7044d087d57b621.setContent(html_87f3494daf9c497281f9b30d3dbef046);
+            
+
+            marker_7d087dcc3d604f3db15a22ce39c20ecb.bindPopup(popup_1a479816f8764fa8b7044d087d57b621);
+
+            
+        
+    
+
+            var marker_783b8a0af94049b99425fb6dc96f5e29 = L.marker(
+                [54.485802,9.05239],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_2e601d388cc64dc99744470d1a0f1de7 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_783b8a0af94049b99425fb6dc96f5e29.setIcon(icon_2e601d388cc64dc99744470d1a0f1de7);
+            
+    
+            var popup_06dcc2f6e3e642a9864d625a32812da4 = L.popup({maxWidth: '300'});
+
+            
+                var html_3b4b99a0a7d14ab18f481039b9cf9071 = $('<div id="html_3b4b99a0a7d14ab18f481039b9cf9071" style="width: 100.0%; height: 100.0%;">Location: Husum, Temperature: 20.51</div>')[0];
+                popup_06dcc2f6e3e642a9864d625a32812da4.setContent(html_3b4b99a0a7d14ab18f481039b9cf9071);
+            
+
+            marker_783b8a0af94049b99425fb6dc96f5e29.bindPopup(popup_06dcc2f6e3e642a9864d625a32812da4);
+
+            
+        
+    
+
+            var marker_9755bf2d34c94f3f8a362a506892dec4 = L.marker(
+                [54.783329,9.43333],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_37a99071174642cd850e5c2cea55930f = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_9755bf2d34c94f3f8a362a506892dec4.setIcon(icon_37a99071174642cd850e5c2cea55930f);
+            
+    
+            var popup_c787e12e0e8948abb683dce0466c7605 = L.popup({maxWidth: '300'});
+
+            
+                var html_872e0f8d354c49aa94bcf43b68edddd4 = $('<div id="html_872e0f8d354c49aa94bcf43b68edddd4" style="width: 100.0%; height: 100.0%;">Location: Flensburg, Temperature: 20.2</div>')[0];
+                popup_c787e12e0e8948abb683dce0466c7605.setContent(html_872e0f8d354c49aa94bcf43b68edddd4);
+            
+
+            marker_9755bf2d34c94f3f8a362a506892dec4.bindPopup(popup_c787e12e0e8948abb683dce0466c7605);
+
+            
+        
+    
+
+            var marker_8e8f4db8447a409d9eabda9f8fe03c4b = L.marker(
+                [54.299999,9.66667],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_044add3b4088451da28799d53d67438e = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_8e8f4db8447a409d9eabda9f8fe03c4b.setIcon(icon_044add3b4088451da28799d53d67438e);
+            
+    
+            var popup_761a3bfc5f96472cb2ed2a48567ce065 = L.popup({maxWidth: '300'});
+
+            
+                var html_4dd2766e8ca5498ab4ec819d2199df23 = $('<div id="html_4dd2766e8ca5498ab4ec819d2199df23" style="width: 100.0%; height: 100.0%;">Location: Rendsburg, Temperature: 20.28</div>')[0];
+                popup_761a3bfc5f96472cb2ed2a48567ce065.setContent(html_4dd2766e8ca5498ab4ec819d2199df23);
+            
+
+            marker_8e8f4db8447a409d9eabda9f8fe03c4b.bindPopup(popup_761a3bfc5f96472cb2ed2a48567ce065);
+
+            
+        
+    
+
+            var marker_b73774447ea743878f62bc7d203efef6 = L.marker(
+                [54.466671,9.83333],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_aaff140455074a5990eb55e0f01a8a74 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_b73774447ea743878f62bc7d203efef6.setIcon(icon_aaff140455074a5990eb55e0f01a8a74);
+            
+    
+            var popup_c2c0740afaaf43608f514ae10b618de0 = L.popup({maxWidth: '300'});
+
+            
+                var html_7f6498ee8ead4fd5ba699379c45b1449 = $('<div id="html_7f6498ee8ead4fd5ba699379c45b1449" style="width: 100.0%; height: 100.0%;">Location: Eckernforde, Temperature: 20.62</div>')[0];
+                popup_c2c0740afaaf43608f514ae10b618de0.setContent(html_7f6498ee8ead4fd5ba699379c45b1449);
+            
+
+            marker_b73774447ea743878f62bc7d203efef6.bindPopup(popup_c2c0740afaaf43608f514ae10b618de0);
+
+            
+        
+    
+
+            var marker_0ad79ee21a114cb38023feb57c2e4335 = L.marker(
+                [54.51667,9.55],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_08a2465921014faea55e015721557ea6 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_0ad79ee21a114cb38023feb57c2e4335.setIcon(icon_08a2465921014faea55e015721557ea6);
+            
+    
+            var popup_192882f20cd74afb9fad67f679129a2b = L.popup({maxWidth: '300'});
+
+            
+                var html_cb5019a092814d1db69ec2b3306b0ea9 = $('<div id="html_cb5019a092814d1db69ec2b3306b0ea9" style="width: 100.0%; height: 100.0%;">Location: Schleswig, Temperature: 20.26</div>')[0];
+                popup_192882f20cd74afb9fad67f679129a2b.setContent(html_cb5019a092814d1db69ec2b3306b0ea9);
+            
+
+            marker_0ad79ee21a114cb38023feb57c2e4335.bindPopup(popup_192882f20cd74afb9fad67f679129a2b);
+
+            
+        
+    
+
+            var marker_0282044ddcc349e2864d74ba4cd74e19 = L.marker(
+                [55.466671,8.45],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8789ec23d5ab48ce9faf4916e186c350 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_0282044ddcc349e2864d74ba4cd74e19.setIcon(icon_8789ec23d5ab48ce9faf4916e186c350);
+            
+    
+            var popup_4810b00f32e64f93b6b2408a3b337efa = L.popup({maxWidth: '300'});
+
+            
+                var html_b15a320a1f2642569e7baed010c8d13d = $('<div id="html_b15a320a1f2642569e7baed010c8d13d" style="width: 100.0%; height: 100.0%;">Location: Esbjerg, Temperature: 19.77</div>')[0];
+                popup_4810b00f32e64f93b6b2408a3b337efa.setContent(html_b15a320a1f2642569e7baed010c8d13d);
+            
+
+            marker_0282044ddcc349e2864d74ba4cd74e19.bindPopup(popup_4810b00f32e64f93b6b2408a3b337efa);
+
+            
+        
+    
+
+            var marker_477c60ed6f83423c993816159c937a80 = L.marker(
+                [56.13932,8.97378],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_1b9277d83be641238608bc9006b1f7c5 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_477c60ed6f83423c993816159c937a80.setIcon(icon_1b9277d83be641238608bc9006b1f7c5);
+            
+    
+            var popup_054ae13b101645c29487aef4b0375d21 = L.popup({maxWidth: '300'});
+
+            
+                var html_d045f0b647e345b6bc3f1a1da2065d68 = $('<div id="html_d045f0b647e345b6bc3f1a1da2065d68" style="width: 100.0%; height: 100.0%;">Location: Herning, Temperature: 20.52</div>')[0];
+                popup_054ae13b101645c29487aef4b0375d21.setContent(html_d045f0b647e345b6bc3f1a1da2065d68);
+            
+
+            marker_477c60ed6f83423c993816159c937a80.bindPopup(popup_054ae13b101645c29487aef4b0375d21);
+
+            
+        
+    
+
+            var marker_05d922b1f7b8460592e795314d8f8b11 = L.marker(
+                [55.044338,9.41741],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_5c85359fc1b04ee084f9eebaab212190 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_05d922b1f7b8460592e795314d8f8b11.setIcon(icon_5c85359fc1b04ee084f9eebaab212190);
+            
+    
+            var popup_a9bfb3071045403e93ec005f71100942 = L.popup({maxWidth: '300'});
+
+            
+                var html_94accd9c9f3a410aa099019fbe38f3c2 = $('<div id="html_94accd9c9f3a410aa099019fbe38f3c2" style="width: 100.0%; height: 100.0%;">Location: Aabenraa, Temperature: 21.0</div>')[0];
+                popup_a9bfb3071045403e93ec005f71100942.setContent(html_94accd9c9f3a410aa099019fbe38f3c2);
+            
+
+            marker_05d922b1f7b8460592e795314d8f8b11.bindPopup(popup_a9bfb3071045403e93ec005f71100942);
+
+            
+        
+    
+
+            var marker_ce7d71d41ab042f2b4cf903d9ff7d63e = L.marker(
+                [55.253769,9.48982],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_f59624a5625d4152808a3f89156487ea = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ce7d71d41ab042f2b4cf903d9ff7d63e.setIcon(icon_f59624a5625d4152808a3f89156487ea);
+            
+    
+            var popup_2ceaaa57f5634c5aa749c9fd86bbdb29 = L.popup({maxWidth: '300'});
+
+            
+                var html_d610ca0ea0ca444aafb0068ef110957f = $('<div id="html_d610ca0ea0ca444aafb0068ef110957f" style="width: 100.0%; height: 100.0%;">Location: Haderslev, Temperature: 20.67</div>')[0];
+                popup_2ceaaa57f5634c5aa749c9fd86bbdb29.setContent(html_d610ca0ea0ca444aafb0068ef110957f);
+            
+
+            marker_ce7d71d41ab042f2b4cf903d9ff7d63e.bindPopup(popup_2ceaaa57f5634c5aa749c9fd86bbdb29);
+
+            
+        
+    
+
+            var marker_ed57780639f040c9a4d0135379dcafeb = L.marker(
+                [55.490398,9.47216],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_4e2774b97cff478aba0445d9a863f9c1 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ed57780639f040c9a4d0135379dcafeb.setIcon(icon_4e2774b97cff478aba0445d9a863f9c1);
+            
+    
+            var popup_2b46c5fbe736416f960b4adfd55ea88f = L.popup({maxWidth: '300'});
+
+            
+                var html_64c4cbea84024010b51e8e21cd695a3a = $('<div id="html_64c4cbea84024010b51e8e21cd695a3a" style="width: 100.0%; height: 100.0%;">Location: Kolding, Temperature: 20.61</div>')[0];
+                popup_2b46c5fbe736416f960b4adfd55ea88f.setContent(html_64c4cbea84024010b51e8e21cd695a3a);
+            
+
+            marker_ed57780639f040c9a4d0135379dcafeb.bindPopup(popup_2b46c5fbe736416f960b4adfd55ea88f);
+
+            
+        
+    
+
+            var marker_6240a74605ac4bfd8df1e2b3ef10fd3b = L.marker(
+                [54.90926,9.80737],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8270fb80baf64f42967003f219904c47 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_6240a74605ac4bfd8df1e2b3ef10fd3b.setIcon(icon_8270fb80baf64f42967003f219904c47);
+            
+    
+            var popup_a3b04c6a37eb42cc94c07604cab362a2 = L.popup({maxWidth: '300'});
+
+            
+                var html_64203c91ec6b45dc9e03b451000de6d1 = $('<div id="html_64203c91ec6b45dc9e03b451000de6d1" style="width: 100.0%; height: 100.0%;">Location: Sonderborg, Temperature: 20.7</div>')[0];
+                popup_a3b04c6a37eb42cc94c07604cab362a2.setContent(html_64203c91ec6b45dc9e03b451000de6d1);
+            
+
+            marker_6240a74605ac4bfd8df1e2b3ef10fd3b.bindPopup(popup_a3b04c6a37eb42cc94c07604cab362a2);
+
+            
+        
+    
+
+            var marker_1139fcd87c4b4b40a795409ab6c53fb5 = L.marker(
+                [55.70927,9.5357],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_3f16a57fd0eb461dbd774e867472847e = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_1139fcd87c4b4b40a795409ab6c53fb5.setIcon(icon_3f16a57fd0eb461dbd774e867472847e);
+            
+    
+            var popup_2c47b598315c498babfd764fd7a74cbd = L.popup({maxWidth: '300'});
+
+            
+                var html_b898f1e254ec40478f549c853f39cd34 = $('<div id="html_b898f1e254ec40478f549c853f39cd34" style="width: 100.0%; height: 100.0%;">Location: Vejle, Temperature: 20.32</div>')[0];
+                popup_2c47b598315c498babfd764fd7a74cbd.setContent(html_b898f1e254ec40478f549c853f39cd34);
+            
+
+            marker_1139fcd87c4b4b40a795409ab6c53fb5.bindPopup(popup_2c47b598315c498babfd764fd7a74cbd);
+
+            
+        
+    
+
+            var marker_ee25051f53374365870293b7564b8a93 = L.marker(
+                [55.565681,9.75257],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_58f93981db264ec9a0b9e4aee23f5b93 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ee25051f53374365870293b7564b8a93.setIcon(icon_58f93981db264ec9a0b9e4aee23f5b93);
+            
+    
+            var popup_d9c887d777334d49bbf251d56ac0686d = L.popup({maxWidth: '300'});
+
+            
+                var html_146087b146c84d86ac4d1130e6a64a16 = $('<div id="html_146087b146c84d86ac4d1130e6a64a16" style="width: 100.0%; height: 100.0%;">Location: Fredericia, Temperature: 21.01</div>')[0];
+                popup_d9c887d777334d49bbf251d56ac0686d.setContent(html_146087b146c84d86ac4d1130e6a64a16);
+            
+
+            marker_ee25051f53374365870293b7564b8a93.bindPopup(popup_d9c887d777334d49bbf251d56ac0686d);
+
+            
+        
+    
+
+            var marker_9efe933c196940bda45e5842ff4d3271 = L.marker(
+                [56.169701,9.54508],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_2a5815788a8a4a73851fa32d40fe7626 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_9efe933c196940bda45e5842ff4d3271.setIcon(icon_2a5815788a8a4a73851fa32d40fe7626);
+            
+    
+            var popup_a524ee4575454da0bf105d9bed54593a = L.popup({maxWidth: '300'});
+
+            
+                var html_d012ee5c7e5e46c79f2171a947825f5e = $('<div id="html_d012ee5c7e5e46c79f2171a947825f5e" style="width: 100.0%; height: 100.0%;">Location: Silkeborg, Temperature: 20.04</div>')[0];
+                popup_a524ee4575454da0bf105d9bed54593a.setContent(html_d012ee5c7e5e46c79f2171a947825f5e);
+            
+
+            marker_9efe933c196940bda45e5842ff4d3271.bindPopup(popup_a524ee4575454da0bf105d9bed54593a);
+
+            
+        
+    
+
+            var marker_4799245df7e04ec3b27f4b7617f46631 = L.marker(
+                [54.066669,9.98333],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_dda8f0d807af49e887c48bc62a913df5 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_4799245df7e04ec3b27f4b7617f46631.setIcon(icon_dda8f0d807af49e887c48bc62a913df5);
+            
+    
+            var popup_ce0ae40f7614429ba19d7405d56958ed = L.popup({maxWidth: '300'});
+
+            
+                var html_6cc9c1656920405caf8ceda1f67e2e75 = $('<div id="html_6cc9c1656920405caf8ceda1f67e2e75" style="width: 100.0%; height: 100.0%;">Location: Neumunster, Temperature: 21.17</div>')[0];
+                popup_ce0ae40f7614429ba19d7405d56958ed.setContent(html_6cc9c1656920405caf8ceda1f67e2e75);
+            
+
+            marker_4799245df7e04ec3b27f4b7617f46631.bindPopup(popup_ce0ae40f7614429ba19d7405d56958ed);
+
+            
+        
+    
+
+            var marker_24368d1050d943869ab90c8c61150137 = L.marker(
+                [54.321331,10.13489],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_47e8805ed06e45c2b6299a8b15f42759 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_24368d1050d943869ab90c8c61150137.setIcon(icon_47e8805ed06e45c2b6299a8b15f42759);
+            
+    
+            var popup_bc0038b4db2c4b15bc6630f98dc705eb = L.popup({maxWidth: '300'});
+
+            
+                var html_bdd259974cf448aaa0464f46a3f78061 = $('<div id="html_bdd259974cf448aaa0464f46a3f78061" style="width: 100.0%; height: 100.0%;">Location: Kiel, Temperature: 20.54</div>')[0];
+                popup_bc0038b4db2c4b15bc6630f98dc705eb.setContent(html_bdd259974cf448aaa0464f46a3f78061);
+            
+
+            marker_24368d1050d943869ab90c8c61150137.bindPopup(popup_bc0038b4db2c4b15bc6630f98dc705eb);
+
+            
+        
+    
+
+            var marker_d883db6c74f245ae9406db0077e5ade6 = L.marker(
+                [54.23333,10.28333],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_5ed0b69dfb964338940e35cf11fa8575 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_d883db6c74f245ae9406db0077e5ade6.setIcon(icon_5ed0b69dfb964338940e35cf11fa8575);
+            
+    
+            var popup_b5cdf9536bbd4f4390a4e2d5c75dc44b = L.popup({maxWidth: '300'});
+
+            
+                var html_eada3e6caa6b4c55a740834ae63f4fcc = $('<div id="html_eada3e6caa6b4c55a740834ae63f4fcc" style="width: 100.0%; height: 100.0%;">Location: Preetz, Temperature: 20.82</div>')[0];
+                popup_b5cdf9536bbd4f4390a4e2d5c75dc44b.setContent(html_eada3e6caa6b4c55a740834ae63f4fcc);
+            
+
+            marker_d883db6c74f245ae9406db0077e5ade6.bindPopup(popup_b5cdf9536bbd4f4390a4e2d5c75dc44b);
+
+            
+        
+    
+
+            var marker_fa51b1458cdb4b8fa9dcd87f05a17115 = L.marker(
+                [54.133331,10.61667],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_964fd8bd47d84ab3bff4ccb92574bab7 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_fa51b1458cdb4b8fa9dcd87f05a17115.setIcon(icon_964fd8bd47d84ab3bff4ccb92574bab7);
+            
+    
+            var popup_d69c9e5585bd4fa8a833485a53c51658 = L.popup({maxWidth: '300'});
+
+            
+                var html_2e0a30dc7c1c476481c58c37c185f713 = $('<div id="html_2e0a30dc7c1c476481c58c37c185f713" style="width: 100.0%; height: 100.0%;">Location: Eutin, Temperature: 21.02</div>')[0];
+                popup_d69c9e5585bd4fa8a833485a53c51658.setContent(html_2e0a30dc7c1c476481c58c37c185f713);
+            
+
+            marker_fa51b1458cdb4b8fa9dcd87f05a17115.bindPopup(popup_d69c9e5585bd4fa8a833485a53c51658);
+
+            
+        
+    
+
+            var marker_6d5f3a5af9ba4052a45a658f237c2576 = L.marker(
+                [54.107071,10.8145],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_20544d9f93dc4ce18cc87fd98bdfa9e6 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_6d5f3a5af9ba4052a45a658f237c2576.setIcon(icon_20544d9f93dc4ce18cc87fd98bdfa9e6);
+            
+    
+            var popup_17f595290f984fee8fc8ead458ef5361 = L.popup({maxWidth: '300'});
+
+            
+                var html_d4ef052c011b47729ea420bc7dbca96a = $('<div id="html_d4ef052c011b47729ea420bc7dbca96a" style="width: 100.0%; height: 100.0%;">Location: Neustadt in Holstein, Temperature: 20.44</div>')[0];
+                popup_17f595290f984fee8fc8ead458ef5361.setContent(html_d4ef052c011b47729ea420bc7dbca96a);
+            
+
+            marker_6d5f3a5af9ba4052a45a658f237c2576.bindPopup(popup_17f595290f984fee8fc8ead458ef5361);
+
+            
+        
+    
+
+            var marker_95fdc7eef0024dd8b547b1bda1b299c1 = L.marker(
+                [55.395939,10.38831],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_7b7276845ef24cd58dd53f4a4b684db5 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_95fdc7eef0024dd8b547b1bda1b299c1.setIcon(icon_7b7276845ef24cd58dd53f4a4b684db5);
+            
+    
+            var popup_a86da07ee9fb4e8a8673f05317d6874c = L.popup({maxWidth: '300'});
+
+            
+                var html_b3c107d4f5724822ad934d4548af2e0e = $('<div id="html_b3c107d4f5724822ad934d4548af2e0e" style="width: 100.0%; height: 100.0%;">Location: Odense, Temperature: 22.0</div>')[0];
+                popup_a86da07ee9fb4e8a8673f05317d6874c.setContent(html_b3c107d4f5724822ad934d4548af2e0e);
+            
+
+            marker_95fdc7eef0024dd8b547b1bda1b299c1.bindPopup(popup_a86da07ee9fb4e8a8673f05317d6874c);
+
+            
+        
+    
+
+            var marker_8396cd14bc744cfdb57bdd557c0d036e = L.marker(
+                [55.860661,9.85034],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_cc12b7912e644c28830de947c96abd2a = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_8396cd14bc744cfdb57bdd557c0d036e.setIcon(icon_cc12b7912e644c28830de947c96abd2a);
+            
+    
+            var popup_97aa70ddcd5249d3a6c8a60b085f6b3d = L.popup({maxWidth: '300'});
+
+            
+                var html_39bd9058dd3a4b7eb41893f642dcca2f = $('<div id="html_39bd9058dd3a4b7eb41893f642dcca2f" style="width: 100.0%; height: 100.0%;">Location: Horsens, Temperature: 21.03</div>')[0];
+                popup_97aa70ddcd5249d3a6c8a60b085f6b3d.setContent(html_39bd9058dd3a4b7eb41893f642dcca2f);
+            
+
+            marker_8396cd14bc744cfdb57bdd557c0d036e.bindPopup(popup_97aa70ddcd5249d3a6c8a60b085f6b3d);
+
+            
+        
+    
+
+            var marker_4bed993ffe914b81b7190033a6c8e74f = L.marker(
+                [56.156738,10.21076],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8ce3fe4c33b841239aea7cf3b26996a7 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_4bed993ffe914b81b7190033a6c8e74f.setIcon(icon_8ce3fe4c33b841239aea7cf3b26996a7);
+            
+    
+            var popup_89aa393bea554c7881b7800ddd53218e = L.popup({maxWidth: '300'});
+
+            
+                var html_3712ccada9a84821aee44affdbc28979 = $('<div id="html_3712ccada9a84821aee44affdbc28979" style="width: 100.0%; height: 100.0%;">Location: Arhus, Temperature: 21.0</div>')[0];
+                popup_89aa393bea554c7881b7800ddd53218e.setContent(html_3712ccada9a84821aee44affdbc28979);
+            
+
+            marker_4bed993ffe914b81b7190033a6c8e74f.bindPopup(popup_89aa393bea554c7881b7800ddd53218e);
+
+            
+        
+    
+
+            var marker_3d8d728dbc64484db9aba3404cfa0bfb = L.marker(
+                [55.059818,10.60677],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_cfeca87cc1f94de08d91b3b4536a4052 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_3d8d728dbc64484db9aba3404cfa0bfb.setIcon(icon_cfeca87cc1f94de08d91b3b4536a4052);
+            
+    
+            var popup_e92d2ff58e5f483689d59c802cefed74 = L.popup({maxWidth: '300'});
+
+            
+                var html_2ab50dde0704431eb00cbf2bf890312e = $('<div id="html_2ab50dde0704431eb00cbf2bf890312e" style="width: 100.0%; height: 100.0%;">Location: Svendborg, Temperature: 22.0</div>')[0];
+                popup_e92d2ff58e5f483689d59c802cefed74.setContent(html_2ab50dde0704431eb00cbf2bf890312e);
+            
+
+            marker_3d8d728dbc64484db9aba3404cfa0bfb.bindPopup(popup_e92d2ff58e5f483689d59c802cefed74);
+
+            
+        
+    
+
+            var marker_d27972df1b9e48c79591eac3a8b40428 = L.marker(
+                [55.31274,10.78964],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_d0da6cd64f3c4527ad8586ccac4e27bb = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_d27972df1b9e48c79591eac3a8b40428.setIcon(icon_d0da6cd64f3c4527ad8586ccac4e27bb);
+            
+    
+            var popup_e634e258cd1e4fad8029c7fb83444409 = L.popup({maxWidth: '300'});
+
+            
+                var html_4a5fd8284b0747b1938fdc3c52871324 = $('<div id="html_4a5fd8284b0747b1938fdc3c52871324" style="width: 100.0%; height: 100.0%;">Location: Nyborg, Temperature: 22.0</div>')[0];
+                popup_e634e258cd1e4fad8029c7fb83444409.setContent(html_4a5fd8284b0747b1938fdc3c52871324);
+            
+
+            marker_d27972df1b9e48c79591eac3a8b40428.bindPopup(popup_e634e258cd1e4fad8029c7fb83444409);
+
+            
+        
+    
+
+            var marker_ec552bd7a3ac4f259418c2bbb5dc126b = L.marker(
+                [55.329929,11.13857],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_85070ab1749e4f8eb21df1e4458f0c92 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ec552bd7a3ac4f259418c2bbb5dc126b.setIcon(icon_85070ab1749e4f8eb21df1e4458f0c92);
+            
+    
+            var popup_06fd721a1cec477092cff2fe51157b6f = L.popup({maxWidth: '300'});
+
+            
+                var html_297cd89990514a1694a576d335145d0f = $('<div id="html_297cd89990514a1694a576d335145d0f" style="width: 100.0%; height: 100.0%;">Location: Korsor, Temperature: 21.48</div>')[0];
+                popup_06fd721a1cec477092cff2fe51157b6f.setContent(html_297cd89990514a1694a576d335145d0f);
+            
+
+            marker_ec552bd7a3ac4f259418c2bbb5dc126b.bindPopup(popup_06fd721a1cec477092cff2fe51157b6f);
+
+            
+        
+    
+
+            var marker_f7c3b2e7d93643e886b3fbeef9b87499 = L.marker(
+                [55.679539,11.08864],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_9becfe59fc894dcf8608b72dca0ecd25 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_f7c3b2e7d93643e886b3fbeef9b87499.setIcon(icon_9becfe59fc894dcf8608b72dca0ecd25);
+            
+    
+            var popup_cdcf4c67864d4c08b9b912ac799e663a = L.popup({maxWidth: '300'});
+
+            
+                var html_f4e7da6d694e4c7db263c71c99873fab = $('<div id="html_f4e7da6d694e4c7db263c71c99873fab" style="width: 100.0%; height: 100.0%;">Location: Kalundborg, Temperature: 21.49</div>')[0];
+                popup_cdcf4c67864d4c08b9b912ac799e663a.setContent(html_f4e7da6d694e4c7db263c71c99873fab);
+            
+
+            marker_f7c3b2e7d93643e886b3fbeef9b87499.bindPopup(popup_cdcf4c67864d4c08b9b912ac799e663a);
+
+            
+        
+    
+
+            var marker_8e36906b04484850842eb085ff0cd8e6 = L.marker(
+                [56.360088,8.61607],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_592ca433286f481e832b8ff780cc38ec = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_8e36906b04484850842eb085ff0cd8e6.setIcon(icon_592ca433286f481e832b8ff780cc38ec);
+            
+    
+            var popup_b91ca50fa59b4d409e468c62de368769 = L.popup({maxWidth: '300'});
+
+            
+                var html_6484b339e57d4d3c86635a14fa0f4a65 = $('<div id="html_6484b339e57d4d3c86635a14fa0f4a65" style="width: 100.0%; height: 100.0%;">Location: Holstebro, Temperature: 19.0</div>')[0];
+                popup_b91ca50fa59b4d409e468c62de368769.setContent(html_6484b339e57d4d3c86635a14fa0f4a65);
+            
+
+            marker_8e36906b04484850842eb085ff0cd8e6.bindPopup(popup_b91ca50fa59b4d409e468c62de368769);
+
+            
+        
+    
+
+            var marker_fed7ca4242f44b41b7853ddc72adb32d = L.marker(
+                [56.566669,9.03333],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_a4a1d71bdfa74b91af256140393a3ec8 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_fed7ca4242f44b41b7853ddc72adb32d.setIcon(icon_a4a1d71bdfa74b91af256140393a3ec8);
+            
+    
+            var popup_1d584a20a1b340e9b784a07b871d62c6 = L.popup({maxWidth: '300'});
+
+            
+                var html_ffcdbf7ebcfa4673b361e2fcc5f621a6 = $('<div id="html_ffcdbf7ebcfa4673b361e2fcc5f621a6" style="width: 100.0%; height: 100.0%;">Location: Skive, Temperature: 19.0</div>')[0];
+                popup_1d584a20a1b340e9b784a07b871d62c6.setContent(html_ffcdbf7ebcfa4673b361e2fcc5f621a6);
+            
+
+            marker_fed7ca4242f44b41b7853ddc72adb32d.bindPopup(popup_1d584a20a1b340e9b784a07b871d62c6);
+
+            
+        
+    
+
+            var marker_a1e82bfc80eb407db3ac6d63003ecde9 = L.marker(
+                [56.45319,9.40201],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_fb4194e7f9654bf3ba3379d801cbdf93 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_a1e82bfc80eb407db3ac6d63003ecde9.setIcon(icon_fb4194e7f9654bf3ba3379d801cbdf93);
+            
+    
+            var popup_b75ea56082144c91b1a65dd6d1bfc1bb = L.popup({maxWidth: '300'});
+
+            
+                var html_b8dbc67d2d2d4a53815ccb24d9657662 = $('<div id="html_b8dbc67d2d2d4a53815ccb24d9657662" style="width: 100.0%; height: 100.0%;">Location: Viborg, Temperature: 21.0</div>')[0];
+                popup_b75ea56082144c91b1a65dd6d1bfc1bb.setContent(html_b8dbc67d2d2d4a53815ccb24d9657662);
+            
+
+            marker_a1e82bfc80eb407db3ac6d63003ecde9.bindPopup(popup_b75ea56082144c91b1a65dd6d1bfc1bb);
+
+            
+        
+    
+
+            var marker_d9a80f640c43462b9ebc9573985ca3cc = L.marker(
+                [56.466671,10.05],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_7e668c2bb00044b6b3f131c57eb91093 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_d9a80f640c43462b9ebc9573985ca3cc.setIcon(icon_7e668c2bb00044b6b3f131c57eb91093);
+            
+    
+            var popup_0125fff3f7a9464890769cb95c34bb8e = L.popup({maxWidth: '300'});
+
+            
+                var html_e7a804e58891479183040708197aebed = $('<div id="html_e7a804e58891479183040708197aebed" style="width: 100.0%; height: 100.0%;">Location: Randers, Temperature: 21.0</div>')[0];
+                popup_0125fff3f7a9464890769cb95c34bb8e.setContent(html_e7a804e58891479183040708197aebed);
+            
+
+            marker_d9a80f640c43462b9ebc9573985ca3cc.bindPopup(popup_0125fff3f7a9464890769cb95c34bb8e);
+
+            
+        
+    
+
+            var marker_0af9263e1ddb4de4b64afab7e0cfa152 = L.marker(
+                [57.048,9.9187],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_62684edbbab5493da4a45f63888779eb = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_0af9263e1ddb4de4b64afab7e0cfa152.setIcon(icon_62684edbbab5493da4a45f63888779eb);
+            
+    
+            var popup_3399ecb21031404e8002aacc16702495 = L.popup({maxWidth: '300'});
+
+            
+                var html_751b83c7cfc343719e8c95714d27e269 = $('<div id="html_751b83c7cfc343719e8c95714d27e269" style="width: 100.0%; height: 100.0%;">Location: Aalborg, Temperature: 19.12</div>')[0];
+                popup_3399ecb21031404e8002aacc16702495.setContent(html_751b83c7cfc343719e8c95714d27e269);
+            
+
+            marker_0af9263e1ddb4de4b64afab7e0cfa152.bindPopup(popup_3399ecb21031404e8002aacc16702495);
+
+            
+        
+    
+
+            var marker_badedd2b14384c59a56d6459369a559f = L.marker(
+                [57.464169,9.98229],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_da31756cc70e41dc99aad6207f45c689 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_badedd2b14384c59a56d6459369a559f.setIcon(icon_da31756cc70e41dc99aad6207f45c689);
+            
+    
+            var popup_ac296841d74c4bdbb75fc326335bb99b = L.popup({maxWidth: '300'});
+
+            
+                var html_6b52b6ca8fac41389ebfcedda073a21c = $('<div id="html_6b52b6ca8fac41389ebfcedda073a21c" style="width: 100.0%; height: 100.0%;">Location: Hjorring, Temperature: 17.72</div>')[0];
+                popup_ac296841d74c4bdbb75fc326335bb99b.setContent(html_6b52b6ca8fac41389ebfcedda073a21c);
+            
+
+            marker_badedd2b14384c59a56d6459369a559f.bindPopup(popup_ac296841d74c4bdbb75fc326335bb99b);
+
+            
+        
+    
+
+            var marker_6ad9b523f8874b59bf90049a5626e44c = L.marker(
+                [57.440731,10.53661],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_09ed6ab361a842d185d0a959f26021d4 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_6ad9b523f8874b59bf90049a5626e44c.setIcon(icon_09ed6ab361a842d185d0a959f26021d4);
+            
+    
+            var popup_5867e344a1bf4aa4a027cbec9f61bd63 = L.popup({maxWidth: '300'});
+
+            
+                var html_05771b8e8fea4918839b413920c62ac6 = $('<div id="html_05771b8e8fea4918839b413920c62ac6" style="width: 100.0%; height: 100.0%;">Location: Frederikshavn, Temperature: 17.62</div>')[0];
+                popup_5867e344a1bf4aa4a027cbec9f61bd63.setContent(html_05771b8e8fea4918839b413920c62ac6);
+            
+
+            marker_6ad9b523f8874b59bf90049a5626e44c.bindPopup(popup_5867e344a1bf4aa4a027cbec9f61bd63);
+
+            
+        
+    
+
+            var marker_addd2f6abf8b4d5c8c5c553ed46c8da3 = L.marker(
+                [54.769058,11.87425],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_56a8ca83e5c84ba69c38999a42ada12d = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_addd2f6abf8b4d5c8c5c553ed46c8da3.setIcon(icon_56a8ca83e5c84ba69c38999a42ada12d);
+            
+    
+            var popup_fa5220896cee4acc914d307dd598f575 = L.popup({maxWidth: '300'});
+
+            
+                var html_b130138f4a834a0aa088ce9fb2bd31dc = $('<div id="html_b130138f4a834a0aa088ce9fb2bd31dc" style="width: 100.0%; height: 100.0%;">Location: Nykobing Falster, Temperature: 18.57</div>')[0];
+                popup_fa5220896cee4acc914d307dd598f575.setContent(html_b130138f4a834a0aa088ce9fb2bd31dc);
+            
+
+            marker_addd2f6abf8b4d5c8c5c553ed46c8da3.bindPopup(popup_fa5220896cee4acc914d307dd598f575);
+
+            
+        
+    
+
+            var marker_895eb77b8b7b43fa8e07d2b3814edc30 = L.marker(
+                [54.088699,12.14049],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_006a4e5841da4c6cb63bb97f31a46782 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_895eb77b8b7b43fa8e07d2b3814edc30.setIcon(icon_006a4e5841da4c6cb63bb97f31a46782);
+            
+    
+            var popup_39bc21b05f514ca4a0741546d7ec9c34 = L.popup({maxWidth: '300'});
+
+            
+                var html_9886404fcb054403b129a1fbc5e50c5c = $('<div id="html_9886404fcb054403b129a1fbc5e50c5c" style="width: 100.0%; height: 100.0%;">Location: Rostock, Temperature: 24.0</div>')[0];
+                popup_39bc21b05f514ca4a0741546d7ec9c34.setContent(html_9886404fcb054403b129a1fbc5e50c5c);
+            
+
+            marker_895eb77b8b7b43fa8e07d2b3814edc30.bindPopup(popup_39bc21b05f514ca4a0741546d7ec9c34);
+
+            
+        
+    
+
+            var marker_219d81692393422d9f011dd8e6ef3b3a = L.marker(
+                [54.25,12.46667],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_d81c234902b040aea43a3a904df8ec0f = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_219d81692393422d9f011dd8e6ef3b3a.setIcon(icon_d81c234902b040aea43a3a904df8ec0f);
+            
+    
+            var popup_f88dcc0447b94c74ab2503b1532215a3 = L.popup({maxWidth: '300'});
+
+            
+                var html_cd433ab07b87481d85420355e2c56a0f = $('<div id="html_cd433ab07b87481d85420355e2c56a0f" style="width: 100.0%; height: 100.0%;">Location: Ribnitz-Damgarten, Temperature: 24.0</div>')[0];
+                popup_f88dcc0447b94c74ab2503b1532215a3.setContent(html_cd433ab07b87481d85420355e2c56a0f);
+            
+
+            marker_219d81692393422d9f011dd8e6ef3b3a.bindPopup(popup_f88dcc0447b94c74ab2503b1532215a3);
+
+            
+        
+    
+
+            var marker_58cf681dbb5942408e4b605443049e4a = L.marker(
+                [55.40276,11.35459],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_3dffb25025b9445f8f423af6ae182d82 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_58cf681dbb5942408e4b605443049e4a.setIcon(icon_3dffb25025b9445f8f423af6ae182d82);
+            
+    
+            var popup_dbf7372af47946d883da6d24805694f1 = L.popup({maxWidth: '300'});
+
+            
+                var html_58b2c61ac0b34d1aabaa4b87bc3d05cc = $('<div id="html_58b2c61ac0b34d1aabaa4b87bc3d05cc" style="width: 100.0%; height: 100.0%;">Location: Slagelse, Temperature: 21.52</div>')[0];
+                popup_dbf7372af47946d883da6d24805694f1.setContent(html_58b2c61ac0b34d1aabaa4b87bc3d05cc);
+            
+
+            marker_58cf681dbb5942408e4b605443049e4a.bindPopup(popup_dbf7372af47946d883da6d24805694f1);
+
+            
+        
+    
+
+            var marker_c64e0711756348859289a5a404744e23 = L.marker(
+                [55.229919,11.76092],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_929f4af9fa8d45b1b7520284a6c14fed = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_c64e0711756348859289a5a404744e23.setIcon(icon_929f4af9fa8d45b1b7520284a6c14fed);
+            
+    
+            var popup_c5d95e222dac49578399686461ee95cb = L.popup({maxWidth: '300'});
+
+            
+                var html_960bb319263f48598a21439b40d018e9 = $('<div id="html_960bb319263f48598a21439b40d018e9" style="width: 100.0%; height: 100.0%;">Location: Naestved, Temperature: 20.0</div>')[0];
+                popup_c5d95e222dac49578399686461ee95cb.setContent(html_960bb319263f48598a21439b40d018e9);
+            
+
+            marker_c64e0711756348859289a5a404744e23.bindPopup(popup_c5d95e222dac49578399686461ee95cb);
+
+            
+        
+    
+
+            var marker_ce657c3eb8fe4f57af56b1901aa6f853 = L.marker(
+                [55.4426,11.79011],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_6804361333fe4d898778fd291c23f4fa = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ce657c3eb8fe4f57af56b1901aa6f853.setIcon(icon_6804361333fe4d898778fd291c23f4fa);
+            
+    
+            var popup_92a26f6ecdd84144a0d2d50c2d64fa91 = L.popup({maxWidth: '300'});
+
+            
+                var html_15036e177cd64c79821c9ac184db3b7f = $('<div id="html_15036e177cd64c79821c9ac184db3b7f" style="width: 100.0%; height: 100.0%;">Location: Ringsted, Temperature: 21.0</div>')[0];
+                popup_92a26f6ecdd84144a0d2d50c2d64fa91.setContent(html_15036e177cd64c79821c9ac184db3b7f);
+            
+
+            marker_ce657c3eb8fe4f57af56b1901aa6f853.bindPopup(popup_92a26f6ecdd84144a0d2d50c2d64fa91);
+
+            
+        
+    
+
+            var marker_60a7405b348646c6b45fe2b5c262e319 = L.marker(
+                [55.716671,11.71667],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_2f254dece8a5490296914cb8cabcb93f = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_60a7405b348646c6b45fe2b5c262e319.setIcon(icon_2f254dece8a5490296914cb8cabcb93f);
+            
+    
+            var popup_d5f0b4902aa44ebb95af82da78010522 = L.popup({maxWidth: '300'});
+
+            
+                var html_3ece09d3acdb4aa280482b43391187fc = $('<div id="html_3ece09d3acdb4aa280482b43391187fc" style="width: 100.0%; height: 100.0%;">Location: Holbaek, Temperature: 21.0</div>')[0];
+                popup_d5f0b4902aa44ebb95af82da78010522.setContent(html_3ece09d3acdb4aa280482b43391187fc);
+            
+
+            marker_60a7405b348646c6b45fe2b5c262e319.bindPopup(popup_d5f0b4902aa44ebb95af82da78010522);
+
+            
+        
+    
+
+            var marker_d86657a982e54baf8e81085579003418 = L.marker(
+                [55.458019,12.18214],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_f55866a436734b519f05f955e85c0a17 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_d86657a982e54baf8e81085579003418.setIcon(icon_f55866a436734b519f05f955e85c0a17);
+            
+    
+            var popup_9d222822c0f44e28a356027979001071 = L.popup({maxWidth: '300'});
+
+            
+                var html_11aca58d98f04296aada6706e0b0bc20 = $('<div id="html_11aca58d98f04296aada6706e0b0bc20" style="width: 100.0%; height: 100.0%;">Location: Koge, Temperature: 20.53</div>')[0];
+                popup_9d222822c0f44e28a356027979001071.setContent(html_11aca58d98f04296aada6706e0b0bc20);
+            
+
+            marker_d86657a982e54baf8e81085579003418.bindPopup(popup_9d222822c0f44e28a356027979001071);
+
+            
+        
+    
+
+            var marker_bc474e8c75cd46868c77d7d621e0e28e = L.marker(
+                [55.641521,12.08035],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_ca19fdbf6f5d4f6c8f2e54d8666cb8f2 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_bc474e8c75cd46868c77d7d621e0e28e.setIcon(icon_ca19fdbf6f5d4f6c8f2e54d8666cb8f2);
+            
+    
+            var popup_66c7d161c64b4773aa6697666bc7fb5e = L.popup({maxWidth: '300'});
+
+            
+                var html_e7d961f2553a4b04b8b08b7fac9a5e01 = $('<div id="html_e7d961f2553a4b04b8b08b7fac9a5e01" style="width: 100.0%; height: 100.0%;">Location: Roskilde, Temperature: 21.0</div>')[0];
+                popup_66c7d161c64b4773aa6697666bc7fb5e.setContent(html_e7d961f2553a4b04b8b08b7fac9a5e01);
+            
+
+            marker_bc474e8c75cd46868c77d7d621e0e28e.bindPopup(popup_66c7d161c64b4773aa6697666bc7fb5e);
+
+            
+        
+    
+
+            var marker_ff6bc031f8d4435986284540bc52fedc = L.marker(
+                [55.76828,12.19723],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8e4fc4372ede4da0b793ad5b559581c8 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_ff6bc031f8d4435986284540bc52fedc.setIcon(icon_8e4fc4372ede4da0b793ad5b559581c8);
+            
+    
+            var popup_d646f2901ff6442eba478786a5dccc3d = L.popup({maxWidth: '300'});
+
+            
+                var html_1fb827eb2c174d7280799c9435062757 = $('<div id="html_1fb827eb2c174d7280799c9435062757" style="width: 100.0%; height: 100.0%;">Location: Stenlose, Temperature: 20.68</div>')[0];
+                popup_d646f2901ff6442eba478786a5dccc3d.setContent(html_1fb827eb2c174d7280799c9435062757);
+            
+
+            marker_ff6bc031f8d4435986284540bc52fedc.bindPopup(popup_d646f2901ff6442eba478786a5dccc3d);
+
+            
+        
+    
+
+            var marker_af6fac7ae8464eafb0b51445c633a1d3 = L.marker(
+                [55.657188,12.47364],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_7b1c2c2e1e0e40fa93514292cf8d3d2a = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_af6fac7ae8464eafb0b51445c633a1d3.setIcon(icon_7b1c2c2e1e0e40fa93514292cf8d3d2a);
+            
+    
+            var popup_2ad5251d7757474dbf240d7a003d64bf = L.popup({maxWidth: '300'});
+
+            
+                var html_e6b6c61885924f9088f8a8b975fb1387 = $('<div id="html_e6b6c61885924f9088f8a8b975fb1387" style="width: 100.0%; height: 100.0%;">Location: Hvidovre, Temperature: 20.75</div>')[0];
+                popup_2ad5251d7757474dbf240d7a003d64bf.setContent(html_e6b6c61885924f9088f8a8b975fb1387);
+            
+
+            marker_af6fac7ae8464eafb0b51445c633a1d3.bindPopup(popup_2ad5251d7757474dbf240d7a003d64bf);
+
+            
+        
+    
+
+            var marker_d152d8efb41f4137a9fc362f2643e51a = L.marker(
+                [55.675941,12.56553],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_d3c57d7fe2bc41468a923e51e05bf39e = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_d152d8efb41f4137a9fc362f2643e51a.setIcon(icon_d3c57d7fe2bc41468a923e51e05bf39e);
+            
+    
+            var popup_d6e2f3cb8b924220a06093b7c3f6ff25 = L.popup({maxWidth: '300'});
+
+            
+                var html_73eb8ffa32a044c79c192b6c11515d4b = $('<div id="html_73eb8ffa32a044c79c192b6c11515d4b" style="width: 100.0%; height: 100.0%;">Location: Copenhagen, Temperature: 21.0</div>')[0];
+                popup_d6e2f3cb8b924220a06093b7c3f6ff25.setContent(html_73eb8ffa32a044c79c192b6c11515d4b);
+            
+
+            marker_d152d8efb41f4137a9fc362f2643e51a.bindPopup(popup_d6e2f3cb8b924220a06093b7c3f6ff25);
+
+            
+        
+    
+
+            var marker_e7811161f10c4c03adc0eefdb52706ad = L.marker(
+                [55.883331,12.5],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8d523ebc740040ac9c9b13e3cf290ca4 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_e7811161f10c4c03adc0eefdb52706ad.setIcon(icon_8d523ebc740040ac9c9b13e3cf290ca4);
+            
+    
+            var popup_31c81de2770b4e5dbbe3237ad59042fa = L.popup({maxWidth: '300'});
+
+            
+                var html_5ec901e6677042a2b2baa3f1efd40b3d = $('<div id="html_5ec901e6677042a2b2baa3f1efd40b3d" style="width: 100.0%; height: 100.0%;">Location: Horsholm, Temperature: 21.0</div>')[0];
+                popup_31c81de2770b4e5dbbe3237ad59042fa.setContent(html_5ec901e6677042a2b2baa3f1efd40b3d);
+            
+
+            marker_e7811161f10c4c03adc0eefdb52706ad.bindPopup(popup_31c81de2770b4e5dbbe3237ad59042fa);
+
+            
+        
+    
+
+            var marker_eb7db5eb4ebf47d4a3b68c3eb1606ecb = L.marker(
+                [55.75367,12.59181],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_8dbb38c22663499a9d2bb52cca6e3b59 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_eb7db5eb4ebf47d4a3b68c3eb1606ecb.setIcon(icon_8dbb38c22663499a9d2bb52cca6e3b59);
+            
+    
+            var popup_5dda904706084b8992db9117f92bce6a = L.popup({maxWidth: '300'});
+
+            
+                var html_b4f48ae1274541f2b63b8caa806194ec = $('<div id="html_b4f48ae1274541f2b63b8caa806194ec" style="width: 100.0%; height: 100.0%;">Location: Charlottenlund, Temperature: 21.0</div>')[0];
+                popup_5dda904706084b8992db9117f92bce6a.setContent(html_b4f48ae1274541f2b63b8caa806194ec);
+            
+
+            marker_eb7db5eb4ebf47d4a3b68c3eb1606ecb.bindPopup(popup_5dda904706084b8992db9117f92bce6a);
+
+            
+        
+    
+
+            var marker_05aa30e886b64a979d8ffa68ac9cd639 = L.marker(
+                [55.92667,12.31091],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_1b3ba9f3b4e6444687d67f27897dde58 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_05aa30e886b64a979d8ffa68ac9cd639.setIcon(icon_1b3ba9f3b4e6444687d67f27897dde58);
+            
+    
+            var popup_3194747fa2da4720a2e4285aadb9e717 = L.popup({maxWidth: '300'});
+
+            
+                var html_7e470ec8b715499e91159882879f93ad = $('<div id="html_7e470ec8b715499e91159882879f93ad" style="width: 100.0%; height: 100.0%;">Location: Hillerod, Temperature: 21.0</div>')[0];
+                popup_3194747fa2da4720a2e4285aadb9e717.setContent(html_7e470ec8b715499e91159882879f93ad);
+            
+
+            marker_05aa30e886b64a979d8ffa68ac9cd639.bindPopup(popup_3194747fa2da4720a2e4285aadb9e717);
+
+            
+        
+    
+
+            var marker_f618e887742140dc8da9e44fd621343a = L.marker(
+                [55.8708,12.83016],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_4a8d411695c342e4903f226ae591b841 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_f618e887742140dc8da9e44fd621343a.setIcon(icon_4a8d411695c342e4903f226ae591b841);
+            
+    
+            var popup_b042b86d2e964d8aa5942ccef5cd4f47 = L.popup({maxWidth: '300'});
+
+            
+                var html_7dbd2242e2c44ac29e1cb4cdf1b1b22b = $('<div id="html_7dbd2242e2c44ac29e1cb4cdf1b1b22b" style="width: 100.0%; height: 100.0%;">Location: Landskrona, Temperature: 21.0</div>')[0];
+                popup_b042b86d2e964d8aa5942ccef5cd4f47.setContent(html_7dbd2242e2c44ac29e1cb4cdf1b1b22b);
+            
+
+            marker_f618e887742140dc8da9e44fd621343a.bindPopup(popup_b042b86d2e964d8aa5942ccef5cd4f47);
+
+            
+        
+    
+
+            var marker_a6cb6ddae91f4e37a6233cbe19b1120a = L.marker(
+                [56.04673,12.69437],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_83fb6fe728a244aebe73c610c9dfd1bd = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_a6cb6ddae91f4e37a6233cbe19b1120a.setIcon(icon_83fb6fe728a244aebe73c610c9dfd1bd);
+            
+    
+            var popup_19a091d55a5e4525816e163f9486a89b = L.popup({maxWidth: '300'});
+
+            
+                var html_fedd938580644b20a2edab77b7aff638 = $('<div id="html_fedd938580644b20a2edab77b7aff638" style="width: 100.0%; height: 100.0%;">Location: Helsingborg, Temperature: 20.38</div>')[0];
+                popup_19a091d55a5e4525816e163f9486a89b.setContent(html_fedd938580644b20a2edab77b7aff638);
+            
+
+            marker_a6cb6ddae91f4e37a6233cbe19b1120a.bindPopup(popup_19a091d55a5e4525816e163f9486a89b);
+
+            
+        
+    
+
+            var marker_24838538a8cd4e2383719574b89f766b = L.marker(
+                [56.242802,12.86219],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_bdc39a8fe9274c3e9942d5642b8f4750 = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_24838538a8cd4e2383719574b89f766b.setIcon(icon_bdc39a8fe9274c3e9942d5642b8f4750);
+            
+    
+            var popup_cf1b90d9a7ba4a98a275c219c52603ce = L.popup({maxWidth: '300'});
+
+            
+                var html_57e30cb5259345ccabda8d80495473d3 = $('<div id="html_57e30cb5259345ccabda8d80495473d3" style="width: 100.0%; height: 100.0%;">Location: AEngelholm Municipality, Temperature: 20.3</div>')[0];
+                popup_cf1b90d9a7ba4a98a275c219c52603ce.setContent(html_57e30cb5259345ccabda8d80495473d3);
+            
+
+            marker_24838538a8cd4e2383719574b89f766b.bindPopup(popup_cf1b90d9a7ba4a98a275c219c52603ce);
+
+            
+        
+    
+
+            var marker_f22bb85038784256920d74ca3b7a44c4 = L.marker(
+                [56.905521,12.49118],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_31f4afbec6444212890901fd6099bfc0 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_f22bb85038784256920d74ca3b7a44c4.setIcon(icon_31f4afbec6444212890901fd6099bfc0);
+            
+    
+            var popup_f6a6f02a6e994c8c9150f786f07e35be = L.popup({maxWidth: '300'});
+
+            
+                var html_693771a2778e403ebca65a1e8f48c823 = $('<div id="html_693771a2778e403ebca65a1e8f48c823" style="width: 100.0%; height: 100.0%;">Location: Falkenberg, Temperature: 19.0</div>')[0];
+                popup_f6a6f02a6e994c8c9150f786f07e35be.setContent(html_693771a2778e403ebca65a1e8f48c823);
+            
+
+            marker_f22bb85038784256920d74ca3b7a44c4.bindPopup(popup_f6a6f02a6e994c8c9150f786f07e35be);
+
+            
+        
+    
+
+            var marker_4684303387de4c4a8bd570ca0dceebfb = L.marker(
+                [57.105572,12.25078],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_6d67662cd9b04903886691362613c225 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_4684303387de4c4a8bd570ca0dceebfb.setIcon(icon_6d67662cd9b04903886691362613c225);
+            
+    
+            var popup_fb49de3a73f24910a3dcb632ee7eb347 = L.popup({maxWidth: '300'});
+
+            
+                var html_020ad98cb4e44c088e15c15bcb5cd58d = $('<div id="html_020ad98cb4e44c088e15c15bcb5cd58d" style="width: 100.0%; height: 100.0%;">Location: Varberg, Temperature: 18.5</div>')[0];
+                popup_fb49de3a73f24910a3dcb632ee7eb347.setContent(html_020ad98cb4e44c088e15c15bcb5cd58d);
+            
+
+            marker_4684303387de4c4a8bd570ca0dceebfb.bindPopup(popup_fb49de3a73f24910a3dcb632ee7eb347);
+
+            
+        
+    
+
+            var marker_396b1c834537488aa53127d101f6cb01 = L.marker(
+                [57.48719,12.07612],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_40c8447d4e7b432483714f96d7079d3b = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_396b1c834537488aa53127d101f6cb01.setIcon(icon_40c8447d4e7b432483714f96d7079d3b);
+            
+    
+            var popup_d1013b0615c94deb9f73ec4fa0cd0544 = L.popup({maxWidth: '300'});
+
+            
+                var html_d7b3e24010ef4818a4a0ea1015525953 = $('<div id="html_d7b3e24010ef4818a4a0ea1015525953" style="width: 100.0%; height: 100.0%;">Location: Kungsbacka, Temperature: 17.0</div>')[0];
+                popup_d1013b0615c94deb9f73ec4fa0cd0544.setContent(html_d7b3e24010ef4818a4a0ea1015525953);
+            
+
+            marker_396b1c834537488aa53127d101f6cb01.bindPopup(popup_d1013b0615c94deb9f73ec4fa0cd0544);
+
+            
+        
+    
+
+            var marker_617c4801e1b64ca28b8c1fdbccfe76a1 = L.marker(
+                [57.707161,11.96679],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_17f4cc9a247541d1af7425e8c3d28a92 = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_617c4801e1b64ca28b8c1fdbccfe76a1.setIcon(icon_17f4cc9a247541d1af7425e8c3d28a92);
+            
+    
+            var popup_0524270c0c1b4fbf95095ad3f6fa89a9 = L.popup({maxWidth: '300'});
+
+            
+                var html_074bcd61950b495c86734f976c34fb93 = $('<div id="html_074bcd61950b495c86734f976c34fb93" style="width: 100.0%; height: 100.0%;">Location: Goeteborg, Temperature: 18.0</div>')[0];
+                popup_0524270c0c1b4fbf95095ad3f6fa89a9.setContent(html_074bcd61950b495c86734f976c34fb93);
+            
+
+            marker_617c4801e1b64ca28b8c1fdbccfe76a1.bindPopup(popup_0524270c0c1b4fbf95095ad3f6fa89a9);
+
+            
+        
+    
+
+            var marker_964ea8b6be05401d8b1e348271cf6378 = L.marker(
+                [57.739498,12.10642],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_73556a807a784a30bc50221a44d46bba = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_964ea8b6be05401d8b1e348271cf6378.setIcon(icon_73556a807a784a30bc50221a44d46bba);
+            
+    
+            var popup_23757572b703439baaedd4ac22b7f474 = L.popup({maxWidth: '300'});
+
+            
+                var html_43aa49706e8545d986f0a5a13284d2c7 = $('<div id="html_43aa49706e8545d986f0a5a13284d2c7" style="width: 100.0%; height: 100.0%;">Location: Partille, Temperature: 17.0</div>')[0];
+                popup_23757572b703439baaedd4ac22b7f474.setContent(html_43aa49706e8545d986f0a5a13284d2c7);
+            
+
+            marker_964ea8b6be05401d8b1e348271cf6378.bindPopup(popup_23757572b703439baaedd4ac22b7f474);
+
+            
+        
+    
+
+            var marker_87e37c1a1e794a8ab7e1fe1c3f9a8ea7 = L.marker(
+                [57.87096,11.98054],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_0a060eccbc4942848d09839892524e81 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_87e37c1a1e794a8ab7e1fe1c3f9a8ea7.setIcon(icon_0a060eccbc4942848d09839892524e81);
+            
+    
+            var popup_49c64a91908d4ba8af6cd4b2c9b3078f = L.popup({maxWidth: '300'});
+
+            
+                var html_64492296ed5543febf0b8df983a419df = $('<div id="html_64492296ed5543febf0b8df983a419df" style="width: 100.0%; height: 100.0%;">Location: Kungalv, Temperature: 17.0</div>')[0];
+                popup_49c64a91908d4ba8af6cd4b2c9b3078f.setContent(html_64492296ed5543febf0b8df983a419df);
+            
+
+            marker_87e37c1a1e794a8ab7e1fe1c3f9a8ea7.bindPopup(popup_49c64a91908d4ba8af6cd4b2c9b3078f);
+
+            
+        
+    
+
+            var marker_80829de96f7b44cb9e893591ca8698aa = L.marker(
+                [57.770512,12.26904],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_29fab3c5cc1d46668f54781251ed1340 = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_80829de96f7b44cb9e893591ca8698aa.setIcon(icon_29fab3c5cc1d46668f54781251ed1340);
+            
+    
+            var popup_bd7c2d5065fb48bfa81f00a52721c302 = L.popup({maxWidth: '300'});
+
+            
+                var html_ec6ce0fb9c65405cba2040a821c97b1c = $('<div id="html_ec6ce0fb9c65405cba2040a821c97b1c" style="width: 100.0%; height: 100.0%;">Location: Lerum, Temperature: 17.0</div>')[0];
+                popup_bd7c2d5065fb48bfa81f00a52721c302.setContent(html_ec6ce0fb9c65405cba2040a821c97b1c);
+            
+
+            marker_80829de96f7b44cb9e893591ca8698aa.bindPopup(popup_bd7c2d5065fb48bfa81f00a52721c302);
+
+            
+        
+    
+
+            var marker_096a0934739f4f37a06f643fe9e68484 = L.marker(
+                [57.930328,12.53345],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_aef2b37183af48149967af957ef9f4cf = L.AwesomeMarkers.icon({
+                    icon: 'cloud',
+                    iconColor: 'white',
+                    markerColor: 'lightgray',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_096a0934739f4f37a06f643fe9e68484.setIcon(icon_aef2b37183af48149967af957ef9f4cf);
+            
+    
+            var popup_f1a3f442dc4241a9b6584294091f2329 = L.popup({maxWidth: '300'});
+
+            
+                var html_f8183d8ca2524a87a6b63b034e30b6cd = $('<div id="html_f8183d8ca2524a87a6b63b034e30b6cd" style="width: 100.0%; height: 100.0%;">Location: Alingsas, Temperature: 17.53</div>')[0];
+                popup_f1a3f442dc4241a9b6584294091f2329.setContent(html_f8183d8ca2524a87a6b63b034e30b6cd);
+            
+
+            marker_096a0934739f4f37a06f643fe9e68484.bindPopup(popup_f1a3f442dc4241a9b6584294091f2329);
+
+            
+        
+    
+
+            var marker_717d0024b9f04aca98a45f14f094bd2d = L.marker(
+                [56.674461,12.85676],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_e5a5319ced1e465ab6c2e3be5b1fbfff = L.AwesomeMarkers.icon({
+                    icon: 'asterisk',
+                    iconColor: 'white',
+                    markerColor: 'yellow',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_717d0024b9f04aca98a45f14f094bd2d.setIcon(icon_e5a5319ced1e465ab6c2e3be5b1fbfff);
+            
+    
+            var popup_a5558ef85df74499a504bccfab8528d8 = L.popup({maxWidth: '300'});
+
+            
+                var html_7867758d82d349ea829038d574f64d9b = $('<div id="html_7867758d82d349ea829038d574f64d9b" style="width: 100.0%; height: 100.0%;">Location: Halmstad, Temperature: 20.1</div>')[0];
+                popup_a5558ef85df74499a504bccfab8528d8.setContent(html_7867758d82d349ea829038d574f64d9b);
+            
+
+            marker_717d0024b9f04aca98a45f14f094bd2d.bindPopup(popup_a5558ef85df74499a504bccfab8528d8);
+
+            
+        
+    
+
+            var marker_802b727a1bcc48d8913829ff7059886f = L.marker(
+                [57.721008,12.9401],
+                {
+                    icon: new L.Icon.Default()
+                    }
+                )
+                .addTo(marker_cluster_f6cd83b0f9d742b99d67d262b05d2991);
+            
+    
+
+                var icon_40d67aa7653e4692adaf4fe85d69be6f = L.AwesomeMarkers.icon({
+                    icon: 'tint',
+                    iconColor: 'white',
+                    markerColor: 'blue',
+                    prefix: 'glyphicon',
+                    extraClasses: 'fa-rotate-0'
+                    });
+                marker_802b727a1bcc48d8913829ff7059886f.setIcon(icon_40d67aa7653e4692adaf4fe85d69be6f);
+            
+    
+            var popup_159cbf3daf5043959c38404d0ee7c590 = L.popup({maxWidth: '300'});
+
+            
+                var html_b8557db10821418ab5ff0c81490a23f1 = $('<div id="html_b8557db10821418ab5ff0c81490a23f1" style="width: 100.0%; height: 100.0%;">Location: Boras, Temperature: 19.09</div>')[0];
+                popup_159cbf3daf5043959c38404d0ee7c590.setContent(html_b8557db10821418ab5ff0c81490a23f1);
+            
+
+            marker_802b727a1bcc48d8913829ff7059886f.bindPopup(popup_159cbf3daf5043959c38404d0ee7c590);
+
+            
+        
+    
+            var layer_control_661a4a4a5b434263b197a609340aeede = {
+                base_layers : { "cartodbpositron" : tile_layer_6b5c899cde174ae6841dc4baaeee35d9,"satellite" : tile_layer_1d62f85ccdbb40abafc1b0f83b32e79f, },
+                overlays : { "wind" : tile_layer_52ec1ca6febb40368a3e2a5f0fe3d5f1,"precipitation" : tile_layer_3484ca49145e4701b8a7ed9ead52c5fc,"temp" : tile_layer_b21970c6499c4119b06dc09dcafc6cdc,"local weather" : marker_cluster_f6cd83b0f9d742b99d67d262b05d2991, }
+                };
+            L.control.layers(
+                layer_control_661a4a4a5b434263b197a609340aeede.base_layers,
+                layer_control_661a4a4a5b434263b197a609340aeede.overlays,
+                {position: 'topright',
+                 collapsed: true,
+                 autoZIndex: true
+                }).addTo(map_c55e7c95ec3d41bcb96838510c395f59);
+        
+</script>

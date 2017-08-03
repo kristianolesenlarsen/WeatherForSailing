@@ -1,0 +1,236 @@
+
+<!-- <!DOCTYPE html> -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Weather data content</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/grid.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+
+
+<!-- NAVBAR -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="index.html">WeatherForSailing</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="content.html">Top</a></li>
+          <li><a href="#p1">Wind compass</a></li>
+          <li><a href="#p2">Wind systems</a></li>
+          <li><a href="#p21">Temperatures</a></li>
+          <li><a href="#p3">Wind vectors</a></li>
+          <li><a href="#p4">Thermometer</a></li>
+        </ul>
+      </div>
+    </nav>
+
+<!-- /NAVBAR -->
+
+<!-- PART 1 -->
+      <a name = "p1"></a>
+      <h3>Wind compass</h3>
+
+
+      <div class="row">
+
+        <div class="col-md-4">
+
+                    <!-- navbuttons -->
+                      <ul class="nav nav-pills nav-fill nav-justified">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1">Previous</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#">Top</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" href="#p2">Next</a>
+                        </li>
+                    </ul>
+                    <br  />
+                  <!-- /navbuttons -->
+
+          This chart shows the development of wind for the following 48 hours after last update, starting from the dot. It's constructed with the <code> plots.webready_plotly_winddir(weather)</code> function, which takes <code>weather</code> as it's returned from <code>weather.fromDarkskyAPI().get_weather_at_loc</code>. This function requires a key to the DarkSky Api.
+
+
+        </div>
+        <div class="col-md-8">
+        <script src="js/compass.js" class = "img-responsive"></script>
+        </div>
+
+      </div>
+<!-- /PART 1 -->
+
+<!-- PART 2 -->
+        <a name = "p2"></a>
+        <h2> Atlantic winds </h2>
+        <div class="row">
+
+        <div class="col-md-4">
+
+          <!-- navbuttons -->
+            <ul class="nav nav-pills nav-fill nav-justified">
+              <li class="page-item">
+                  <a class="page-link" href="#p1" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Top</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#p21">Next</a>
+              </li>
+          </ul>
+          <br  />
+        <!-- /navbuttons -->
+
+          This plot shows the windspeeds across the Atlantic Ocean and Europe, with <span style="color:#ccff33"> yellow </span> being the fastest, and the almost transparent <span style="color:blue"> blue </span> being low winds. Data are gathered from GRIB files from Saildocs.
+
+        </div>
+
+        <div class="col-md-8">
+          <img class ="img-responsive" src="plots/Windspeed.png">
+        </div>
+
+        </div>
+<!-- /PART 2 -->
+
+<!-- PART 2.1 -->
+      <a name="p21"></a>
+      <h2> 2M air temperatures </h2>
+
+      <div class="row">
+        <div class="col-md-4">
+          <!-- navbuttons -->
+            <ul class="nav nav-pills nav-fill nav-justified">
+              <li class="page-item">
+                  <a class="page-link" href="#p2" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Top</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#p3">Next</a>
+              </li>
+          </ul>
+        <br />
+        <!-- /navbuttons -->
+
+          This map shows air temperatures 2 meters above ground level.
+        </div>
+
+        <div class="col-md-8">
+          <img class="img-responsive" src="plots/Temp.png">
+        </div>
+
+      </div>
+<!-- /PART 2.1 -->
+
+<!-- PART 3 -->
+        <a name = "p3"></a>
+        <h2> Local wind vectors </h2>
+        <div class="row">
+          <div class="col-md-4">
+            <!-- navbuttons -->
+
+              <ul class="nav nav-pills nav-fill nav-justified">
+                <li class="page-item">
+                    <a class="page-link" href="#p21" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Top</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="#p4">Next</a>
+                </li>
+            </ul>
+            <br />
+          <!-- /navbuttons -->
+
+            Current wind directions around vessel, color represent temperatures with red being hot and blue cold. Note wind direction data are not very reliable and shouldn't be considered final.
+          </div>
+          <div class="col-md-8">
+            <img class ="img-responsive" src="plots/map.png">
+          </div>
+        </div>
+<!-- /PART 3 -->
+
+<!-- PART 4 -->
+      <a name="p4"></a>
+      <h2>Current temperature</h2>
+
+      <div class="row">
+        <div class="col-md-4">
+
+          <!-- navbuttons -->
+
+            <ul class="nav nav-pills nav-fill nav-justified">
+              <li class="page-item">
+                  <a class="page-link" href="#p3" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#">Top</a>
+              </li>
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+              </li>
+          </ul>
+          <br />
+        <!-- /navbuttons -->
+
+
+        Gauges the current temperature. This is made with the python module <code>pygal</code> which provide a nice and easy interface to produce a number of standard plots. For example this was made only by importing pygal and calling
+        <br>
+        <pre class = "prettyprint"><code> def show_temperature(weather, name):
+            gauge_chart = pygal.Gauge(human_readable=True, style = custom_style)
+            gauge_chart.title = 'Current temperature'
+            gauge_chart.range = [0, 35]
+            gauge_chart.add('temperature', weather['currently']['temperature'])
+            return gauge_chart.render_to_file('./svg/' + name + '.svg')
+        </code></pre>
+
+        </div>
+      <div class="col-md-8">
+        <object data="svg/temp_now.svg" type="image/svg+xml" class = "img-responsive"></object>
+      </div>
+      </div>
+<!-- /PART 2 -->
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+      <span class="text-muted">Weather data supplied by <a href="https://darksky.net/poweredby">DarkSky.net</a>, <a href="openweathermap.org/">OpenWeatherMap</a> and GRIB data from <a href ="http://saildocs.com/">Saildocs</a>. Last updated <script src="js/time.js"></script>
+      </span>
+    </div>
+  </footer>
+<!-- /FOOTER -->
+
+
+
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </body>
+</html>

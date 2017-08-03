@@ -207,6 +207,10 @@ def plotly_winddir(weather):
     data = [trace1,trace2]
     layout = go.Layout(
         title='Wind direction and -speed',
+<<<<<<< HEAD
+=======
+        autosize = True,
+>>>>>>> f06288894d8de11ef3dc6046d7e812cba86d563f
         showlegend = False,
         font=dict(
             size=16
@@ -275,7 +279,14 @@ def folium_cityweather(datafile, outfile):
     df.loc[df.icon == 'cloud','color'] = 'lightgray'
     df.loc[df.icon == 'map-marker','color'] = 'green'
 
-    map_osm = folium.Map(location = [locNow[0],locNow[1]], tiles = 'Cartodb Positron', control_scale = True, zoom_start = 4)
+
+
+    map_osm = folium.Map(location = [locNow[0],locNow[1]], tiles = 'cartodbpositron', control_scale = True, zoom_start = 4)
+
+    folium.TileLayer(tiles = 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+    attr = 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS,AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+    name = 'satellite'
+    ).add_to(map_osm)
 
     for i in ['wind_new', 'precipitation_new','temp_new']:
         url = 'http://tile.openweathermap.org/map/' + i + '/{z}/{x}/{y}.png?appid=' + keys.key2
@@ -298,3 +309,6 @@ def folium_cityweather(datafile, outfile):
     folium.LayerControl().add_to(map_osm)
 
     mc.save(outfile)
+
+
+#folium_cityweather('./data/bbox.csv','./plots/bbox_test.html')

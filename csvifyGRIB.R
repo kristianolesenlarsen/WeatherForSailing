@@ -11,64 +11,64 @@ library("viridis")
 
 setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing/data")
 
-# fix some easy way to change this
-fname = "25N,70N,300W,30W29-00.grb"
-#fname = '40N,60N,140W,120W29-00.grb'
-#fname = "gfsanl_4_20170726_0000_006.grb2"
-
-
-gribdata = readGDAL(fname)
-df = as.data.frame(gribdata)
-rm(gribdata)
+df2 = read.csv('WAVES.csv')
+df2[df2 == 9999.00] = NA
 
 
 
-#df$speed = sqrt(df$band4^2 + df$band7^2)
-df$speed = sqrt(df$band1^2 + df$band2^2)
-df$unif = runif(length(df$x),0,1)
+df = read.csv('WIND,AIRTMP.csv')
+df$speed = sqrt(df$UGRD^2 + df$VGRD^2)
 
-#map = get_map(c(-130, 55) , zoom = 3, maptype = 'satellite')
-map = get_map(c(5, 55) , zoom = 3, maptype = 'satellite')
+df[df == 9999.00] = NA
 
+map = get_map(c(-10, 51) , zoom = 3, maptype = 'satellite')
 
-setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing")
-
+#ggmap(map)
 
 
 
-p = ggmap(map) +
-#  scale_x_continuous(limits = c(min(df$x), max(df$x)), expand = c(0, 0)) +
-# scale_y_continuous(limits = c(min(df$y), max(df$y)), expand = c(0, 0)) +
-#  geom_point(data = df, aes(x = x, y = y))# +
-#  geom_segment(data = subset(df, unif < 0.1), aes(x = x, y = y, xend = x + band1*0.01, yend = y+band2), arrow = arrow(length = unit(0.5, 'cm'))) +
-  geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed), alpha = 0.6) +
-  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5) +
-  scale_fill_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
-  scale_color_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
- # scale_color_viridis(option = "inferno") +
-  #scale_fill_viridis(option = "inferno") #+
+setwd("C:/Users/Kristian/Documents/GitHub/WeatherForSailing/plots")
+
+
+# Wind
+p_2 = ggmap(map) +
+  geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed)) +
+#  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5) +
+  scale_fill_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 9) +
+  scale_color_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 9) +
   theme_nothing()
 
 
-p
+# Waves
+p2 = ggmap(map) +
+  geom_tile(data = subset(df2, !is.na(HTSGW)), aes(x = x, y = y,  fill = HTSGW, alpha = HTSGW)) +
+  geom_contour(data = subset(df2, !is.na(HTSGW)), aes(x = x, y = y, z = HTSGW, colour = ..level..), bins = 5) +
+  scale_fill_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 2) +
+  scale_color_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 2) +
+  theme_nothing()
 
-ggsave('map-eu2.png')
+# Temp
+p3 = ggmap(map) +
+  geom_tile(data = df, aes(x = x, y = y,  fill = TMP), alpha = 0.4) +
+  geom_contour(data = df, aes(x = x, y = y, z = TMP, colour = ..level..), bins = 5) +
+  scale_fill_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 16) +
+  scale_color_gradient2(low = 'blue', mid = 'yellow', high = 'red', midpoint = 16) +
+  theme_nothing()
+
+
+# Sea level temperatures
+#p4 = ggmap(map) +
+#  geom_tile(data = df2, aes(x = x, y = y,  fill = TMP, alpha = TMP)) +
+#  geom_contour(data = df2, aes(x = x, y = y, z = TMP, colour = ..level..), bins = 5) +
+#  scale_fill_gradient2(low = 'blue', mid = 'yellow', high = 'green', midpoint = 2) +
+#  scale_color_gradient2(low = 'blue', mid = 'yellow', high = 'green', midpoint = 2) +
+#  theme_nothing()
 
 
 
-library('maps')
 
-world = map_data("world")
-
-worldmap = ggplot(world,aes(x = long, y = lat, group = group)) +
-  geom_polygon(fill = 'white', colour = 'black') +
-  geom_tile(data = df, aes(x = x, y = y,  fill = speed, alpha = speed), alpha = 0.6, inherit.aes = F) +
-  geom_contour(data = df, aes(x = x, y = y, z = speed, colour = ..level..), bins = 5, inherit.aes = F) +
-  scale_fill_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
-  scale_color_gradient2(low = 'blue', mid = 'green', high = 'yellow', midpoint = 8) +
-  scale_y_continuous(breaks = (-2:2) * 30) +
-  scale_x_continuous(breaks = (-4:4) * 45) +
-  coord_map("ortho", orientation = c(50,12,0))
-
-worldmap
+ggsave('Windspeed.png',p)
+ggsave('Waves.png',p2)
+ggsave('Temp.png',p3)
+#ggsave('Sealeveltemp.png', p4)
 

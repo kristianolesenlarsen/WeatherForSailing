@@ -24,7 +24,10 @@ df$dy = df$speed * sin(df$direction)*f
 
 
 df_static = unique(subset(df, time == min(time)))
-map = get_map(c(subset(df_static, dummy == 1)$lon, subset(df_static, dummy == 1)$lat), zoom = n, color = 'bw')
+map = get_map(c(subset(df_static, dummy == 1)$lon, subset(df_static, dummy == 1)$lat), zoom = n, maptype = 'satellite')
+
+
+
 
 
 p <- ggmap(map) +
@@ -34,12 +37,17 @@ p <- ggmap(map) +
   scale_color_gradient(low = 'blue', high = 'red') +
   theme_nothing()
 
+
+setwd('C:/User/Kristian/Documents/GitHub/WeatherForSailing/plots')
 ggsave(filename = 'map.png', p)
 
 
 ################################################################################
 ###
 ###
+
+setwd('C:/User/Kristian/Documents/GitHub/WeatherForSailing')
+
 
 df = read.csv("./data/test2.csv")
 
@@ -68,6 +76,9 @@ geom_raster(data = df, aes(x = lon, y = lat, fill = temp), interpolate = TRUE, a
 scale_fill_gradient(low = 'blue', high = 'red')
 
 p
+
+
+setwd('C:/User/Kristian/Documents/GitHub/WeatherForSailing/plots')
 
 ggsave(filename = 'temp.png', p)
 
