@@ -275,7 +275,7 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
                 if b == 1:                                         # Only add lon/lat once
                     # something is wrong with this
                     endResult['x'].append( minx +  stepx * x_index )
-                    endResult['y'].append( maxy + stepy * y_index )
+                    endResult['y'].append( maxy + stepy * y_index ) #begin in upper left corner
                 endResult[meta['GRIB_ELEMENT']].append(array[y_index][x_index])
 
     if delete_original:
@@ -311,8 +311,12 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filen
     if lonLeft > lonRight:
         lonRight = 360 + lonRight
 
-    lonRight = lonRight - 20
-    lonLeft = lonLeft -20
+    print('x (left to right):', lonLeft, lonRight)
+    print('y (top to bottom):', latTop, latBottom)
+
+    print('origin:', latTop, lonLeft)
+#    lonRight = lonRight - 20
+#    lonLeft = lonLeft -20
 
     time = datetime.datetime.now().date().strftime('%Y-%M-%d %H-%M %Z')
     nx = int(round((lonLeft - lonRight)/(dx),0))
@@ -360,6 +364,7 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filen
 
 
 """
+# bodgy approach to get whole earth
 for i in ['WIND,AIRTMP','WAVES']:
     filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
     test = GRIBtoDict(filename,  delete_original = False)
@@ -368,13 +373,24 @@ for i in ['WIND,AIRTMP','WAVES']:
 
 
 # why is this not working?
-getOut = getMailWrapper(user, pwd, 80, -50, -90, 150, timestring = '00', params = 'WIND', inc = 1, send = True)
+getOut = getMailWrapper(user, pwd, 80, -50, 0, 179, timestring = '00', params = 'WIND', inc = 1, send = True)
 filename = getOut[0]
 
 test = GRIBtoDict(filename,  delete_original = False)
 
-
+getOut[1]
 coords = getOut[1]
 
-fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = coords[0]  , latBottom =  coords[1], lonLeft =  coords[2], lonRight = coords[3], filename = 'data/windy.json')
+g= fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = coords[0]  , latBottom =  coords[1], lonLeft =  coords[2], lonRight = coords[3], filename = 'data/windy.json')
+
+
+# second half
+getOut2 = getMailWrapper(user, pwd, 80, -50, -179, 0, timestring = '00', params = 'WIND', inc = 1, send = True)
+filename2 = getOut2[0]
+
+test2 = GRIBtoDict(filename2,  delete_original = False)
+
+coords2 = getOut2[1]
+
+g= fromDictTowindJSON(test2[0]['UGRD'], test2[0]['VGRD'], 1, 1, latTop = coords2[0]  , latBottom =  coords2[1], lonLeft =  coords2[2], lonRight = coords2[3], filename = 'data/windy2.json')
 """
