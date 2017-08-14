@@ -27,6 +27,7 @@ user = keys.user
 pwd = keys.pwd
 
 
+# generate a mail query for saildocs
 
 def genMailQuery(latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
     #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
