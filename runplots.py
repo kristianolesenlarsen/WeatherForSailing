@@ -54,8 +54,11 @@ plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
 
 # getting GRIB data
+
+GRIBer = GAG.GRIBmail(user = keys.user, pwd = keys.pwd)
+
 for i in ['WIND,AIRTMP','WAVES']:
-    filename = GAG.getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
+    filename = GRIBer.wrapper(5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
     test = GAG.GRIBtoDict(filename,  delete_original = False)
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)

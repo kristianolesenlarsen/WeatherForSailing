@@ -27,94 +27,150 @@ user = keys.user
 pwd = keys.pwd
 
 
-# generate a mail query for saildocs
+class GRIBmail():
+    def __init__(self, user, pwd):
+        self.user = user
+        self.pwd = pwd
 
-def genMailQuery(latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
-    #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
+    # generate a mail query for saildocs
+    def genQuery(self, latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
+        #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
 
-    query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonLeft, lonRight, str(inc), str(inc), timestring, params)
-    if subscribe:
-        query = 'sub ' + query
-    print('query:', query)
-    return query.replace(' ','')
+        query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonLeft, lonRight, str(inc), str(inc), timestring, params)
+        if subscribe:
+            query = 'sub ' + query
+        print('query:', query)
+        return query.replace(' ','')
 
-### sendemail ##################################################################
-#
-# query: email body content
-# send: if true the email is send (so we can get mail subject without sending it)
+    ### sendemail ##################################################################
+    #
+    # query: email body content
+    # send: if true the email is send (so we can get mail subject without sending it)
 
-def sendMailQuery(query, user, pwd, send = True):
-    fromaddr = user
-    toaddr = "query@saildocs.com"
+    def sendQuery(self, query, send = True):
 
-    msg = MIMEMultipart()
-    msg['From'] = fromaddr
-    msg['To'] = toaddr
-    msg['Subject'] = "saildocs request"
-    # implement carrying info in the filename
+        fromaddr = self.user
+        toaddr = "query@saildocs.com"
 
-
-    if send:
-        try:
-            body = query
-            msg.attach(MIMEText(body, 'plain'))
-
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(fromaddr, pwd)
-            text = msg.as_string()
-            server.sendmail(fromaddr, toaddr, text)
-            server.quit()
-        except:
-            print('Something went wrong...')
-            return None
-
-    return 'Re: ' + msg['subject']
+        msg = MIMEMultipart()
+        msg['From'] = fromaddr
+        msg['To'] = toaddr
+        msg['Subject'] = "saildocs request"
+        # implement carrying info in the filename
 
 
-#Retrieve an attachment from a Message.
-#   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
+        if send:
+            try:
+                body = query
+                msg.attach(MIMEText(body, 'plain'))
 
-def getMailAttachment(user, pwd):
-    detach_dir = './data/raw' # directory where to save attachments (default: current)
-    # connecting to the gmail imap server
-    m = imaplib.IMAP4_SSL("imap.gmail.com")
-    m.login(user,pwd)
-    m.select("saildocs") # here you a can choose a mail box like INBOX instead
-    # use m.list() to get all the mailboxes
-    resp, items = m.search(None, 'ALL') # you could filter using the IMAP rules here (check http://www.example-code.com/csharp/imap-search-critera.asp)
-    items = items[0].split() # getting the mails id
-    print('items in folder:', items)
+                server = smtplib.SMTP('smtp.gmail.com', 587)
+                server.starttls()
+                server.login(fromaddr, self.pwd)
+                text = msg.as_string()
+                server.sendmail(fromaddr, toaddr, text)
+                server.quit()
+            except:
+                print('Something went wrong...')
+                return None
 
-    resp, data = m.fetch(items[-1], '(RFC822)')
-    body = data[0][1]
+        return 'Re: ' + msg['subject']
 
-    mail = email.message_from_bytes(body) # parsing the mail content to get a mail object
-    print('mail: ' + "[" + mail["From"] +"] :" + mail["Subject"])
 
-    # we use walk to create a generator so we can iterate on the parts and forget about the recursive headach
-    for part in mail.walk():
-        # multipart are just containers, so we skip them
-        if part.get_content_maintype() == 'multipart':
-            continue
+    #Retrieve an attachment from a Message.
+    #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
 
-            # is this part an attachment ?
-        if part.get('Content-Disposition') is None:
-            continue
+    def getAttachment(self):
+        detach_dir = './data/raw' # directory where to save attachments (default: current)
+        # connecting to the gmail imap server
+        m = imaplib.IMAP4_SSL("imap.gmail.com")
+        m.login(self.user, self.pwd)
+        m.select("saildocs") # here you a can choose a mail box like INBOX instead
+        # use m.list() to get all the mailboxes
+        resp, items = m.search(None, 'ALL') # you could filter using the IMAP rules here (check http://www.example-code.com/csharp/imap-search-critera.asp)
+        items = items[0].split() # getting the mails id
+        print('items in folder:', items)
 
-        filename =  mail['Subject'][4:]
-        att_path = os.path.join(detach_dir, filename) + '.grb'
-        #Check if its already there
-        if os.path.exists(att_path):
-            os.remove(att_path)
-            print('removed old file')
-        else:
-            open(att_path, 'w').close()
+        resp, data = m.fetch(items[-1], '(RFC822)')
+        body = data[0][1]
 
-        fp = open(att_path, 'wb')
-        fp.write(part.get_payload(decode=True))
-        fp.close()
-        print('new file added!')
+        mail = email.message_from_bytes(body) # parsing the mail content to get a mail object
+        print('mail: ' + "[" + mail["From"] +"] :" + mail["Subject"])
+
+        # we use walk to create a generator so we can iterate on the parts and forget about the recursive headach
+        for part in mail.walk():
+            # multipart are just containers, so we skip them
+            if part.get_content_maintype() == 'multipart':
+                continue
+
+                # is this part an attachment ?
+            if part.get('Content-Disposition') is None:
+                continue
+
+            filename =  mail['Subject'][4:]
+            att_path = os.path.join(detach_dir, filename) + '.grb'
+            #Check if its already there
+            if os.path.exists(att_path):
+                os.remove(att_path)
+                print('removed old file')
+            else:
+                open(att_path, 'w').close()
+
+            fp = open(att_path, 'wb')
+            fp.write(part.get_payload(decode=True))
+            fp.close()
+            print('new file added!')
+
+    """ getMailWrapper - a wrapper to get grib data from saildocs
+     - user: a gmail address
+     - pwd: password for the gmail account
+     - bottom: lowest latitude northward
+     - top: highest latitude northward
+     - left: leftmost longitude eastward
+     - right: rightmost longitude eastward
+     - model: saildocs parameter for model
+     - inc: grid increment
+     - params: variables to get in grib file
+     - timestring: forecast hours (you can get 00, 24, 48, 72... 180)
+     - subscribe: if true, you subscribe to updated GRIBS of the same area
+     - send: if false the request to saildocs isn't send
+    """
+    ### valid timestring
+    # 0,3,...180 hrs
+
+    ### valid parameters:
+    # PRMSL: mean sea-level pressure
+    # WIND: surface wind gradient
+    # HGT: 500mb (milibars) height above sea-level
+    # SEATMP: sea temperature
+    # AIRTMP: air temperature
+    # WAVES: wave height
+
+    def wrapper(self, top, bottom, left, right, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
+        STRING_MIN = 25
+        STRING_MAX = 40
+        STRING_CUT = 45
+
+        q = self.genQuery(latTop = top, latBottom = bottom, lonLeft = left, lonRight = right, model = model, inc = inc, params = params, timestring = timestring, subscribe = subscribe)
+        if len(q) > STRING_CUT:
+            splitcomma = q[STRING_MIN:STRING_MAX].find(',')
+            if splitcomma != -1:
+                q1 = q[0:splitcomma + STRING_MIN + 1]
+                q2 = q[splitcomma + STRING_MIN + 1: len(q)]
+                q = """
+                {}=
+                {}
+                """.format(q1, q2)
+            else:
+                print('error in generating query')
+        self.sendQuery(q)
+        print(q)
+        if send:
+            time.sleep(180)
+        self.getAttachment()
+        return  ['./data/raw/{}N,{}N,{}E,{}E.grb'.format(bottom, top, left, right), [top, bottom, left, right]]
+
+
 
 
 #possibly dont get anl files?
@@ -129,57 +185,6 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
         f.write(chunk)
 
     return link
-
-
-
-""" getMailWrapper - a wrapper to get grib data from saildocs
- - user: a gmail address
- - pwd: password for the gmail account
- - latBottom: lowest latitude northward
- - latTop: highest latitude northward
- - lonLeft: leftmost longitude eastward
- - lonRight: rightmost longitude eastward
- - model: saildocs parameter for model
- - inc: grid increment
- - params: variables to get in grib file
- - timestring: forecast hours (you can get 00, 24, 48, 72... 180)
- - subscribe: if true, you subscribe to updated GRIBS of the same area
- - send: if false the request to saildocs isn't send
-"""
-### valid timestring
-# 0,3,...180 hrs
-
-### valid parameters:
-# PRMSL: mean sea-level pressure
-# WIND: surface wind gradient
-# HGT: 500mb (milibars) height above sea-level
-# SEATMP: sea temperature
-# AIRTMP: air temperature
-# WAVES: wave height
-
-def getMailWrapper(user, pwd, latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
-#    STRING_LENGTH = 25
-
-    q = genMailQuery(latTop = latTop, latBottom = latBottom, lonLeft = lonLeft, lonRight = lonRight, model = model, inc = inc, params = params, timestring = timestring, subscribe = subscribe)
-#    if len(q) > 35:
-#        splitcomma = q[STRING_LENGTH:40].find(',')
-#        if splitcomma != -1:
-#            q1 = q[0:splitcomma + STRING_LENGTH + 1]
-#            q2 = q[splitcomma + STRING_LENGTH + 1: len(q)]
-#            q = """
-#            {}=
-#            {}
-#            """.format(q1, q2)
-#        else:
-#            print('error in generating query')
-    sendMailQuery(q, user,pwd, send)
-    print(q)
-    if send:
-        time.sleep(180)
-    getMailAttachment(user,pwd)
-    return  ['./data/raw/{}N,{}N,{}E,{}E.grb'.format(latBottom, latTop, lonLeft, lonRight), [latTop, latBottom, lonLeft, lonRight]]
-
-
 
 
 """
@@ -207,8 +212,6 @@ various metadata on the variables.
  - topLeft: a two element list containing coordinates for the top left corner of the bbox in the format [top, left]
  - delete_original: should the original grib file be deleted after use?
 """
-
-
 
 # ATT: x,y are returned in a slightly shady way, dont trust output to be correct. (plot some winds to see that they look to be facing correctly)
 def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
@@ -242,7 +245,6 @@ def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
 
     # dict to be returned with metadata for all the stuff
     outerHelp = {}
-
     endResult = {'x':[], 'y': []}
 
     for b in range(1, nbands + 1):
@@ -367,14 +369,16 @@ def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filen
 """
 # bodgy approach to get whole earth
 for i in ['WIND,AIRTMP','WAVES']:
-    filename = getMailWrapper(user, pwd, 5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
+    filename = GRIBmail(user = keys.user, pwd = keys.pwd).wrapper(5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
     test = GRIBtoDict(filename,  delete_original = False)
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
 
 
+"""
 # why is this not working?
-getOut = getMailWrapper(user, pwd, 80, -50, 0, 179, timestring = '00', params = 'WIND', inc = 1, send = True)
+g = GRIBmail(user = keys.user, pwd = keys.pwd)
+getOut = g.wrapper(65,  -10, -80, 12, timestring = '00', params = 'WIND', inc = 1, send = True)
 filename = getOut[0]
 
 test = GRIBtoDict(filename,  delete_original = False)
@@ -394,4 +398,3 @@ test2 = GRIBtoDict(filename2,  delete_original = False)
 coords2 = getOut2[1]
 
 g= fromDictTowindJSON(test2[0]['UGRD'], test2[0]['VGRD'], 1, 1, latTop = coords2[0]  , latBottom =  coords2[1], lonLeft =  coords2[2], lonRight = coords2[3], filename = 'data/windy2.json')
-"""
