@@ -79,10 +79,3 @@ class GRIB(GRIB_file):
 
     def read_band(self, band_number):
         return GRIB_band(self.filepath, band_number)
-
-
-a =  GRIB('./data/raw/58N,51N,0E,15E.grb')
-
-b = a.read_band(1)
-
-b.dictify_band()

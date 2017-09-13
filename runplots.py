@@ -52,7 +52,7 @@ weather.csvFunctions().toCSV(bbox, './data/bbox.csv','bbox')
 #folium plots
 plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
-
+"""
 # getting GRIB data
 
 for i in ['WIND,AIRTMP']:
@@ -84,3 +84,4 @@ plt.show()
 #subprocess.call (["/usr/bin/Rscript", "--vanilla", "/pathto/MyrScript.r"])
 #import subprocess
 #subprocess.check_call(['Rscript', 'vectorfield.R'], shell=False)
+"""
