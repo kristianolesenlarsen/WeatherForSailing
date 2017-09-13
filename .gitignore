@@ -21,7 +21,9 @@ $RECYCLE.BIN/
 #images
 *.jpg
 
+
 #project specific
+depr.py
 __pycache__/*
 *.csv
 *.gif

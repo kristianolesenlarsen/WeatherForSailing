@@ -1,22 +1,14 @@
 # sends and recieves mail containing GRIB files as attachments
-
-import keys
-import datetime
-import requests
-import pandas as pd
-import gdal
-import numpy as np
-import re
 import time
-import json
-
-
+import keys
 import email, imaplib, os
 imaplib._MAXLINE = 100000
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+
+# i need a better management of old files and better file naming
 
 ### setup ######################################################################
 # create a folder in gmail called 'saildocs'
@@ -42,11 +34,10 @@ class GRIBmail():
         print('query:', query)
         return query.replace(' ','')
 
-    ### sendemail ##################################################################
-    #
-    # query: email body content
-    # send: if true the email is send (so we can get mail subject without sending it)
-
+    """
+     query: email body content
+     send: if true the email is send (so we can get mail subject without sending it)
+    """
     def sendQuery(self, query, send = True):
 
         fromaddr = self.user
@@ -56,9 +47,7 @@ class GRIBmail():
         msg['From'] = fromaddr
         msg['To'] = toaddr
         msg['Subject'] = "saildocs request"
-        # implement carrying info in the filename
-
-
+        # implement carrying info in the filename here
         if send:
             try:
                 body = query
@@ -79,7 +68,6 @@ class GRIBmail():
 
     #Retrieve an attachment from a Message.
     #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
-
     def getAttachment(self):
         detach_dir = './data/raw' # directory where to save attachments (default: current)
         # connecting to the gmail imap server
@@ -185,216 +173,3 @@ def getNOAAdata(year = '2017', month = '01', day = '01', hour = '0000'):
         f.write(chunk)
 
     return link
-
-
-"""
-getTop/Left - find coordinates in saildocs query filenames, to ease the bbox finding. are helpers in GRIBtoDict()
- - GRIB: path to a grib file
-"""
-
-def getTopY(GRIB):
-    place = [m.start() for m in re.finditer(',', GRIB)][0]
-    comma = [m.start() for m in re.finditer('N', GRIB)][1]
-
-    return int(GRIB[place +1 : comma])
-
-def getLeftX(GRIB):
-    place = [m.start() for m in re.finditer(',', GRIB)][2]
-    comma = [m.start() for m in re.finditer('E', GRIB)][1]
-
-    return int(GRIB[place +1 : comma])
-
-
-""" GRIBtoDict - convert a GRIB file to a dict  with properly named 'columns'. Produces a list as output with [0] being the actual data, and [1] containing
-various metadata on the variables.
-
- - GRIB: path to a grib file to be opened
- - topLeft: a two element list containing coordinates for the top left corner of the bbox in the format [top, left]
- - delete_original: should the original grib file be deleted after use?
-"""
-
-# ATT: x,y are returned in a slightly shady way, dont trust output to be correct. (plot some winds to see that they look to be facing correctly)
-def GRIBtoDict(GRIB, topLeft = None, delete_original = True):
-    f = gdal.Open(GRIB)
-    print('opened file')
-    #basic info on the thing
-    width = f.RasterXSize
-    height = f.RasterYSize
-    # get transformation
-    gt = f.GetGeoTransform()
-
-    #bbox of GRIB data
-    if topLeft:
-        minx = topleft[1] #left
-        maxy = topLeft[0] #gt[3]
-        print(minx, maxy)
-    if not topLeft:
-        minx = getLeftX(GRIB)
-#        maxx = 60
-        maxy = getTopY(GRIB)
-#        miny = 10
-#    print('bbox:',minx, maxx, miny, maxy)
-
-    stepx = gt[1]
-    stepy = gt[5]
-    print('steps:', stepx, stepy)
-
-    # number of bands
-    s = gdal.Info(GRIB)
-    nbands = len([m.start() for m in re.finditer('Band', s)])
-
-    # dict to be returned with metadata for all the stuff
-    outerHelp = {}
-    endResult = {'x':[], 'y': []}
-
-    for b in range(1, nbands + 1):
-        print('new band')
-        helpMeDict = {}
-        band = f.GetRasterBand(b)
-        meta = band.GetMetadata_Dict()
-        #this is stupidly complicated, but it converts the timestamp to a readable date
-        time = datetime.datetime.fromtimestamp(int(re.findall('\d+', meta['GRIB_REF_TIME'])[0])).strftime("%Y-%m-%d %H")
-
-        # fill out the helper dict
-        #helpMeDict['var'].append(meta['GRIB_ELEMENT'])
-        helpMeDict['band'] = [str(b)]
-        helpMeDict['comment'] = [meta['GRIB_COMMENT']]
-        helpMeDict['forecast'] = [meta['GRIB_FORECAST_SECONDS']]
-        helpMeDict['time'] = [time]
-
-        outerHelp[meta['GRIB_ELEMENT']] = helpMeDict
-
-
-        #define new column in output
-        endResult[meta['GRIB_ELEMENT']] = []
-        """
-        maybe arr[i] is the y-coordinates, and for each arr[i] the values are the corresponding x's?
-        so where do they begin???
-        """
-        array = band.ReadAsArray()
-
-        for y_index in range(0,len(array)):                        # for each y
-            for x_index in range(0,len(array[y_index])):           # for each x
-                if b == 1:                                         # Only add lon/lat once
-                    # something is wrong with this
-                    endResult['x'].append( minx +  stepx * x_index )
-                    endResult['y'].append( maxy + stepy * y_index ) #begin in upper left corner
-                endResult[meta['GRIB_ELEMENT']].append(array[y_index][x_index])
-
-    if delete_original:
-        try:
-            os.remove(f.GetFileList()[0])
-        except:
-            print("couldn't remove file")
-    print("DONE! see result in output[0]")
-    return [endResult, outerHelp]
-
-
-
-
-""" fromDictToWindJSON: takes the dict produced by GRIBtoDict() and converts it into an animation friendly json file
- - u: u component of wind
- - v: v component of wind
- - dx: increments in longitude
- - dy: increments in latitude
- - latTop, latBottom, lonLeft,lonRight: bbox
- - filename: output json filename
-"""
-# TODO is to make transfer from GRIBtoDict to this automatic
-#also some of these values are static to match grib2json output - this is worth fixing
-
-
-def fromDictTowindJSON(u, v, dx, dy, latTop, latBottom, lonLeft, lonRight, filename):
-
-    if lonRight < 0:
-        lonRight = 360 + lonRight # if right side (end) is negative, subtract it from 360 to convert from [-180,180] to [0,360]
-    if lonLeft < 0:
-        lonLeft = 360 + lonLeft # same with left side (beginning)
-
-    if lonLeft > lonRight:
-        lonRight = 360 + lonRight
-
-    print('x (left to right):', lonLeft, lonRight)
-    print('y (top to bottom):', latTop, latBottom)
-
-    print('origin:', latTop, lonLeft)
-#    lonRight = lonRight - 20
-#    lonLeft = lonLeft -20
-
-    time = datetime.datetime.now().date().strftime('%Y-%M-%d %H-%M %Z')
-    nx = int(round((lonLeft - lonRight)/(dx),0))
-    ny = int(round((latTop -latBottom)/(dy),0))
-    if nx < 0:
-        nx = -nx
-    if ny < 0:
-        ny = -ny
-
-    out = [{'header': {'parameterUnit': 'm.s-1',
-                        'parameterNumber': 2,
-                        'dx': dx,
-                        'dy': dy,
-                        'parameterNumberName': "eastward_wind",
-                        'la1': latTop,
-                        'la2': latBottom,
-                        'parameterCategory': 2,
-                        'lo2': lonRight,
-                        'nx': nx,
-                        'ny': ny,
-                        'refTime': time,
-                        'lo1': lonLeft},
-                        'data': u
-                        },
-            {'header': { 'parameterUnit': 'm.s-1',
-                         'parameterNumber': 3,
-                         'dx': dx,
-                         'dy': dy,
-                         'parameterNumberName': "northward_wind",
-                         'la1': latTop,
-                         'la2': latBottom,
-                         'parameterCategory': 2,
-                         'lo2': lonRight,
-                         'nx': nx,
-                         'ny': ny,
-                         'refTime': time,
-                         'lo1': lonLeft},
-                         'data': v
-                        }]
-    with open(filename, 'w') as f:
-        json.dump(out, f)
-
-    return out
-
-
-
-"""
-# bodgy approach to get whole earth
-for i in ['WIND,AIRTMP','WAVES']:
-    filename = GRIBmail(user = keys.user, pwd = keys.pwd).wrapper(5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
-    test = GRIBtoDict(filename,  delete_original = False)
-    pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
-    time.sleep(180)
-
-
-"""
-# why is this not working?
-g = GRIBmail(user = keys.user, pwd = keys.pwd)
-getOut = g.wrapper(65,  -10, -80, 12, timestring = '00', params = 'WIND', inc = 1, send = True)
-filename = getOut[0]
-
-test = GRIBtoDict(filename,  delete_original = False)
-
-getOut[1]
-coords = getOut[1]
-
-g= fromDictTowindJSON(test[0]['UGRD'], test[0]['VGRD'], 1, 1, latTop = coords[0]  , latBottom =  coords[1], lonLeft =  coords[2], lonRight = coords[3], filename = 'data/windy.json')
-
-
-# second half
-getOut2 = getMailWrapper(user, pwd, 80, -50, -179, 0, timestring = '00', params = 'WIND', inc = 1, send = True)
-filename2 = getOut2[0]
-
-test2 = GRIBtoDict(filename2,  delete_original = False)
-
-coords2 = getOut2[1]
-
-g= fromDictTowindJSON(test2[0]['UGRD'], test2[0]['VGRD'], 1, 1, latTop = coords2[0]  , latBottom =  coords2[1], lonLeft =  coords2[2], lonRight = coords2[3], filename = 'data/windy2.json')

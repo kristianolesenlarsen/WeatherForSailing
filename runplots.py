@@ -4,7 +4,7 @@ import plots
 import datetime
 import pandas as pd
 import GET_A_GRIB as GAG
-
+import READ_A_GRIB as RAG
 # inputs
 #   get_weather_around_loc: extend, incr (how far to each side of current location, and in how many steps)
 #   current weather circle: number of cities to catch
@@ -55,10 +55,25 @@ plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
 # getting GRIB data
 
-GRIBer = GAG.GRIBmail(user = keys.user, pwd = keys.pwd)
+for i in ['WIND,AIRTMP']:
+    filename = GAG.GRIBmail(user = keys.user, pwd = keys.pwd).wrapper(51, 58, 0,15, timestring = '00', params = i, inc = 0.5, send = True)
 
-for i in ['WIND,AIRTMP','WAVES']:
-    filename = GRIBer.wrapper(5, 80, -70,50, timestring = '00', params = i, inc = 0.5, send = True)
+DK = RAG.GRIB(filename[0])
+
+DK.no_bands
+
+band = DK.read_band(2)
+
+band.metadata
+
+
+import matplotlib.pyplot as plt
+
+
+
+plt.imshow(band.array)
+plt.show()
+
     test = GAG.GRIBtoDict(filename,  delete_original = False)
     pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
     time.sleep(180)
