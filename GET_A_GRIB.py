@@ -1,5 +1,4 @@
 # sends and recieves mail containing GRIB files as attachments
-import time
 import keys
 import email, imaplib, os
 imaplib._MAXLINE = 100000
@@ -19,26 +18,45 @@ user = keys.user
 pwd = keys.pwd
 
 
-class GRIBmail():
+class mail():
     def __init__(self, user, pwd):
         self.user = user
         self.pwd = pwd
 
-    # generate a mail query for saildocs
-    def genQuery(self, latTop, latBottom, lonLeft, lonRight, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False):
-        #model: lat0, lat1, lon0, lon1 |inc, inc | times | params
+    def saildocs_query(self, top, bottom, left, right, N_or_S = 'N', E_or_W = 'E', model = 'gfs', inc = 0.5, params = 'WIND', timestring = '24,38,72'):
 
-        query = '{}:{}N,{}N,{}E,{}E|{},{}|{}|{}'.format(model,latBottom, latTop, lonLeft, lonRight, str(inc), str(inc), timestring, params)
-        if subscribe:
-            query = 'sub ' + query
+        STRING_MIN = 20
+        STRING_MAX = 45
+
+        query = '{mod}:{to}{ns},{bot}{ns},{le}{ew},{ri}{ew}|{inc},{inc}|{ts}|{p}'.format(mod = model,
+                                                                                          bot = str(bottom),
+                                                                                          to = str(top),
+                                                                                          ns = N_or_S,
+                                                                                          le = str(left),
+                                                                                          ri = str(right),
+                                                                                          ew = E_or_W,
+                                                                                          inc = str(inc),
+                                                                                          ts = timestring,
+                                                                                          p = params)
         print('query:', query)
-        return query.replace(' ','')
+
+        if len(query) > STRING_MAX:
+            splitcomma = query[STRING_MIN:STRING_MAX].find(',')
+            if splitcomma != -1:
+                q1 = query[0:splitcomma + STRING_MIN + 1]
+                q2 = query[splitcomma + STRING_MIN + 1: len(q)]
+                query = """
+                {}=
+                {}
+                """.format(q1, q2)
+
+        return query
 
     """
      query: email body content
      send: if true the email is send (so we can get mail subject without sending it)
     """
-    def sendQuery(self, query, send = True):
+    def send_query(self, query, send = True):
 
         fromaddr = self.user
         toaddr = "query@saildocs.com"
@@ -68,8 +86,8 @@ class GRIBmail():
 
     #Retrieve an attachment from a Message.
     #   borrowed from https://gist.github.com/jasonrdsouza/1674794 with gratitude
-    def getAttachment(self):
-        detach_dir = './data/raw' # directory where to save attachments (default: current)
+    def get_attachment(self, file_dir):
+        detach_dir = file_dir # directory where to save attachments (default: current)
         # connecting to the gmail imap server
         m = imaplib.IMAP4_SSL("imap.gmail.com")
         m.login(self.user, self.pwd)
@@ -109,54 +127,7 @@ class GRIBmail():
             fp.close()
             print('new file added!')
 
-    """ getMailWrapper - a wrapper to get grib data from saildocs
-     - user: a gmail address
-     - pwd: password for the gmail account
-     - bottom: lowest latitude northward
-     - top: highest latitude northward
-     - left: leftmost longitude eastward
-     - right: rightmost longitude eastward
-     - model: saildocs parameter for model
-     - inc: grid increment
-     - params: variables to get in grib file
-     - timestring: forecast hours (you can get 00, 24, 48, 72... 180)
-     - subscribe: if true, you subscribe to updated GRIBS of the same area
-     - send: if false the request to saildocs isn't send
-    """
-    ### valid timestring
-    # 0,3,...180 hrs
-
-    ### valid parameters:
-    # PRMSL: mean sea-level pressure
-    # WIND: surface wind gradient
-    # HGT: 500mb (milibars) height above sea-level
-    # SEATMP: sea temperature
-    # AIRTMP: air temperature
-    # WAVES: wave height
-
-    def wrapper(self, top, bottom, left, right, model = 'gfs', inc = 1, params = 'WIND', timestring = '24,48,72', subscribe = False, send = True):
-        STRING_MIN = 25
-        STRING_MAX = 40
-        STRING_CUT = 45
-
-        q = self.genQuery(latTop = top, latBottom = bottom, lonLeft = left, lonRight = right, model = model, inc = inc, params = params, timestring = timestring, subscribe = subscribe)
-        if len(q) > STRING_CUT:
-            splitcomma = q[STRING_MIN:STRING_MAX].find(',')
-            if splitcomma != -1:
-                q1 = q[0:splitcomma + STRING_MIN + 1]
-                q2 = q[splitcomma + STRING_MIN + 1: len(q)]
-                q = """
-                {}=
-                {}
-                """.format(q1, q2)
-            else:
-                print('error in generating query')
-        self.sendQuery(q)
-        print(q)
-        if send:
-            time.sleep(180)
-        self.getAttachment()
-        return  ['./data/raw/{}N,{}N,{}E,{}E.grb'.format(bottom, top, left, right), [top, bottom, left, right]]
+        return att_path
 
 
 

@@ -19,6 +19,7 @@ class GRIB_file():
         self.width = self.GRIB.RasterXSize
         self.height = self.GRIB.RasterYSize
         self.geotransform = self.GRIB.GetGeoTransform()
+
         self.info = gdal.Info(self.GRIB)
         self.no_bands = len([m.start() for m in re.finditer('Band', self.info)])
 

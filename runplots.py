@@ -1,8 +1,12 @@
 import weather
+import time
 import keys
 import plots
 import datetime
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
 import GET_A_GRIB as GAG
 import READ_A_GRIB as RAG
 # inputs
@@ -52,36 +56,33 @@ weather.csvFunctions().toCSV(bbox, './data/bbox.csv','bbox')
 #folium plots
 plots.folium_cityweather('./data/bbox.csv','./plots/bbox.html')
 
-"""
+
 # getting GRIB data
 
-for i in ['WIND,AIRTMP']:
-    filename = GAG.GRIBmail(user = keys.user, pwd = keys.pwd).wrapper(51, 58, 0,15, timestring = '00', params = i, inc = 0.5, send = True)
-
-DK = RAG.GRIB(filename[0])
-
-DK.no_bands
-
-band = DK.read_band(2)
-
-band.metadata
 
 
-import matplotlib.pyplot as plt
-
-
-
-plt.imshow(band.array)
-plt.show()
-
-    test = GAG.GRIBtoDict(filename,  delete_original = False)
-    pd.DataFrame.from_dict(test[0]).to_csv('./data/{}.csv'.format(i))
+for i in ['WIND,AIRTMP', 'WAVES']:
+    saildocs = GAG.mail(user = keys.user, pwd = keys.pwd)
+    query = saildocs.saildocs_query(10,90,180,20, E_or_W = 'W', timestring = '00')
+    saildocs.send_query(query)
     time.sleep(180)
+    path = saildocs.get_attachment()
+
+path
+
+weather = RAG.GRIB(path)
+
+weather.no_bands
+weather.read_band(1).metadata
+
+u = weather.read_band(1)
+v = weather.read_band(2)
 
 
-# something something ... run the R script
-#import subprocess
-#subprocess.call (["/usr/bin/Rscript", "--vanilla", "/pathto/MyrScript.r"])
-#import subprocess
-#subprocess.check_call(['Rscript', 'vectorfield.R'], shell=False)
-"""
+s = np.sqrt(u.array*u.array + v.array*v.array)
+
+
+plt.title('Winds across North America')
+plt.imshow(s, cmap = 'RdPu_r', extent = (180,20,10,90))
+plt.savefig('windmap.png')
+plt.show()
